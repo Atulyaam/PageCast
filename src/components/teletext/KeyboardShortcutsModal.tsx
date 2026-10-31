@@ -34,6 +34,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
     { key: "Home", desc: "Return immediately to Main Index (P100)" },
     { key: "T", desc: "Toggle between CRT Raster & Text-Only Accessible View" },
     { key: "E", desc: "Toggle Source Evidence & Provenance Explorer" },
+    { key: "D", desc: "Toggle Low-Bandwidth Data Saver Mode (system font, no CRT glow)" },
     { key: "M", desc: "Toggle Teletext Audio Synthesizer (Mute / Sound)" },
     { key: "? / H", desc: "Open / close this keyboard reference" },
     { key: "Esc", desc: "Clear dialing buffer / dismiss overlays" },

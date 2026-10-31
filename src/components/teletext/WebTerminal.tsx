@@ -74,6 +74,15 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   const [showScanlines, setShowScanlines] = useState<boolean>(false);
   const [phosphorGlow, setPhosphorGlow] = useState<boolean>(true);
   const [viewMode, setViewMode] = useState<"crt" | "accessible">("crt");
+  const [isDataSaver, setIsDataSaver] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return localStorage.getItem("pagecast_data_saver_mode") === "true";
+    } catch {
+      return false;
+    }
+  });
+  const [sessionBytes, setSessionBytes] = useState<number>(0);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isNotFound, setIsNotFound] = useState<boolean>(false);
@@ -137,6 +146,18 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
     });
   }, []);
 
+  const handleToggleDataSaver = useCallback(() => {
+    setIsDataSaver((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("pagecast_data_saver_mode", String(next));
+      } catch {
+        // Local storage unavailable
+      }
+      return next;
+    });
+  }, []);
+
   // Fetch page data on currentPageNumber change
   useEffect(() => {
     let isCancelled = false;
@@ -145,7 +166,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
       setIsLoading(true);
       setIsNotFound(false);
 
-      const res = await fetchPublishedPage(currentPageNumber);
+      const res = await fetchPublishedPage(currentPageNumber, fetch, isDataSaver);
 
       if (isCancelled) return;
 
@@ -154,6 +175,12 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
         setIsNotFound(false);
         const synth = getTeletextSynthesizer();
         synth.playTuningChirp(currentPageNumber);
+
+        // Record telemetry: add payload bytes if received from live network
+        if (!res.data.isSavedCopy && !res.data.isFallback) {
+          const payloadBytes = new TextEncoder().encode(JSON.stringify(res.data.pack)).byteLength;
+          setSessionBytes((prev) => prev + payloadBytes);
+        }
       } else if (res.notFound) {
         setIsNotFound(true);
         setPageData(null);
@@ -183,7 +210,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
     return () => {
       isCancelled = true;
     };
-  }, [currentPageNumber]);
+  }, [currentPageNumber, isDataSaver]);
 
   const handleToggleSave = useCallback(async () => {
     if (!pageData?.pack) return;
@@ -269,6 +296,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
     onToggleShortcuts: () => setIsShortcutsOpen((prev) => !prev),
     onToggleTextMode: () => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt")),
     onToggleEvidence: () => setIsEvidenceOpen((prev) => !prev),
+    onToggleDataSaver: handleToggleDataSaver,
   });
 
   return (
@@ -294,6 +322,24 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
             }
           >
             {viewMode === "crt" ? "ACCESSIBLE TEXT MODE" : "CRT DISPLAY MODE"}
+          </button>
+
+          {/* Data Saver Mode Toggle (ENH-05) */}
+          <button
+            type="button"
+            onClick={handleToggleDataSaver}
+            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all ${
+              isDataSaver
+                ? "border-cyan-400 bg-cyan-950/70 font-bold text-cyan-300"
+                : "border-surface-border bg-surface-terminal text-text-primary hover:text-teletext-yellow"
+            }`}
+            aria-label={
+              isDataSaver
+                ? "Disable Low-Bandwidth Data Saver Mode"
+                : "Enable Low-Bandwidth Data Saver Mode"
+            }
+          >
+            {isDataSaver ? "⚡ DATA SAVER ON" : "DATA SAVER [D]"}
           </button>
 
           {/* Buffer Dialing Indicator */}
@@ -372,6 +418,21 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
         </div>
       </div>
 
+      {/* Data Saver Mode Status Banner (ENH-05) */}
+      {isDataSaver && (
+        <div className="flex w-full items-center justify-between border border-cyan-800/60 bg-cyan-950/40 px-3 py-1 font-mono text-xs text-cyan-300">
+          <span className="flex items-center gap-1.5 font-bold">
+            <span>⚡ DATA SAVER ACTIVE</span>
+            <span className="hidden font-normal text-zinc-400 sm:inline">
+              • System Monospace Font • CRT Glow &amp; Scanlines Off • Cache-First Resolution
+            </span>
+          </span>
+          <span className="font-bold text-emerald-400">
+            Network: {(sessionBytes / 1024).toFixed(1)} KB
+          </span>
+        </div>
+      )}
+
       {/* Main Terminal View Content */}
       {viewMode === "accessible" ? (
         <AccessibleTextView
@@ -424,8 +485,9 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
               <>
                 <TeletextGrid
                   page={activePage}
-                  showScanlines={showScanlines}
-                  phosphorGlow={phosphorGlow}
+                  showScanlines={isDataSaver ? false : showScanlines}
+                  phosphorGlow={isDataSaver ? false : phosphorGlow}
+                  useSystemFont={isDataSaver}
                 />
                 <TeletextFastextBar fastext={activePage.fastext} onNavigate={handleNavigate} />
               </>

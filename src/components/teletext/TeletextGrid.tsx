@@ -7,6 +7,7 @@ export interface TeletextGridProps {
   readonly page: TeletextPage;
   readonly showScanlines?: boolean;
   readonly phosphorGlow?: boolean;
+  readonly useSystemFont?: boolean;
   readonly className?: string;
 }
 
@@ -14,6 +15,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
   page,
   showScanlines = false,
   phosphorGlow = true,
+  useSystemFont = false,
   className = "",
 }) => {
   return (
@@ -42,7 +44,11 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
         )}
 
         {/* 25 Teletext Rows */}
-        <div className="font-teletext flex h-full flex-col justify-between text-[10px] leading-none tracking-normal sm:text-xs md:text-sm lg:text-base">
+        <div
+          className={`${
+            useSystemFont ? "font-mono" : "font-teletext"
+          } flex h-full flex-col justify-between text-[10px] leading-none tracking-normal sm:text-xs md:text-sm lg:text-base`}
+        >
           {page.rows.map((row, rowIndex) => (
             <TeletextRow
               key={`row-${page.pageNumber}-${rowIndex}`}

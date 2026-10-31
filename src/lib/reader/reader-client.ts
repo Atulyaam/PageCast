@@ -35,7 +35,8 @@ export interface FetchPageResult {
  */
 export async function fetchPublishedPage(
   pageNumber: number,
-  fetchFn: typeof fetch = fetch
+  fetchFn: typeof fetch = fetch,
+  preferOfflineFirst = false
 ): Promise<FetchPageResult> {
   if (!isValidPageNumber(pageNumber)) {
     return {
@@ -44,12 +45,18 @@ export async function fetchPublishedPage(
     };
   }
 
-  // Check if browser is explicitly offline
+  // Check if browser is explicitly offline or caller requested offline-first resolution (Data Saver)
   const isOffline =
     typeof navigator !== "undefined" && typeof navigator.onLine === "boolean" && !navigator.onLine;
 
-  if (isOffline) {
-    return await resolveOfflinePage(pageNumber);
+  if (isOffline || preferOfflineFirst) {
+    const offlineResult = await resolveOfflinePage(pageNumber);
+    if (offlineResult.success) {
+      return offlineResult;
+    }
+    if (isOffline) {
+      return offlineResult;
+    }
   }
 
   try {

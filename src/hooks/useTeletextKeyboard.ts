@@ -28,6 +28,7 @@ export interface TeletextKeyboardOptions {
   onToggleAudio?: () => void;
   onToggleTextMode?: () => void;
   onToggleEvidence?: () => void;
+  onToggleDataSaver?: () => void;
   enabled?: boolean;
 }
 
@@ -196,6 +197,11 @@ export function handleTeletextKeyDown(
   if (lower === "e") {
     e.preventDefault?.();
     options.onToggleEvidence?.();
+    return true;
+  }
+  if (lower === "d") {
+    e.preventDefault?.();
+    options.onToggleDataSaver?.();
     return true;
   }
 
