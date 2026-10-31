@@ -3,6 +3,8 @@ import type { TeletextPage } from "../teletext/types";
 export interface EvidenceReference {
   readonly pointId: string;
   readonly sourceSentenceId: string;
+  readonly sentenceText?: string;
+  readonly sentenceHash?: string;
 }
 
 export interface PagePackMetadata {

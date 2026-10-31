@@ -33,6 +33,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
     { key: "C / B", desc: "Follow CYAN / BLUE Fastext shortcut" },
     { key: "Home", desc: "Return immediately to Main Index (P100)" },
     { key: "T", desc: "Toggle between CRT Raster & Text-Only Accessible View" },
+    { key: "E", desc: "Toggle Source Evidence & Provenance Explorer" },
     { key: "M", desc: "Toggle Teletext Audio Synthesizer (Mute / Sound)" },
     { key: "? / H", desc: "Open / close this keyboard reference" },
     { key: "Esc", desc: "Clear dialing buffer / dismiss overlays" },

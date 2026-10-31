@@ -27,6 +27,7 @@ export interface TeletextKeyboardOptions {
   onToggleShortcuts?: () => void;
   onToggleAudio?: () => void;
   onToggleTextMode?: () => void;
+  onToggleEvidence?: () => void;
   enabled?: boolean;
 }
 
@@ -176,7 +177,7 @@ export function handleTeletextKeyDown(
     return true;
   }
 
-  // 11. Accessibility & Toggles: ?, M, T
+  // 11. Accessibility & Toggles: ?, M, T, E
   if (key === "?" || lower === "h") {
     e.preventDefault?.();
     options.onToggleShortcuts?.();
@@ -190,6 +191,11 @@ export function handleTeletextKeyDown(
   if (lower === "t") {
     e.preventDefault?.();
     options.onToggleTextMode?.();
+    return true;
+  }
+  if (lower === "e") {
+    e.preventDefault?.();
+    options.onToggleEvidence?.();
     return true;
   }
 

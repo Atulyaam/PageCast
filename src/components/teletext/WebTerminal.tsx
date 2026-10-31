@@ -54,6 +54,10 @@ const QrScannerModal = dynamic(() => import("./QrScannerModal").then((mod) => mo
   ssr: false,
 });
 
+const EvidenceDrawer = dynamic(() => import("./EvidenceDrawer").then((mod) => mod.EvidenceDrawer), {
+  ssr: false,
+});
+
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;
   readonly initialSubPage?: number;
@@ -79,6 +83,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
   const [isImportOpen, setIsImportOpen] = useState<boolean>(false);
   const [isScannerOpen, setIsScannerOpen] = useState<boolean>(false);
+  const [isEvidenceOpen, setIsEvidenceOpen] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const isOnline = useOnlineStatus();
 
@@ -263,6 +268,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
     },
     onToggleShortcuts: () => setIsShortcutsOpen((prev) => !prev),
     onToggleTextMode: () => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt")),
+    onToggleEvidence: () => setIsEvidenceOpen((prev) => !prev),
   });
 
   return (
@@ -317,6 +323,15 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
             }
           >
             <span>{isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsEvidenceOpen(true)}
+            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            aria-label="Inspect source sentence evidence and attribution"
+          >
+            EVIDENCE [E]
           </button>
 
           <button
@@ -467,6 +482,16 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           setIsScannerOpen(false);
           handleNavigate(pack.primaryPageNumber);
         }}
+      />
+
+      {/* Source Evidence Explorer Drawer (TASK-ENH-01) */}
+      <EvidenceDrawer
+        isOpen={isEvidenceOpen}
+        onClose={() => setIsEvidenceOpen(false)}
+        pack={pageData?.pack}
+        pageNumber={currentPageNumber}
+        reviewedBy={pageData?.pack?.metadata?.publisherId}
+        reviewedAt={pageData?.publishedAt}
       />
     </div>
   );

@@ -169,9 +169,27 @@ export const CURATED_DEMO_BULLETINS: readonly PagePackV1[] = [
       aiAssisted: true,
       publisherId: "editor_editorial_desk",
       evidenceReferences: [
-        { pointId: "p101-1", sourceSentenceId: "s1" },
-        { pointId: "p101-2", sourceSentenceId: "s2" },
-        { pointId: "p101-3", sourceSentenceId: "s3" },
+        {
+          pointId: "p101-1",
+          sourceSentenceId: "s1",
+          sentenceText:
+            "Delegates from 140 nations ratified the landmark climate treaty in Geneva today.",
+          sentenceHash: "7b8d4f2a1e3c5a6b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b",
+        },
+        {
+          pointId: "p101-2",
+          sourceSentenceId: "s2",
+          sentenceText:
+            "Key provisions mandate carbon emission disclosures and transition financing for developing economies.",
+          sentenceHash: "8c9e5f3b2f4d6a7b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2c",
+        },
+        {
+          pointId: "p101-3",
+          sourceSentenceId: "s3",
+          sentenceText:
+            "The accord will enter into formal legal force within sixty days of deposit.",
+          sentenceHash: "9d0f6a4c3a5e7b8c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3d",
+        },
       ],
     },
     pages: [page101],
@@ -193,9 +211,26 @@ export const CURATED_DEMO_BULLETINS: readonly PagePackV1[] = [
       aiAssisted: true,
       publisherId: "editor_hindi_desk",
       evidenceReferences: [
-        { pointId: "p102-1", sourceSentenceId: "s1" },
-        { pointId: "p102-2", sourceSentenceId: "s2" },
-        { pointId: "p102-3", sourceSentenceId: "s3" },
+        {
+          pointId: "p102-1",
+          sourceSentenceId: "s1",
+          sentenceText:
+            "सरकार ने ग्रामीण क्षेत्रों के लिए राष्ट्रीय डिजिटल साक्षरता मिशन का विस्तार किया।",
+          sentenceHash: "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+        },
+        {
+          pointId: "p102-2",
+          sourceSentenceId: "s2",
+          sentenceText:
+            "इस पहल का मुख्य उद्देश्य महिलाओं और युवाओं को कंप्यूटर और स्मार्टफोन का बुनियादी प्रशिक्षण देना है।",
+          sentenceHash: "2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c",
+        },
+        {
+          pointId: "p102-3",
+          sourceSentenceId: "s3",
+          sentenceText: "प्रशिक्षण केंद्र सभी ग्राम पंचायतों में स्थापित किए जा रहे हैं।",
+          sentenceHash: "3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
+        },
       ],
     },
     pages: [page102],
@@ -217,9 +252,26 @@ export const CURATED_DEMO_BULLETINS: readonly PagePackV1[] = [
       aiAssisted: true,
       publisherId: "editor_tech_desk",
       evidenceReferences: [
-        { pointId: "p200-1", sourceSentenceId: "s1" },
-        { pointId: "p200-2", sourceSentenceId: "s2" },
-        { pointId: "p200-3", sourceSentenceId: "s3" },
+        {
+          pointId: "p200-1",
+          sourceSentenceId: "s1",
+          sentenceText: "Modern web pages now average over 2.5 megabytes in payload size.",
+          sentenceHash: "4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e",
+        },
+        {
+          pointId: "p200-2",
+          sourceSentenceId: "s2",
+          sentenceText:
+            "Edge networks and constrained terminal interfaces significantly reduce energy consumption and cellular transit costs.",
+          sentenceHash: "5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f",
+        },
+        {
+          pointId: "p200-3",
+          sourceSentenceId: "s3",
+          sentenceText:
+            "Information-dense layouts preserve essential news without tracking scripts or heavy stylesheets.",
+          sentenceHash: "6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a",
+        },
       ],
     },
     pages: [page200],
@@ -241,9 +293,27 @@ export const CURATED_DEMO_BULLETINS: readonly PagePackV1[] = [
       aiAssisted: false,
       publisherId: "emergency_broadcast_system",
       evidenceReferences: [
-        { pointId: "p400-1", sourceSentenceId: "s1" },
-        { pointId: "p400-2", sourceSentenceId: "s2" },
-        { pointId: "p400-3", sourceSentenceId: "s3" },
+        {
+          pointId: "p400-1",
+          sourceSentenceId: "s1",
+          sentenceText:
+            "Meteorological Department issues red alert for coastal regions due to severe depression.",
+          sentenceHash: "7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b",
+        },
+        {
+          pointId: "p400-2",
+          sourceSentenceId: "s2",
+          sentenceText:
+            "Wind gusts are projected to reach 75 to 85 km/h along maritime zones through midnight.",
+          sentenceHash: "8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c",
+        },
+        {
+          pointId: "p400-3",
+          sourceSentenceId: "s3",
+          sentenceText:
+            "Fishermen are advised not to venture into deep sea waters until further notice.",
+          sentenceHash: "9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        },
       ],
     },
     pages: [page400],
@@ -265,9 +335,25 @@ export const CURATED_DEMO_BULLETINS: readonly PagePackV1[] = [
       aiAssisted: true,
       publisherId: "emergency_broadcast_hindi",
       evidenceReferences: [
-        { pointId: "p401-1", sourceSentenceId: "s1" },
-        { pointId: "p401-2", sourceSentenceId: "s2" },
-        { pointId: "p401-3", sourceSentenceId: "s3" },
+        {
+          pointId: "p401-1",
+          sourceSentenceId: "s1",
+          sentenceText:
+            "मौसम विभाग ने तटीय जिलों में भारी बारिश और तेज हवाओं की चेतावनी जारी की है।",
+          sentenceHash: "0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e",
+        },
+        {
+          pointId: "p401-2",
+          sourceSentenceId: "s2",
+          sentenceText: "मछुआरों को समुद्र में न जाने की सख्त सलाह दी गई है।",
+          sentenceHash: "1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f",
+        },
+        {
+          pointId: "p401-3",
+          sourceSentenceId: "s3",
+          sentenceText: "तटीय राहत दलों और आपदा प्रबंधन इकाइयों को उच्च सतर्कता पर रखा गया है।",
+          sentenceHash: "2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a",
+        },
       ],
     },
     pages: [page401],

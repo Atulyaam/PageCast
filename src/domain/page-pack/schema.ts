@@ -34,6 +34,8 @@ export const TeletextPageSchema = z.object({
 export const EvidenceReferenceSchema = z.object({
   pointId: z.string(),
   sourceSentenceId: z.string(),
+  sentenceText: z.string().optional(),
+  sentenceHash: z.string().optional(),
 });
 
 export const PagePackMetadataSchema = z.object({

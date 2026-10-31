@@ -50,4 +50,3 @@ describe("Public Legal & Documentation Pages (TASK-S5-10 / SEC-011, UXR-013)", (
     });
   });
 });
-

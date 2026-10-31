@@ -147,15 +147,19 @@ export function convertDraftToPagePack(
   const magazine = getMagazineNumber(draft.pageNumber);
   const slug = createSafeSlug(draft.title, draft.pageNumber);
 
-  // Build evidence references
+  // Build evidence references with optional sentence excerpts
+  const sentenceMap = new Map(source?.sentences?.map((s) => [s.id, s]) ?? []);
   const evidenceReferences: EvidenceReference[] = [];
   let ptIndex = 1;
   for (const section of draft.sections) {
     for (const point of section.points) {
       for (const sId of point.sourceSentenceIds) {
+        const matched = sentenceMap.get(sId);
         evidenceReferences.push({
           pointId: `pt-${ptIndex}`,
           sourceSentenceId: sId,
+          sentenceText: matched?.text,
+          sentenceHash: matched?.hash,
         });
       }
       ptIndex++;
