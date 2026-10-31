@@ -7,7 +7,7 @@
  * and direct subpage stepping for multi-page Teletext bulletins.
  */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { formatSubPageIndicator } from "@/domain/teletext/magazine";
 
 export interface SubPageCarouselProps {
@@ -29,28 +29,12 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
 }) => {
   const [isAutoRotating, setIsAutoRotating] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const animFrameRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number>(Date.now());
-
-  // If bulletin has only 1 page, render minimal indicator without controls
-  if (subPageCount <= 1) {
-    return (
-      <div
-        role="region"
-        aria-label="Subpage Indicator"
-        className={`flex items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-1.5 font-mono text-xs text-zinc-500 ${className}`.trim()}
-      >
-        <span>P{pageNumber} &bull; Single Frame Bulletin</span>
-        <span className="text-[11px] text-zinc-600">STATIC BROADCAST</span>
-      </div>
-    );
-  }
+  const startTimeRef = useRef<number>(0);
 
   // Handle Carousel Timer
   useEffect(() => {
     if (!isAutoRotating || subPageCount <= 1) {
-      setProgress(0);
       return;
     }
 
@@ -81,26 +65,44 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
     };
   }, [isAutoRotating, currentSubIndex, subPageCount, autoRotateIntervalMs, onSubPageChange]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     const nextIdx = currentSubIndex === 0 ? subPageCount - 1 : currentSubIndex - 1;
     onSubPageChange(nextIdx);
     startTimeRef.current = Date.now();
-  };
+  }, [currentSubIndex, subPageCount, onSubPageChange]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const nextIdx = (currentSubIndex + 1) % subPageCount;
     onSubPageChange(nextIdx);
     startTimeRef.current = Date.now();
-  };
+  }, [currentSubIndex, subPageCount, onSubPageChange]);
 
-  const handleSelect = (idx: number) => {
-    onSubPageChange(idx);
-    startTimeRef.current = Date.now();
-  };
+  const handleSelect = useCallback(
+    (idx: number) => {
+      onSubPageChange(idx);
+      startTimeRef.current = Date.now();
+    },
+    [onSubPageChange]
+  );
 
-  const togglePause = () => {
+  const togglePause = useCallback(() => {
     setIsAutoRotating((prev) => !prev);
-  };
+    setProgress(0);
+  }, []);
+
+  // If bulletin has only 1 page, render minimal indicator without controls
+  if (subPageCount <= 1) {
+    return (
+      <div
+        role="region"
+        aria-label="Subpage Indicator"
+        className={`flex items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-1.5 font-mono text-xs text-zinc-500 ${className}`.trim()}
+      >
+        <span>P{pageNumber} &bull; Single Frame Bulletin</span>
+        <span className="text-[11px] text-zinc-600">STATIC BROADCAST</span>
+      </div>
+    );
+  }
 
   const indicatorText = formatSubPageIndicator(currentSubIndex + 1, subPageCount);
 
@@ -113,76 +115,81 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
       {/* Subpage Index Display & Direct Jumps */}
       <div className="flex items-center gap-2">
         <span className="bg-emerald-500 px-1.5 py-0.5 text-xs font-bold text-black">
-          {indicatorText}
+          CAROUSEL FRAMES:
         </span>
-        <span className="hidden text-[11px] text-zinc-500 sm:inline">CAROUSEL FRAMES:</span>
+        <span className="font-bold tracking-wider text-white">{indicatorText}</span>
 
-        <div className="flex items-center gap-1">
-          {Array.from({ length: subPageCount }).map((_, idx) => (
+        {/* Direct Subpage Buttons */}
+        <div className="ml-2 flex items-center gap-1">
+          {Array.from({ length: subPageCount }, (_, i) => (
             <button
-              key={idx}
+              key={i}
               type="button"
-              onClick={() => handleSelect(idx)}
-              aria-label={`Jump to subpage ${idx + 1}`}
-              aria-current={currentSubIndex === idx ? "true" : undefined}
-              className={`cursor-pointer border px-2 py-0.5 text-xs font-bold transition-colors ${
-                currentSubIndex === idx
-                  ? "border-emerald-400 bg-emerald-950/50 text-emerald-300"
-                  : "border-zinc-800 bg-black text-zinc-500 hover:border-zinc-700 hover:text-zinc-300"
+              onClick={() => handleSelect(i)}
+              className={`h-5 w-5 rounded text-[11px] font-bold transition-colors ${
+                i === currentSubIndex
+                  ? "bg-cyan-400 font-extrabold text-black shadow"
+                  : "border border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-white"
               }`}
+              aria-label={`Jump to subpage ${i + 1}`}
+              aria-current={i === currentSubIndex ? "true" : undefined}
             >
-              {idx + 1}
+              {i + 1}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Stepping Controls & Auto-Rotation Toggle */}
-      <div className="flex items-center gap-2">
+      {/* Navigation & Rotation Controls */}
+      <div className="flex items-center gap-3">
         {/* Progress Bar for Auto-Rotation */}
         {isAutoRotating && (
           <div
-            className="h-1.5 w-16 overflow-hidden border border-zinc-800 bg-zinc-900"
-            title="Time until next subpage rotation"
+            className="hidden items-center gap-1.5 sm:flex"
+            title={`Auto-rotating every ${autoRotateIntervalMs / 1000}s`}
           >
-            <div
-              className="h-full bg-emerald-400 transition-all duration-100 ease-linear"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="h-1.5 w-16 overflow-hidden rounded border border-zinc-800 bg-zinc-900">
+              <div
+                className="h-full bg-cyan-400 transition-all duration-100 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <span className="text-[10px] text-zinc-500">15s</span>
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={togglePause}
-          aria-label={
-            isAutoRotating ? "Pause subpage carousel rotation" : "Resume subpage carousel rotation"
-          }
-          className={`cursor-pointer border px-2 py-1 text-[11px] font-bold transition-colors ${
-            isAutoRotating
-              ? "border-zinc-800 bg-black text-zinc-400 hover:text-white"
-              : "border-amber-400 bg-amber-400 text-black"
-          }`}
-        >
-          {isAutoRotating ? "⏸ PAUSE" : "▶ RESUME"}
-        </button>
-
+        {/* Previous Subpage */}
         <button
           type="button"
           onClick={handlePrev}
+          className="border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
           aria-label="Previous subpage"
-          className="cursor-pointer border border-zinc-800 bg-black px-2.5 py-1 text-xs font-bold text-zinc-300 hover:border-zinc-600 hover:text-white"
         >
-          ← PREV
+          &larr; PREV
         </button>
 
+        {/* Auto-Rotation Pause/Play */}
+        <button
+          type="button"
+          onClick={togglePause}
+          className={`border px-2 py-1 text-xs font-bold transition-colors ${
+            isAutoRotating
+              ? "border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:text-white"
+              : "border-yellow-500 bg-yellow-500/20 text-yellow-300"
+          }`}
+          aria-label={isAutoRotating ? "Pause auto-rotation" : "Resume auto-rotation"}
+        >
+          {isAutoRotating ? "PAUSE" : "RESUME"}
+        </button>
+
+        {/* Next Subpage */}
         <button
           type="button"
           onClick={handleNext}
+          className="border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
           aria-label="Next subpage"
-          className="cursor-pointer border border-zinc-800 bg-black px-2.5 py-1 text-xs font-bold text-zinc-300 hover:border-zinc-600 hover:text-white"
         >
-          NEXT →
+          NEXT &rarr;
         </button>
       </div>
     </div>

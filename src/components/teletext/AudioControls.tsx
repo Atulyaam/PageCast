@@ -25,13 +25,10 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
     isSupported: false,
   });
 
-  const [isSynthMuted, setIsSynthMuted] = useState<boolean>(true); // Default muted until activated
+  const [isSynthMuted, setIsSynthMuted] = useState<boolean>(true);
 
   useEffect(() => {
     const speechReader = getBulletinSpeechReader();
-    const synth = getTeletextSynthesizer();
-
-    setIsSynthMuted(synth.muted);
 
     const unsubscribe = speechReader.subscribe((state) => {
       setSpeechState(state);
