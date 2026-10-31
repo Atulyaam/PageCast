@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
+    "dexie": "^4.4.7",
     "next": "16.4.3",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.20.0",
     "eslint-config-next": "16.4.3",
+    "fake-indexeddb": "^6.2.7",
     "fast-check": "^4.10.2",
     "postcss": "^8.5.32",
     "prettier": "^3.9.10",
