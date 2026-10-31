@@ -40,6 +40,12 @@ export default async function TerminalPage({ searchParams }: TerminalPageProps) 
             >
               CATALOGUE
             </Link>
+            <Link
+              href="/saved"
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              SAVED
+            </Link>
           </nav>
         </div>
       </header>

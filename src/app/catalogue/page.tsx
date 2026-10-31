@@ -100,6 +100,12 @@ export default function BroadcastCataloguePage() {
               📺 Terminal (P100)
             </Link>
             <Link
+              href="/saved"
+              className="border border-transparent px-2.5 py-1 text-zinc-400 hover:border-zinc-800 hover:text-white"
+            >
+              💾 Saved
+            </Link>
+            <Link
               href="/publisher"
               className="border border-zinc-700 bg-zinc-900 px-2.5 py-1 font-bold text-emerald-400 hover:border-emerald-500"
             >

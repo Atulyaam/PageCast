@@ -45,6 +45,12 @@ export default async function PageRoute({ params }: PageProps) {
               CATALOGUE
             </Link>
             <Link
+              href="/saved"
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              SAVED
+            </Link>
+            <Link
               href={`/terminal?page=${num}`}
               className="text-text-muted hover:text-teletext-white transition-all"
             >

@@ -33,6 +33,12 @@ export default function Home() {
               CATALOGUE
             </Link>
             <Link
+              href="/saved"
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              SAVED
+            </Link>
+            <Link
               href="/publisher/ingest"
               className="border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 rounded border px-2 py-0.5 transition-all"
             >
