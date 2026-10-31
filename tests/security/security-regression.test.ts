@@ -257,8 +257,9 @@ describe("PageCast Security Regression Test Suite (SEC-001 through SEC-013)", ()
           index: i,
           text: `Sentence ${i + 1} content.`,
           characterCount: 20,
+          hash: `hash-${i + 1}`,
         })),
-        extractedAt: "2026-10-31T12:00:00Z",
+        fetchedAt: "2026-10-31T12:00:00Z",
         language: "en",
       };
 
