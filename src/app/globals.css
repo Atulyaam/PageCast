@@ -32,7 +32,9 @@
 }
 
 /* Base Styles & Accessibility Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -62,7 +64,9 @@ body {
   font-family: var(--font-teletext);
   letter-spacing: 0;
   line-height: 1.25;
-  font-feature-settings: "tnum" 1, "zero" 1;
+  font-feature-settings:
+    "tnum" 1,
+    "zero" 1;
 }
 
 .teletext-hindi {
@@ -72,7 +76,9 @@ body {
 
 /* Accessible Reduced-Motion Support */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

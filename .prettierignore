@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.*
+
+# Build artifacts & caches
+.next
+out
+build
+dist
+coverage
+*.tsbuildinfo
+
+# Lockfiles & vendor files
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Existing specifications & documentation (preserve original formatting)
+docs/**
+*.md
