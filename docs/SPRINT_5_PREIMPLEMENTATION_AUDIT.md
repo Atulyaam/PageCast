@@ -81,3 +81,4 @@ A critical distinction must be maintained between automated unit/integration moc
 ## 5. Audit Conclusion
 
 The application architecture is remarkably solid: the core domain, layout engine, and PWA storage are 100% covered by 312 passing automated tests. Sprint 5 must focus strictly on **security hardening (rate limiting, CSP, body limits), observability (structured logging, error boundaries), accessibility auditing (axe-core, focus traps), performance measurement, and deployment readiness**.
+

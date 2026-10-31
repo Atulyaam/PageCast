@@ -55,3 +55,4 @@
   - `tests/unit/security/rate-limiter.test.ts`: 7 tests passed (quota decrement, 429 blocking, client IP isolation, window expiration, proxy header extraction, HTTP enforce integration, storage fail-open).
 - **Full Integration Suite:**
   - 324 tests across 54 test files passed with 100% success rate.
+
