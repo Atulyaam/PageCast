@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import React, { type ReactElement } from "react";
+import { renderToString } from "react-dom/server";
 import { TeletextGrid } from "@/components/teletext/TeletextGrid";
 import { AccessibleAlternative } from "@/components/teletext/AccessibleAlternative";
 import { layoutBulletinPage } from "@/domain/layout-engine/layout";
@@ -12,6 +13,16 @@ describe("Teletext React Components", () => {
     headline: "PEACE SUMMIT CONCLUDES",
     paragraphs: ["Diplomats have signed a multilateral peace framework."],
     fastext: { red: 102, green: 200, yellow: 300, cyan: 100 },
+  });
+
+  const hindiPage = layoutBulletinPage({
+    pageNumber: 102,
+    title: "राष्ट्रीय समाचार",
+    topic: "मुख्य समाचार",
+    headline: "शांति शिखर सम्मेलन संपन्न",
+    paragraphs: ["राजनयिकों ने बहुपक्षीय शांति समझौते पर हस्ताक्षर किए हैं।"],
+    fastext: { red: 100, green: 200, yellow: 300, cyan: 400 },
+    language: "hi",
   });
 
   it("renders TeletextGrid with strictly 25 rows and accessibility alternative", () => {
@@ -52,5 +63,33 @@ describe("Teletext React Components", () => {
 
     expect(navSection.type).toBe("nav");
     expect(navSection.props["aria-label"]).toBe("Fastext Shortcut Navigation");
+  });
+
+  it("renders Hindi Devanagari pages with authentic teletext-hindi typography class", () => {
+    const html = renderToString(
+      React.createElement(TeletextGrid, {
+        page: hindiPage,
+        showScanlines: false,
+        phosphorGlow: true,
+      })
+    );
+
+    expect(html).toContain("teletext-hindi");
+    expect(html).toContain("शांति शिखर सम्मेलन संपन्न");
+  });
+
+  it("enforces responsive aspect ratio [40/25] and overflow containment for 360px viewports", () => {
+    const html = renderToString(
+      React.createElement(TeletextGrid, {
+        page: samplePage,
+        showScanlines: true,
+        phosphorGlow: true,
+      })
+    );
+
+    expect(html).toContain("aspect-[40/25]");
+    expect(html).toContain("overflow-hidden");
+    expect(html).toContain("crt-scanlines");
+    expect(html).toContain("crt-glow");
   });
 });
