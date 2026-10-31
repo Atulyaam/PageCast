@@ -11,6 +11,7 @@ import { z } from "zod";
 import { getBulletinPublisher } from "@/server/publishing/bulletin-publisher";
 import { parseJsonWithLimit, MAX_PAGEPACK_BODY_BYTES } from "@/server/security/request-limits";
 import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
+import { logger, getCorrelationId } from "@/server/logging/logger";
 
 const PublishRequestSchema = z.object({
   draftId: z.string().optional(),
@@ -20,6 +21,9 @@ const PublishRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const startTime = performance.now();
+  const correlationId = getCorrelationId(request);
+
   // 1. Enforce rate limiting
   const rateLimitResult = await enforceRateLimit(
     request,
@@ -27,6 +31,13 @@ export async function POST(request: Request) {
     RATE_LIMIT_PROFILES.PUBLISH
   );
   if (!rateLimitResult.success) {
+    logger.warn("Publish rate limit exceeded", {
+      category: "SECURITY",
+      route: "/api/v1/pages/publish",
+      correlationId,
+      status: 429,
+      durationMs: performance.now() - startTime,
+    });
     return rateLimitResult.response;
   }
 
@@ -63,9 +74,31 @@ export async function POST(request: Request) {
       reviewerId,
     });
 
+    logger.info("Page published successfully", {
+      category: "PERSISTENCE",
+      route: "/api/v1/pages/publish",
+      correlationId,
+      status: 201,
+      durationMs: performance.now() - startTime,
+      meta: {
+        pageNumber: result.page_number,
+        title: result.title,
+        payloadBytes: result.payload_bytes,
+      },
+    });
+
     return NextResponse.json({ success: true, page: result }, { status: 201 });
   } catch (error: any) {
     const msg = error?.message || "Failed to publish page";
+
+    logger.error("Failed to publish page", {
+      category: "PERSISTENCE",
+      route: "/api/v1/pages/publish",
+      correlationId,
+      status: msg.includes("DUPLICATE_PAGE_NUMBER") ? 409 : 400,
+      durationMs: performance.now() - startTime,
+      error,
+    });
 
     if (msg.includes("UNREVIEWED_DRAFT")) {
       return NextResponse.json({ error: "UNREVIEWED_DRAFT", message: msg }, { status: 400 });

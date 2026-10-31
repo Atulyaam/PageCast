@@ -5,6 +5,7 @@ import { extractArticleFromHtml } from "@/server/ingestion/extractor";
 import { SecurityError } from "@/server/security/url-safety";
 import { parseJsonWithLimit, DEFAULT_MAX_BODY_BYTES } from "@/server/security/request-limits";
 import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
+import { logger, getCorrelationId } from "@/server/logging/logger";
 
 const ExtractRequestSchema = z.object({
   url: z.string().url("A valid URL is required"),
@@ -12,6 +13,9 @@ const ExtractRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const startTime = performance.now();
+  const correlationId = getCorrelationId(request);
+
   // 1. Enforce rate limiting
   const rateLimitResult = await enforceRateLimit(
     request,
@@ -19,6 +23,13 @@ export async function POST(request: Request) {
     RATE_LIMIT_PROFILES.SOURCE_EXTRACT
   );
   if (!rateLimitResult.success) {
+    logger.warn("Extract rate limit exceeded", {
+      category: "SECURITY",
+      route: "/api/v1/sources/extract",
+      correlationId,
+      status: 429,
+      durationMs: performance.now() - startTime,
+    });
     return rateLimitResult.response;
   }
 
@@ -51,6 +62,15 @@ export async function POST(request: Request) {
       language,
     });
 
+    logger.info("Article extracted successfully", {
+      category: "INGESTION",
+      route: "/api/v1/sources/extract",
+      correlationId,
+      status: 200,
+      durationMs: performance.now() - startTime,
+      meta: { url, bytesFetched: fetchResult.bytesFetched },
+    });
+
     return NextResponse.json({
       success: true,
       source,
@@ -60,6 +80,16 @@ export async function POST(request: Request) {
       },
     });
   } catch (err: unknown) {
+    const status = err instanceof SecurityError ? 403 : 500;
+    logger.error("Article extraction failed", {
+      category: "INGESTION",
+      route: "/api/v1/sources/extract",
+      correlationId,
+      status,
+      durationMs: performance.now() - startTime,
+      error: err,
+    });
+
     if (err instanceof SecurityError) {
       return NextResponse.json(
         { success: false, error: err.message, code: err.code },
@@ -69,8 +99,8 @@ export async function POST(request: Request) {
 
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { success: false, error: `Failed to extract article: ${message}`, code: "EXTRACTION_FAILED" },
-      { status: 502 }
+      { success: false, error: message, code: "INGESTION_ERROR" },
+      { status: 500 }
     );
   }
 }
