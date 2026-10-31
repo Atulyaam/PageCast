@@ -146,209 +146,209 @@ function ImportDialogModal({
     >
       <FocusTrap onClose={onClose} className="w-full max-w-lg">
         <div className="border-teletext-cyan bg-surface-terminal text-text-primary flex w-full flex-col gap-4 rounded border-2 p-6 shadow-2xl">
-        {/* Header */}
-        <div className="border-surface-border flex items-center justify-between border-b pb-3">
-          <div className="flex items-center gap-2">
-            <span className="bg-teletext-cyan text-teletext-black px-1.5 py-0.5 text-xs font-bold">
-              IMPORT
-            </span>
-            <h2 id="import-dialog-title" className="text-teletext-cyan text-base font-bold">
-              PAGEPACK INGESTION
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-text-muted hover:text-teletext-white font-mono text-xs transition-colors"
-            aria-label="Close import dialog"
-          >
-            [CLOSE ✕]
-          </button>
-        </div>
-
-        {/* Tab switch: File drop vs Paste */}
-        <div className="flex gap-2 text-xs">
-          <button
-            type="button"
-            onClick={() => setInputMode("file")}
-            className={`border px-3 py-1 font-semibold transition-colors ${
-              inputMode === "file"
-                ? "border-teletext-yellow bg-teletext-yellow text-teletext-black"
-                : "border-surface-border bg-surface-panel text-text-muted hover:text-text-primary"
-            }`}
-          >
-            SELECT FILE (.JSON)
-          </button>
-          <button
-            type="button"
-            onClick={() => setInputMode("paste")}
-            className={`border px-3 py-1 font-semibold transition-colors ${
-              inputMode === "paste"
-                ? "border-teletext-yellow bg-teletext-yellow text-teletext-black"
-                : "border-surface-border bg-surface-panel text-text-muted hover:text-text-primary"
-            }`}
-          >
-            PASTE JSON TEXT
-          </button>
-        </div>
-
-        {/* File Dropzone or Paste Input */}
-        {inputMode === "file" ? (
-          <div
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-            className={`border-2 border-dashed p-6 text-center transition-colors ${
-              dragActive
-                ? "border-teletext-yellow bg-teletext-yellow/10"
-                : "border-surface-border bg-surface-panel/40 hover:border-text-muted"
-            }`}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json,application/json"
-              className="hidden"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleFile(e.target.files[0]);
-                }
-              }}
-              data-testid="pagepack-file-input"
-            />
-            <p className="text-text-secondary mb-2 text-xs">
-              DRAG &amp; DROP A PAGEPACK JSON FILE HERE
-            </p>
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="border-teletext-cyan bg-teletext-cyan/10 text-teletext-cyan hover:bg-teletext-cyan hover:text-teletext-black border px-3 py-1.5 text-xs font-bold transition-all"
-            >
-              CHOOSE FILE
-            </button>
-            <p className="text-text-muted mt-2 text-[10px]">
-              Max byte ceiling: 10,240 bytes (10 KiB)
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-2">
-            <textarea
-              value={manualText}
-              onChange={(e) => setManualText(e.target.value)}
-              placeholder="Paste PagePack JSON string here..."
-              rows={5}
-              className="border-surface-border bg-surface-panel text-text-primary placeholder:text-text-muted focus:border-teletext-yellow w-full resize-none border p-2 font-mono text-xs focus:outline-hidden"
-              data-testid="pagepack-paste-textarea"
-            />
-            <button
-              type="button"
-              disabled={!manualText.trim()}
-              onClick={() => processJsonString(manualText)}
-              className="border-teletext-cyan bg-teletext-cyan/20 text-teletext-cyan hover:bg-teletext-cyan hover:text-teletext-black border px-3 py-1 text-xs font-bold transition-all disabled:opacity-40"
-            >
-              VALIDATE &amp; PREVIEW
-            </button>
-          </div>
-        )}
-
-        {/* Validation Errors */}
-        {errorMessages.length > 0 && (
-          <div
-            role="alert"
-            className="border-teletext-red bg-teletext-red/10 text-teletext-red border p-3 text-xs"
-          >
-            <p className="font-bold">❌ INGESTION REJECTED ({errorMessages.length} ERRORS):</p>
-            <ul className="mt-1 list-inside list-disc space-y-0.5 text-[11px]">
-              {errorMessages.map((msg, idx) => (
-                <li key={idx}>{msg}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Valid Candidate Preview */}
-        {candidatePack && (
-          <div className="border-teletext-green bg-teletext-green/5 border p-3 text-xs">
-            <div className="border-teletext-green/20 flex items-center justify-between border-b pb-2">
-              <span className="text-teletext-green font-bold">✓ VALID PAGEPACK VERIFIED</span>
-              <span className="border-teletext-green text-teletext-green py-0.2 border px-1.5 text-[10px] font-bold">
-                P{candidatePack.primaryPageNumber}
+          {/* Header */}
+          <div className="border-surface-border flex items-center justify-between border-b pb-3">
+            <div className="flex items-center gap-2">
+              <span className="bg-teletext-cyan text-teletext-black px-1.5 py-0.5 text-xs font-bold">
+                IMPORT
               </span>
+              <h2 id="import-dialog-title" className="text-teletext-cyan text-base font-bold">
+                PAGEPACK INGESTION
+              </h2>
             </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-text-muted hover:text-teletext-white font-mono text-xs transition-colors"
+              aria-label="Close import dialog"
+            >
+              [CLOSE ✕]
+            </button>
+          </div>
 
-            <div className="text-text-secondary mt-2 space-y-1 text-[11px]">
-              <div>
-                <span className="text-text-muted">TITLE: </span>
-                <span className="text-text-primary font-semibold">{candidatePack.title}</span>
+          {/* Tab switch: File drop vs Paste */}
+          <div className="flex gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => setInputMode("file")}
+              className={`border px-3 py-1 font-semibold transition-colors ${
+                inputMode === "file"
+                  ? "border-teletext-yellow bg-teletext-yellow text-teletext-black"
+                  : "border-surface-border bg-surface-panel text-text-muted hover:text-text-primary"
+              }`}
+            >
+              SELECT FILE (.JSON)
+            </button>
+            <button
+              type="button"
+              onClick={() => setInputMode("paste")}
+              className={`border px-3 py-1 font-semibold transition-colors ${
+                inputMode === "paste"
+                  ? "border-teletext-yellow bg-teletext-yellow text-teletext-black"
+                  : "border-surface-border bg-surface-panel text-text-muted hover:text-text-primary"
+              }`}
+            >
+              PASTE JSON TEXT
+            </button>
+          </div>
+
+          {/* File Dropzone or Paste Input */}
+          {inputMode === "file" ? (
+            <div
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed p-6 text-center transition-colors ${
+                dragActive
+                  ? "border-teletext-yellow bg-teletext-yellow/10"
+                  : "border-surface-border bg-surface-panel/40 hover:border-text-muted"
+              }`}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json,application/json"
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handleFile(e.target.files[0]);
+                  }
+                }}
+                data-testid="pagepack-file-input"
+              />
+              <p className="text-text-secondary mb-2 text-xs">
+                DRAG &amp; DROP A PAGEPACK JSON FILE HERE
+              </p>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="border-teletext-cyan bg-teletext-cyan/10 text-teletext-cyan hover:bg-teletext-cyan hover:text-teletext-black border px-3 py-1.5 text-xs font-bold transition-all"
+              >
+                CHOOSE FILE
+              </button>
+              <p className="text-text-muted mt-2 text-[10px]">
+                Max byte ceiling: 10,240 bytes (10 KiB)
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <textarea
+                value={manualText}
+                onChange={(e) => setManualText(e.target.value)}
+                placeholder="Paste PagePack JSON string here..."
+                rows={5}
+                className="border-surface-border bg-surface-panel text-text-primary placeholder:text-text-muted focus:border-teletext-yellow w-full resize-none border p-2 font-mono text-xs focus:outline-hidden"
+                data-testid="pagepack-paste-textarea"
+              />
+              <button
+                type="button"
+                disabled={!manualText.trim()}
+                onClick={() => processJsonString(manualText)}
+                className="border-teletext-cyan bg-teletext-cyan/20 text-teletext-cyan hover:bg-teletext-cyan hover:text-teletext-black border px-3 py-1 text-xs font-bold transition-all disabled:opacity-40"
+              >
+                VALIDATE &amp; PREVIEW
+              </button>
+            </div>
+          )}
+
+          {/* Validation Errors */}
+          {errorMessages.length > 0 && (
+            <div
+              role="alert"
+              className="border-teletext-red bg-teletext-red/10 text-teletext-red border p-3 text-xs"
+            >
+              <p className="font-bold">❌ INGESTION REJECTED ({errorMessages.length} ERRORS):</p>
+              <ul className="mt-1 list-inside list-disc space-y-0.5 text-[11px]">
+                {errorMessages.map((msg, idx) => (
+                  <li key={idx}>{msg}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Valid Candidate Preview */}
+          {candidatePack && (
+            <div className="border-teletext-green bg-teletext-green/5 border p-3 text-xs">
+              <div className="border-teletext-green/20 flex items-center justify-between border-b pb-2">
+                <span className="text-teletext-green font-bold">✓ VALID PAGEPACK VERIFIED</span>
+                <span className="border-teletext-green text-teletext-green py-0.2 border px-1.5 text-[10px] font-bold">
+                  P{candidatePack.primaryPageNumber}
+                </span>
               </div>
-              <div className="flex gap-4">
+
+              <div className="text-text-secondary mt-2 space-y-1 text-[11px]">
                 <div>
-                  <span className="text-text-muted">MAGAZINE: </span>
-                  <span className="text-teletext-yellow">{candidatePack.magazine}</span>
+                  <span className="text-text-muted">TITLE: </span>
+                  <span className="text-text-primary font-semibold">{candidatePack.title}</span>
                 </div>
-                <div>
-                  <span className="text-text-muted">PAGES: </span>
-                  <span className="text-text-primary">{candidatePack.pages.length}</span>
+                <div className="flex gap-4">
+                  <div>
+                    <span className="text-text-muted">MAGAZINE: </span>
+                    <span className="text-teletext-yellow">{candidatePack.magazine}</span>
+                  </div>
+                  <div>
+                    <span className="text-text-muted">PAGES: </span>
+                    <span className="text-text-primary">{candidatePack.pages.length}</span>
+                  </div>
+                  <div>
+                    <span className="text-text-muted">SOURCE: </span>
+                    <span className="text-text-primary">
+                      {candidatePack.metadata?.sourceName || "Independent"}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-text-muted">SOURCE: </span>
-                  <span className="text-text-primary">
-                    {candidatePack.metadata?.sourceName || "Independent"}
+                {budgetResult && (
+                  <div>
+                    <span className="text-text-muted">BUDGET: </span>
+                    <span
+                      className={
+                        budgetResult.isOverBudget
+                          ? "text-teletext-red font-bold"
+                          : "text-teletext-green"
+                      }
+                    >
+                      {budgetResult.bytesUsed} / {budgetResult.maxBytes} bytes (
+                      {budgetResult.percentageUsed}%)
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {saveSuccess ? (
+                <div className="border-teletext-green/30 mt-3 flex items-center justify-between border-t pt-2 text-xs">
+                  <span className="text-teletext-green font-bold">
+                    ★ SAVED TO LOCAL OFFLINE VAULT!
                   </span>
-                </div>
-              </div>
-              {budgetResult && (
-                <div>
-                  <span className="text-text-muted">BUDGET: </span>
-                  <span
-                    className={
-                      budgetResult.isOverBudget
-                        ? "text-teletext-red font-bold"
-                        : "text-teletext-green"
-                    }
+                  <a
+                    href={`/terminal?page=${candidatePack.primaryPageNumber}`}
+                    className="border-teletext-cyan bg-teletext-cyan text-teletext-black hover:bg-teletext-yellow px-2.5 py-1 font-bold transition-colors"
                   >
-                    {budgetResult.bytesUsed} / {budgetResult.maxBytes} bytes (
-                    {budgetResult.percentageUsed}%)
-                  </span>
+                    VIEW BULLETIN P{candidatePack.primaryPageNumber} →
+                  </a>
+                </div>
+              ) : (
+                <div className="border-teletext-green/30 mt-3 border-t pt-2">
+                  <button
+                    type="button"
+                    disabled={isSaving}
+                    onClick={handleSaveToVault}
+                    className="border-teletext-green bg-teletext-green text-teletext-black hover:bg-teletext-yellow flex w-full items-center justify-center gap-1.5 border py-1.5 text-xs font-bold transition-colors disabled:opacity-50"
+                    data-testid="save-to-vault-btn"
+                  >
+                    {isSaving ? "SAVING TO INDEXEDDB..." : "★ SAVE TO LOCAL OFFLINE VAULT"}
+                  </button>
                 </div>
               )}
             </div>
+          )}
 
-            {saveSuccess ? (
-              <div className="border-teletext-green/30 mt-3 flex items-center justify-between border-t pt-2 text-xs">
-                <span className="text-teletext-green font-bold">
-                  ★ SAVED TO LOCAL OFFLINE VAULT!
-                </span>
-                <a
-                  href={`/terminal?page=${candidatePack.primaryPageNumber}`}
-                  className="border-teletext-cyan bg-teletext-cyan text-teletext-black hover:bg-teletext-yellow px-2.5 py-1 font-bold transition-colors"
-                >
-                  VIEW BULLETIN P{candidatePack.primaryPageNumber} →
-                </a>
-              </div>
-            ) : (
-              <div className="border-teletext-green/30 mt-3 border-t pt-2">
-                <button
-                  type="button"
-                  disabled={isSaving}
-                  onClick={handleSaveToVault}
-                  className="border-teletext-green bg-teletext-green text-teletext-black hover:bg-teletext-yellow flex w-full items-center justify-center gap-1.5 border py-1.5 text-xs font-bold transition-colors disabled:opacity-50"
-                  data-testid="save-to-vault-btn"
-                >
-                  {isSaving ? "SAVING TO INDEXEDDB..." : "★ SAVE TO LOCAL OFFLINE VAULT"}
-                </button>
-              </div>
-            )}
+          {/* Footer */}
+          <div className="border-surface-border text-text-muted flex justify-between border-t pt-2 text-[10px]">
+            <span>Format: PagePack v1 Canonical JSON</span>
+            <span>Security: Client-side sandboxed validation</span>
           </div>
-        )}
-
-        {/* Footer */}
-        <div className="border-surface-border text-text-muted flex justify-between border-t pt-2 text-[10px]">
-          <span>Format: PagePack v1 Canonical JSON</span>
-          <span>Security: Client-side sandboxed validation</span>
         </div>
-      </div>
       </FocusTrap>
     </div>
   );

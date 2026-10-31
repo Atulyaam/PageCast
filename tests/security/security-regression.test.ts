@@ -18,12 +18,20 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { isPrivateIPv4, isPrivateIPv6, validateUrlForIngestion } from "@/server/security/url-safety";
+import {
+  isPrivateIPv4,
+  isPrivateIPv6,
+  validateUrlForIngestion,
+} from "@/server/security/url-safety";
 import { cleanHtmlToText, decodeHtmlEntities } from "@/server/ingestion/extractor";
 import { securityHeaders, cspHeader } from "../../next.config";
 import { parseJsonWithLimit } from "@/server/security/request-limits";
 import { buildSystemPrompt, buildUserPrompt } from "@/server/ai/prompt";
-import { getSupabaseConfig, isValidSupabaseUrl, isNonPlaceholderKey } from "@/server/database/config";
+import {
+  getSupabaseConfig,
+  isValidSupabaseUrl,
+  isNonPlaceholderKey,
+} from "@/server/database/config";
 import { validateGrid } from "@/domain/validation/validate-grid";
 import type { TeletextPage } from "@/domain/teletext/types";
 import type { ExtractedSource } from "@/domain/source-provenance/types";

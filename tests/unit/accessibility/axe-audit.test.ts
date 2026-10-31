@@ -26,11 +26,7 @@ function getRelativeLuminance(hex: string): number {
   const g = parseInt(cleaned.substring(2, 4), 16);
   const b = parseInt(cleaned.substring(4, 6), 16);
 
-  return (
-    0.2126 * sRgbLuminance(r) +
-    0.7152 * sRgbLuminance(g) +
-    0.0722 * sRgbLuminance(b)
-  );
+  return 0.2126 * sRgbLuminance(r) + 0.7152 * sRgbLuminance(g) + 0.0722 * sRgbLuminance(b);
 }
 
 /**

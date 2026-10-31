@@ -49,7 +49,8 @@ describe("Structured Server-Side Logger (TASK-S5-06 / NFR-014)", () => {
     });
 
     it("redacts inline Bearer tokens and query parameters in string values", () => {
-      const text = "Authorization header was Bearer secret-jwt-payload-abc and key=mysecretkey123 in url";
+      const text =
+        "Authorization header was Bearer secret-jwt-payload-abc and key=mysecretkey123 in url";
       const sanitized = redactSensitiveData(text);
 
       expect(sanitized).not.toContain("secret-jwt-payload-abc");

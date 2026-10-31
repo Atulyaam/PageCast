@@ -49,9 +49,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
     if (initialTarget && typeof initialTarget.focus === "function") {
       initialTarget.focus();
     } else {
-      const focusables = Array.from(
-        container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS)
-      );
+      const focusables = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS));
       if (focusables.length > 0 && typeof focusables[0].focus === "function") {
         focusables[0].focus();
       }
@@ -95,7 +93,11 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      if (returnFocus && triggerElementRef.current && typeof triggerElementRef.current.focus === "function") {
+      if (
+        returnFocus &&
+        triggerElementRef.current &&
+        typeof triggerElementRef.current.focus === "function"
+      ) {
         triggerElementRef.current.focus();
       }
     };

@@ -14,13 +14,7 @@ import crypto from "node:crypto";
 
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
 
-export type LogCategory =
-  | "SECURITY"
-  | "INGESTION"
-  | "AI"
-  | "PERSISTENCE"
-  | "DELIVERY"
-  | "GENERAL";
+export type LogCategory = "SECURITY" | "INGESTION" | "AI" | "PERSISTENCE" | "DELIVERY" | "GENERAL";
 
 export interface LogContext {
   readonly correlationId?: string;
@@ -48,7 +42,8 @@ export interface StructuredLogEntry {
   };
 }
 
-const SENSITIVE_KEY_PATTERN = /(?:api[-_]?key|authorization|bearer|token|secret|password|credential|cookie)/i;
+const SENSITIVE_KEY_PATTERN =
+  /(?:api[-_]?key|authorization|bearer|token|secret|password|credential|cookie)/i;
 const MAX_STRING_LOG_LENGTH = 300;
 
 /**
@@ -80,7 +75,11 @@ export function redactSensitiveData<T>(input: T): T {
     for (const [key, value] of Object.entries(input)) {
       if (SENSITIVE_KEY_PATTERN.test(key)) {
         result[key] = "[REDACTED]";
-      } else if (key.toLowerCase().includes("content") && typeof value === "string" && value.length > 200) {
+      } else if (
+        key.toLowerCase().includes("content") &&
+        typeof value === "string" &&
+        value.length > 200
+      ) {
         result[key] = `[TRUNCATED_CONTENT len=${value.length}]`;
       } else {
         result[key] = redactSensitiveData(value);
@@ -101,9 +100,7 @@ export function getCorrelationId(request?: Request): string {
     return `corr_${crypto.randomUUID().slice(0, 8)}`;
   }
 
-  const existing =
-    request.headers.get("x-correlation-id") ||
-    request.headers.get("x-request-id");
+  const existing = request.headers.get("x-correlation-id") || request.headers.get("x-request-id");
 
   if (existing && existing.trim().length > 0) {
     return existing.trim().slice(0, 64);
@@ -122,7 +119,9 @@ class StructuredLogger {
       ...(ctx?.correlationId ? { correlationId: ctx.correlationId } : {}),
       ...(ctx?.route ? { route: ctx.route } : {}),
       ...(ctx?.status !== undefined ? { status: ctx.status } : {}),
-      ...(ctx?.durationMs !== undefined ? { durationMs: Math.round(ctx.durationMs * 100) / 100 } : {}),
+      ...(ctx?.durationMs !== undefined
+        ? { durationMs: Math.round(ctx.durationMs * 100) / 100 }
+        : {}),
       ...(ctx?.meta ? { meta: redactSensitiveData(ctx.meta) } : {}),
       ...(ctx?.error
         ? {

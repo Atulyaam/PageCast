@@ -46,15 +46,13 @@ const ExportDialog = dynamic(
   { ssr: false }
 );
 
-const ImportDialog = dynamic(
-  () => import("./ImportDialog").then((mod) => mod.ImportDialog),
-  { ssr: false }
-);
+const ImportDialog = dynamic(() => import("./ImportDialog").then((mod) => mod.ImportDialog), {
+  ssr: false,
+});
 
-const QrScannerModal = dynamic(
-  () => import("./QrScannerModal").then((mod) => mod.QrScannerModal),
-  { ssr: false }
-);
+const QrScannerModal = dynamic(() => import("./QrScannerModal").then((mod) => mod.QrScannerModal), {
+  ssr: false,
+});
 
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;
