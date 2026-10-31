@@ -36,6 +36,7 @@ import { AccessibleTextView } from "./AccessibleTextView";
 import { KeyboardShortcutsModal } from "./KeyboardShortcutsModal";
 import { ExportDialog } from "@/components/publisher/ExportDialog";
 import { ImportDialog } from "./ImportDialog";
+import { QrScannerModal } from "./QrScannerModal";
 
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;
@@ -61,6 +62,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
   const [isImportOpen, setIsImportOpen] = useState<boolean>(false);
+  const [isScannerOpen, setIsScannerOpen] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const isOnline = useOnlineStatus();
 
@@ -321,6 +323,15 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
           <button
             type="button"
+            onClick={() => setIsScannerOpen(true)}
+            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-green hover:text-teletext-green flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            aria-label="Scan optical QR code or air-gap burst"
+          >
+            SCAN QR
+          </button>
+
+          <button
+            type="button"
             onClick={() => setIsShortcutsOpen(true)}
             className="border-surface-border bg-surface-terminal text-text-muted hover:text-teletext-white flex items-center gap-1 rounded border px-2 py-1 text-xs transition-colors"
             aria-label="Open keyboard shortcuts help modal"
@@ -424,6 +435,20 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
         onClose={() => setIsImportOpen(false)}
         onImportSuccess={(pack) => {
           setIsImportOpen(false);
+          handleNavigate(pack.primaryPageNumber);
+        }}
+      />
+
+      {/* Optical QR & Air-Gap Scanner Modal */}
+      <QrScannerModal
+        isOpen={isScannerOpen}
+        onClose={() => setIsScannerOpen(false)}
+        onNavigateToPage={(pageNum) => {
+          setIsScannerOpen(false);
+          handleNavigate(pageNum);
+        }}
+        onPackIngested={(pack) => {
+          setIsScannerOpen(false);
           handleNavigate(pack.primaryPageNumber);
         }}
       />

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { getAllSavedPages, removeSavedPage } from "@/lib/storage/saved-pages";
 import type { SavedPageRecord } from "@/lib/storage/dexie-db";
 import { ImportDialog } from "@/components/teletext/ImportDialog";
+import { QrScannerModal } from "@/components/teletext/QrScannerModal";
 import { getMagazineDefinition } from "@/domain/teletext/magazine";
 
 export default function SavedPagesPage() {
@@ -20,6 +21,7 @@ export default function SavedPagesPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [actionMessage, setActionMessage] = useState<string>("");
   const [isImportOpen, setIsImportOpen] = useState<boolean>(false);
+  const [isScannerOpen, setIsScannerOpen] = useState<boolean>(false);
   const [, startTransition] = useTransition();
 
   const reloadPages = () => {
@@ -138,6 +140,14 @@ export default function SavedPagesPage() {
               aria-label="Import PagePack JSON file"
             >
               + IMPORT JSON
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsScannerOpen(true)}
+              className="border-teletext-green bg-teletext-green/10 text-teletext-green hover:bg-teletext-green hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              aria-label="Scan optical QR code or air-gap burst"
+            >
+              SCAN QR
             </button>
             <input
               type="text"
@@ -274,6 +284,17 @@ export default function SavedPagesPage() {
         onImportSuccess={() => {
           reloadPages();
           setActionMessage("PagePack imported and saved to offline vault successfully!");
+          setTimeout(() => setActionMessage(""), 4000);
+        }}
+      />
+
+      {/* QR Scanner Modal */}
+      <QrScannerModal
+        isOpen={isScannerOpen}
+        onClose={() => setIsScannerOpen(false)}
+        onPackIngested={() => {
+          reloadPages();
+          setActionMessage("Air-gap bulletin received and verified successfully!");
           setTimeout(() => setActionMessage(""), 4000);
         }}
       />
