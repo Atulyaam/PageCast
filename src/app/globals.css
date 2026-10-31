@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* Classic Teletext 8-Color Palette */
+  --color-teletext-black: #0a0a0c;
+  --color-teletext-white: #f8fafc;
+  --color-teletext-yellow: #facc15;
+  --color-teletext-cyan: #06b6d4;
+  --color-teletext-green: #22c55e;
+  --color-teletext-magenta: #e11d48;
+  --color-teletext-red: #ef4444;
+  --color-teletext-blue: #2563eb;
+
+  /* Modern Neutral & Surface Tokens (Studio & Publisher UI) */
+  --color-surface-ground: #030712;
+  --color-surface-terminal: #0b0f19;
+  --color-surface-panel: #111827;
+  --color-surface-border: #1f2937;
+  --color-surface-border-subtle: #374151;
+  --color-text-muted: #9ca3af;
+
+  /* Typography Stacks */
+  --font-mono: "Noto Sans Mono", "Courier New", monospace;
+  --font-teletext: "Noto Sans Mono", "Courier New", monospace;
+  --font-hindi: "Noto Sans Devanagari", "Noto Sans Mono", sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Terminal Layout Tokens */
+  --spacing-bezel: 1rem;
+  --radius-terminal: 0.75rem;
+  --radius-bezel: 1.25rem;
+}
+
+/* Base Styles & Accessibility Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-surface-ground);
+  color: var(--color-teletext-white);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* High-Visibility Accessible Focus Indicators */
+:focus-visible {
+  outline: 2px solid var(--color-teletext-yellow);
+  outline-offset: 2px;
+}
+
+/* Text Selection Styling */
+::selection {
+  background-color: var(--color-teletext-yellow);
+  color: var(--color-teletext-black);
+}
+
+/* Teletext Terminal Specific Utilities */
+.teletext-grid-container {
+  font-family: var(--font-teletext);
+  letter-spacing: 0;
+  line-height: 1.25;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+.teletext-hindi {
+  font-family: var(--font-hindi);
+  line-height: 1.35;
+}
+
+/* Accessible Reduced-Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
