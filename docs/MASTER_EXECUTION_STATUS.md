@@ -28,7 +28,7 @@
 |---|---|---|---|---|---|---|
 | **Phase 0** | AUDIT | Repository Audit & Baseline Verification | **COMMITTED** | `fd49b84` | 394 tests verified | Working tree clean |
 | **Phase 1** | ENH-01 | Source Evidence Explorer (Reader Drawer) | **COMMITTED** | `f423f99` | 7 tests (`evidence-drawer.test.ts`), 401 tests total | Fully accessible drawer, `E` hotkey |
-| **Phase 2** | ENH-02 | Data Efficiency Lab (`/lab` Route) | **COMMITTED** | Pending commit | 8 tests (`efficiency-lab.test.ts`), 409 tests total | Pure calculator, 5 benchmarks, interactive dashboard, methodology docs |
+| **Phase 2** | ENH-02 | Data Efficiency Lab (`/lab` Route) | **COMMITTED** | `c98d7dd` | 8 tests (`efficiency-lab.test.ts`), 409 tests total | Pure calculator, 5 benchmarks, interactive dashboard, methodology docs |
 | **Phase 3** | ENH-03 | Community Broadcast Kit & Printable Posters | **NOT STARTED** | — | — | Pending Phase 2 completion |
 | **Phase 4** | ENH-04 | PageCast Domain QA MCP Server | **NOT STARTED** | — | — | Pending Phase 3 completion |
 | **Phase 5** | ENH-05 | Low-Bandwidth Data Saver Profile | **NOT STARTED** | — | — | Pending Phase 4 completion |
