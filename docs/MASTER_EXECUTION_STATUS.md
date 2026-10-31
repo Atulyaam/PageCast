@@ -35,9 +35,9 @@
 | **Phase 6** | ENH-06 | Bulletin Freshness & Version History | **COMMITTED** | `bcde9df` | 5 tests (`freshness-versioning.test.ts`), 439 tests total | Revision badges, relative freshness, stale copy alert banner with live refresh, non-destructive expiry |
 | **Phase 7** | AUDIT-2 | Integration & Security Audit | **COMMITTED** | `44b5df8` | 50 security tests verified | Zero secret leaks, SSRF/CSP/rate-limit verified, SECURITY_AUDIT_REPORT.md |
 | **Phase 8** | GATE | Automated Quality Gate (`pnpm quality:check`) | **COMMITTED** | `36fd53f` | 439 tests (69 files), Next.js build | 100% full pass: env check, prettier, eslint, tsc, vitest, next build |
-| **Phase 9** | DOCS | Hackathon Readiness & Documentation | **NOT STARTED** | — | — | README & runbook updates |
-| **Phase 10**| PROTOCOL| Real-World User Validation Protocol | **NOT STARTED** | — | — | Testing protocol template |
-| **Phase 11**| DEMO | 3-Minute Video Demo Script & Presentation | **NOT STARTED** | — | — | Devpost & presentation text |
+| **Phase 9** | DOCS | Hackathon Readiness & Documentation | **COMMITTED** | `cfd413a` | README, TRACEABILITY | Updated README with all 6 enhancements, 439 tests, verified KIRO-018 |
+| **Phase 10**| PROTOCOL| Real-World User Validation Protocol | **COMMITTED** | `d9c8184` | Protocol document | 4 personas, 5 disaster scenarios, 2G/EDGE emulation, scorecard |
+| **Phase 11**| DEMO | 3-Minute Video Demo Script & Presentation | **COMMITTED** | Pending commit | DEMO_VIDEO_SCRIPT, DEVPOST | 180s timecoded beat sheet, comprehensive Devpost submission text |
 | **Phase 12**| REPORT | Master Execution Completion Report | **NOT STARTED** | — | — | Final sign-off |
 
 ---
