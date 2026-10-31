@@ -21,10 +21,10 @@ The modern web suffers from extreme bloat. The average webpage weighs over 2.5 m
 - Inaccessible essential news, weather, and public bulletins.
 
 ### The Solution: PageCast
-PageCast combines retro 1970s broadcast engineering principles with 2026 AI language modeling:
-1. **Sub-5KB Page Packs:** An entire multi-page bulletin (3 to 6 teletext pages including index, news, weather, and summaries) packages into under 5,120 bytes uncompressed (and sub-2KB gzipped/brotli).
-2. **AI-Composed Teletext Layout:** Uses Google Gemini 2.5 Flash to distill raw article content into fixed 40-column × 24-row grid pages, preserving factual essence and creating Teletext ASCII/mosaic banners.
-3. **Authentic 40×24 CRT Experience:** Renders in authentic high-contrast monospaced typography with CRT scanlines, flicker toggles, page dialing (100–899), and 4-button Fastext navigation (Red, Green, Yellow, Cyan).
+PageCast combines retro broadcast engineering principles with modern AI language modeling:
+1. **10 KiB Page Packs:** An entire multi-page bulletin (3 to 6 teletext pages including index, news, weather, and summaries) packages into under 10,240 bytes uncompressed UTF-8 JSON (and sub-3KB gzipped/brotli).
+2. **AI-Composed Teletext Layout:** Uses Google Gemini 2.5 Flash to distill raw article content into fixed 40-column × 25-row grid pages, preserving factual essence and creating Teletext ASCII/mosaic banners.
+3. **Authentic 40×25 CRT Experience:** Renders in authentic high-contrast monospaced typography with CRT scanlines, flicker toggles, page dialing (100–899), and 4-button Fastext navigation (Red, Green, Yellow, Cyan) on Row 25.
 4. **Offline-First Delivery:** Once fetched, Page Packs persist locally via IndexedDB and Service Worker caches, allowing uninterrupted reading without active connectivity.
 
 ---
@@ -46,7 +46,6 @@ PageCast combines retro 1970s broadcast engineering principles with 2026 AI lang
 
 ## 4. Key Hackathon Deliverables
 
-- **Publisher Studio:** Input an article URL or raw text, run AI conversion into a structured 40×24 Teletext Page Pack, inspect page budget breakdown, edit lines, and publish.
-- **Web Teletext Terminal:** Fully interactive web-based Teletext CRT display with 40×24 grid, 100–899 page dialing, 4 Fastext shortcut links, sub-page carousel cycling, and CRT visual controls.
-- **Low-Bandwidth Architecture:** Strict enforcement of the sub-5KB byte budget per pack with deterministic property-based testing and zero client runtime dependencies beyond React.
-
+- **Publisher Studio:** Input an article URL or raw text, run AI conversion into a structured 40×25 Teletext Page Pack, inspect page budget breakdown, edit lines, and publish.
+- **Web Teletext Terminal:** Fully interactive web-based Teletext CRT display with 40×25 grid, 100–899 page dialing, 4 Fastext shortcut links, sub-page carousel cycling, and CRT visual controls.
+- **Low-Bandwidth Architecture:** Strict enforcement of the 10,240-byte (10 KiB) payload budget per pack with deterministic property-based testing and zero client runtime dependencies beyond React.

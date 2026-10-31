@@ -12,7 +12,7 @@ PageCast employs a clean, layered architecture separating pure domain logic from
 flowchart TD
     subgraph Client["Client Browser / Offline PWA"]
         UI["App Router UI (React 19)"]
-        Terminal["Teletext 40x24 Grid Display"]
+        Terminal["Teletext 40x25 Grid Display"]
         Cache["IndexedDB / Service Worker Cache"]
     end
 
@@ -22,9 +22,9 @@ flowchart TD
         AIComposer["Gemini 2.5 Flash AI Composer"]
         
         subgraph Domain["Pure Domain Engines (src/domain)"]
-            Layout["Layout Engine (40x24 Grids)"]
+            Layout["Layout Engine (40x25 Grids)"]
             PackCodec["PagePack Serializer & Validator"]
-            Budget["Byte Budget Calculator (Sub-5KB)"]
+            Budget["Byte Budget Calculator (10 KiB)"]
         end
     end
 
@@ -61,13 +61,13 @@ flowchart TD
 
 ### 2.2 Domain Layer (`src/domain/`)
 - Contains **pure, deterministic TypeScript functions** with zero framework or browser dependencies.
-- **`layout-engine/`**: Splits article text into 40-column wrapped lines, manages Teletext header rows (Row 0: Page Number, Day, Date, Time), page breaks, and mosaic art.
+- **`layout-engine/`**: Splits article text into 40-column wrapped lines, manages Teletext header row (Row 1: Page Number, Day, Date, Time), 23 content rows (Rows 2–24), and navigation/footer row (Row 25).
 - **`page-pack/`**: Defines Page Pack data models, schemas (Zod), serialization, deserialization, and integrity validation.
-- **`byte-budget/`**: Calculates UTF-8 byte weights of characters, strings, and serialized page packs, strictly enforcing the 5,120-byte maximum limit.
+- **`byte-budget/`**: Calculates UTF-8 byte weights of characters, strings, and serialized page packs, strictly enforcing the 10,240-byte (10 KiB) maximum limit.
 
 ### 2.3 Application & Services Layer (`src/services/`)
-- **`article-fetcher/`**: Retrieves external HTML content with hardened SSRF protection, parses text with Readability-style heuristics, and extracts headline, author, and paragraphs.
-- **`ai-composer/`**: Formulates structured prompt envelopes for Google Gemini 2.5 Flash with few-shot teletext examples, parsing the returned structured JSON into raw 40×24 pages.
+- **`article-fetcher/`**: Retrieves external HTML content with hardened SSRF protection, parses text with Readability heuristics, and extracts headline, author, and paragraphs.
+- **`ai-composer/`**: Formulates structured prompt envelopes for Google Gemini 2.5 Flash with few-shot teletext examples, parsing returned structured JSON into raw 40×25 pages.
 - **`storage/`**: Interfaces with Supabase PostgreSQL to store and query bulletins by magazine number and slug.
 
 ---
@@ -76,10 +76,9 @@ flowchart TD
 
 | Constraint | Enforcement Mechanism |
 | :--- | :--- |
-| **Sub-5KB Pack Budget** | `PAGECAST_MAX_PACK_BYTES = 5120`. Pack serializer rejects any pack exceeding 5,120 bytes uncompressed UTF-8. Tested with property tests (100+ runs). |
-| **Strict 40×24 Grid** | Teletext pages MUST have exactly 24 rows, each with at most 40 monospaced characters. Row 0 is reserved for standard Teletext broadcast headers. |
+| **10 KiB Pack Budget** | `PAGECAST_MAX_PACK_BYTES = 10240`. Pack serializer rejects any pack exceeding 10,240 bytes uncompressed UTF-8. Tested with property tests (100+ runs). |
+| **Strict 40×25 Grid** | Teletext pages MUST have exactly 25 rows, each with exactly 40 monospaced logical cells. Row 1 is reserved for status/header, Rows 2–24 for content, Row 25 for navigation/footer. |
 | **Server-Only Secrets** | All AI and database service keys (`GOOGLE_GENERATIVE_AI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) are prohibited from client code or `NEXT_PUBLIC_` prefixes. Validated via `scripts/check-env-safety.mjs`. |
 | **SSRF Safe Fetching** | Article fetching rejects private IP ranges (RFC 1918, loopback, link-local, AWS/GCP metadata endpoints), limits redirects to 3, enforces 10s timeout, and caps input at 2MB. |
 | **Zero Heavy UI Libs** | No Radix, no Material UI, no Chakra. Pure Tailwind CSS 4 design tokens and semantic HTML to maintain a lean bundle footprint. |
 | **Offline-First Delivery** | Service Worker caches page packs on initial load. The reader terminal can operate entirely offline without network access once cached. |
-

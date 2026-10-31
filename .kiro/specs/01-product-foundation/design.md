@@ -31,8 +31,8 @@ sequenceDiagram
     Fetcher-->>NextServer: Clean Extracted Text
     NextServer->>Gemini: Prompt with Article Context
     Gemini-->>NextServer: Structured Teletext JSON
-    NextServer->>Domain: Format into 40x24 Pages & Validate Budget
-    Domain-->>NextServer: PagePack (<5KB)
+    NextServer->>Domain: Format into 40x25 Pages & Validate Budget
+    Domain-->>NextServer: PagePack (<=10 KiB)
     NextServer-->>Client: Return Draft PagePack
     Publisher->>Client: Review, Edit & Approve
     Publisher->>Client: Click Publish
@@ -48,7 +48,7 @@ sequenceDiagram
     DB-->>NextServer: Stored PagePack
     NextServer-->>Client: PagePack JSON
     Client->>Client: Save to IndexedDB (Offline Cache)
-    Client->>Client: Render 40x24 Character Cells
+    Client->>Client: Render 40x25 Character Cells
 ```
 
 ---
@@ -89,7 +89,7 @@ export interface TeletextPage {
   readonly subPageNumber?: number; // 1 - 99
   readonly subPageCount?: number;
   readonly title: string;
-  readonly rows: readonly TeletextRow[]; // exactly or <= 24 rows
+  readonly rows: readonly TeletextRow[]; // exactly 25 rows
   readonly fastext: FastextLinks;
 }
 ```
@@ -125,16 +125,17 @@ export interface PagePack {
 ## 3. Layout Engine Rules & Invariants
 
 1. **Grid Invariants:**
-   - A page canvas has exactly **24 rows** (index 0 to 23).
-   - Each row has a maximum capacity of **40 visual character cells**.
-   - Row 0 is the broadcast header: `P[Page]  PAGECAST  [Day] [Date]  [HH:MM:SS]`.
-   - Row 23 is the navigation bar with 4 Fastext shortcut indicators.
+   - A page canvas has exactly **25 rows** (index 0 to 24).
+   - Each row has a capacity of exactly **40 visual character cells**.
+   - Row 1 (index 0) is the broadcast header: `P[Page]  PAGECAST  [Day] [Date]  [HH:MM:SS]`.
+   - Rows 2–24 (indices 1–23) are the 23 usable content rows.
+   - Row 25 (index 24) is the navigation bar with 4 Fastext shortcut indicators or source links.
 2. **Text Wrapping:**
    - Pure algorithmic word-wrapping breaks on whitespace; words longer than 40 columns are hyphenated safely.
    - Devanagari and combining Unicode sequences are kept intact without splitting combining marks or diacritics.
 3. **Byte Budget Calculation:**
    - Serialized UTF-8 bytes are computed via `new TextEncoder().encode(JSON.stringify(pagePack)).length`.
-   - `MAX_PACK_BYTES` is strictly 5,120 bytes. Any pack exceeding this value is rejected by domain validators.
+   - `PAGECAST_MAX_PACK_BYTES` is strictly 10,240 bytes (10 KiB). Any pack exceeding this value is rejected by domain validators.
 
 ---
 
@@ -163,4 +164,3 @@ flowchart LR
   - Zero sensitive server secrets in browser bundles (`check-env-safety.mjs` verification).
   - CSP Headers: `default-src 'self'`.
   - DOM injection defense: No unsanitized `dangerouslySetInnerHTML`.
-

@@ -7,7 +7,7 @@
 
 ---
 
-## Sprint 0: Product Design, UI/UX and Project Foundation (Current)
+## Sprint 0: Product Design, UI/UX and Project Foundation (Completed)
 
 - [x] **TASK-S0-01:** Git and Root Directory Sanitization
   - *Dependencies:* None | *Complexity:* Low | *Risk:* Low
@@ -33,16 +33,16 @@
 - [x] **TASK-S0-08:** Kiro Steering Documents Creation
   - *Dependencies:* TASK-S0-07 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* 7 steering guides in `.kiro/steering/` with correct frontmatter.
-- [ ] **TASK-S0-09:** Kiro Specification Foundation Creation
+- [x] **TASK-S0-09:** Kiro Specification Foundation Creation
   - *Dependencies:* TASK-S0-08 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* EARS requirements, design spec with Mermaid, task roadmap for Sprints 1–6.
-- [ ] **TASK-S0-10:** Kiro Automation Hooks Configuration
+- [x] **TASK-S0-10:** Kiro Automation Hooks Configuration
   - *Dependencies:* TASK-S0-09 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* 4 automation hooks in `.kiro/hooks/` (`version: "v1"`).
-- [ ] **TASK-S0-11:** Vitest and fast-check Testing Infrastructure
+- [x] **TASK-S0-11:** Vitest and fast-check Testing Infrastructure
   - *Dependencies:* TASK-S0-10 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* Vitest setup, fast-check property tests (1000 runs), Hindi Unicode validation.
-- [ ] **TASK-S0-12:** Sprint 0 Final Verification and Quality Gate
+- [x] **TASK-S0-12:** Sprint 0 Final Verification and Quality Gate
   - *Dependencies:* TASK-S0-11 | *Complexity:* Low | *Risk:* Low
   - *Criteria:* All verification commands exit 0, clean git status, completion report.
 
@@ -50,18 +50,18 @@
 
 ## Sprint 1: Core Teletext Engine & Web Terminal (Days 3–4)
 
-- [ ] **TASK-S1-01:** Teletext 40×24 Data Models & Zod Schemas
+- [ ] **TASK-S1-01:** Teletext 40×25 Data Models & Zod Schemas
   - *Dependencies:* TASK-S0-11 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* `TeletextSpan`, `TeletextRow`, `TeletextPage`, `PagePack` types and Zod schemas in `src/domain/teletext/`.
-- [ ] **TASK-S1-02:** Pure Layout Engine Implementation
+- [ ] **TASK-S1-02:** Pure Layout Engine Implementation (40×25 Grid)
   - *Dependencies:* TASK-S1-01 | *Complexity:* High | *Risk:* Medium
-  - *Criteria:* 40-column word wrapper, header generator, row padding, Devanagari Unicode safety.
+  - *Criteria:* 40-column word wrapper, header generator, row padding to exactly 25 rows, Devanagari Unicode safety.
 - [ ] **TASK-S1-03:** Byte Budget Calculator & Pack Codec
   - *Dependencies:* TASK-S1-02 | *Complexity:* Medium | *Risk:* Medium
-  - *Criteria:* Exact UTF-8 byte calculation via `TextEncoder`, 5,120-byte pack limit enforcement, pack serializer.
+  - *Criteria:* Exact UTF-8 byte calculation via `TextEncoder`, 10,240-byte (10 KiB) pack limit enforcement, pack serializer.
 - [ ] **TASK-S1-04:** Web Teletext Terminal Component
   - *Dependencies:* TASK-S1-03 | *Complexity:* High | *Risk:* Low
-  - *Criteria:* High-contrast 40×24 monospaced CRT canvas, phosphor glow, optional scanlines, responsive scaling.
+  - *Criteria:* High-contrast 40×25 monospaced CRT canvas, phosphor glow, optional scanlines, responsive scaling.
 - [ ] **TASK-S1-05:** Teletext Remote & Keyboard Dialing Handler
   - *Dependencies:* TASK-S1-04 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* 3-digit dialing (100–899), Fastext navigation (Red, Green, Yellow, Cyan), Escape to Page 100.
@@ -70,7 +70,7 @@
   - *Criteria:* Public `/` and `/[magazine]/[page]` routes rendering demo news and weather packs.
 - [ ] **TASK-S1-07:** Sprint 1 Property-Based Verification Suite
   - *Dependencies:* TASK-S1-06 | *Complexity:* Medium | *Risk:* Low
-  - *Criteria:* 1000-run fast-check properties validating 40×24 grid dimensions and <5KB budget invariants.
+  - *Criteria:* 1000-run fast-check properties validating 40×25 grid dimensions (P1, P2) and ≤10,240 byte budget invariants (P6).
 
 ---
 
@@ -108,7 +108,7 @@
 - [ ] **TASK-S3-03:** Publisher Studio Article Import & Review View
   - *Dependencies:* TASK-S3-02 | *Complexity:* High | *Risk:* Low
   - *Criteria:* URL import form, extracted text preview, AI draft trigger, language toggle.
-- [ ] **TASK-S3-04:** Interactive 40×24 Teletext Grid Editor
+- [ ] **TASK-S3-04:** Interactive 40×25 Teletext Grid Editor
   - *Dependencies:* TASK-S3-03 | *Complexity:* High | *Risk:* Medium
   - *Criteria:* Live grid editor, color picker, double-height toggle, live byte budget progress meter.
 - [ ] **TASK-S3-05:** Publishing Workflow & Approval Enforcement
@@ -141,7 +141,7 @@
 
 - [ ] **TASK-S5-01:** WCAG 2.1 AA Accessibility Audit & Screen-Reader Transcript
   - *Dependencies:* Sprint 4 | *Complexity:* Medium | *Risk:* Low
-  - *Criteria:* Semantic `sr-only` mirror of all 40×24 rows, zero axe-core critical violations, focus management.
+  - *Criteria:* Semantic `sr-only` mirror of all 40×25 rows, zero axe-core critical violations, focus management.
 - [ ] **TASK-S5-02:** Client Bundle Optimization & Tree-Shaking
   - *Dependencies:* TASK-S5-01 | *Complexity:* Medium | *Risk:* Low
   - *Criteria:* Reader route client JS bundle ≤ 200 KiB gzipped, dynamic import of publisher studio.
@@ -165,4 +165,3 @@
 - [ ] **TASK-S6-03:** Final Security, Code Quality & License Audit
   - *Dependencies:* TASK-S6-02 | *Complexity:* Low | *Risk:* Low
   - *Criteria:* Clean `quality:check`, clean git history, verified MIT license.
-

@@ -21,14 +21,14 @@ PageCast maintains high confidence in core domain correctness, encoding integrit
 - Test deterministic pure functions:
   - Text wrapping to 40 columns without breaking words.
   - Page header generation with clock formatting.
-  - Teletext row padding and color span merging.
+  - Teletext row padding and color span merging to exactly 40 cells.
   - Page pack serialization and deserialization round-trips.
   - Devanagari (Hindi) and multi-byte UTF-8 character length checks (`TextEncoder` vs `string.length`).
 
 ### 2.2 Property-Based Tests (`tests/property/`)
 - Uses `fast-check` with a minimum of **100 runs per test** (and up to 1,000 runs for critical invariants):
-  - **Grid Invariant:** For any arbitrary input string, the layout engine never produces a row exceeding 40 character cells, and never produces a page exceeding 24 rows.
-  - **Budget Invariant:** For any generated PagePack adhering to domain generation constraints, `TextEncoder().encode(packJson).length` never exceeds 5,120 bytes.
+  - **Grid Invariant (P1 & P2):** For any arbitrary input string, `validateGrid(page)` is true only for exactly 25 rows and each row contains exactly 40 logical cells.
+  - **Budget Invariant (P6):** For any generated PagePack adhering to domain generation constraints, `TextEncoder().encode(packJson).length` never exceeds 10,240 bytes.
   - **Round-Trip Invariant:** `deserialize(serialize(pagePack))` is deeply equivalent to the original `pagePack`.
   - **Unicode Stability:** No surrogate pairs or multi-byte glyphs are severed mid-byte during line truncations.
 
@@ -61,4 +61,3 @@ pnpm test:run
 # Run full project quality verification suite
 pnpm quality:check
 ```
-

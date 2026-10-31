@@ -27,28 +27,27 @@ All styling utilizes the CSS design tokens defined in `src/styles/globals.css`:
 
 ### 2.2 Typography Tokens
 - **Teletext Monospace:** `'VT323', 'Space Mono', 'Courier New', monospace`
-  - Fixed-pitch character cells ensuring exact 40×24 alignment.
+  - Fixed-pitch character cells ensuring exact 40×25 alignment.
   - Line-height: `1.1` to `1.2` with zero letter-spacing distortion.
 - **Modern UI Sans:** `'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`
   - Used strictly for outer publisher controls, navigation headers, and metadata forms outside the CRT terminal canvas.
 
 ---
 
-## 3. The 40×24 Teletext Grid Layout
+## 3. The 40×25 Teletext Grid Layout
 
 ```text
-Row 0:  [P100  PAGECAST  SAT 31 OCT  10:04:12] (Broadcast Header)
-Row 1:  [========================================] (Divider / Topic Banner)
-Row 2:  [PAGECAST HEADLINE IN TELETEXT YELLOW    ]
-Row 3:  [                                        ]
-Row 4-21: [Body text wrapped to 40 columns       ]
-          [and optional Teletext mosaic ASCII art ]
-Row 22: [                                        ]
-Row 23: [RED: News  GRN: Weather  YEL: Sport  CYN: Index] (Fastext Bar)
+Row 1:  [P100  PAGECAST  SAT 31 OCT  10:04:12    ] (Header Row)
+Row 2:  [========================================] (Divider / Topic Banner)
+Row 3:  [PAGECAST HEADLINE IN TELETEXT YELLOW    ]
+Row 4:  [                                        ]
+Rows 5-24: [20 Content Rows of Body Text        ]
+           [wrapped to 40 columns & ASCII mosaic ]
+Row 25: [RED: News  GRN: Weather  YEL: Sport  CYN: Index] (Navigation Bar)
 ```
 
-- **Exact Grid Cell Aspect Ratio:** Character cells are taller than they are wide (approx. 1:1.6 to 1:2 aspect ratio).
-- **Responsive Scaling:** The CRT canvas maintains its 40×24 aspect ratio across viewport sizes using CSS `aspect-ratio: 4/3` or `clamp()`, scaling text size dynamically via `rem` or container query units (`cqw`).
+- **Exact Grid Dimensions:** Exactly 25 rows, each containing exactly 40 logical character cells.
+- **Responsive Scaling:** The CRT canvas maintains its 40×25 aspect ratio across viewport sizes using CSS `aspect-ratio: 4/3` or `clamp()`, scaling text size dynamically via `rem` or container query units (`cqw`).
 
 ---
 
@@ -74,7 +73,6 @@ Row 23: [RED: News  GRN: Weather  YEL: Sport  CYN: Index] (Fastext Bar)
 - **Conversion Workflow:** 
   1. Fetching & extraction progress.
   2. Gemini AI summarization and page division.
-  3. Interactive 40×24 side-by-side grid editor.
-  4. Byte budget progress bar (e.g. `3,420 / 5,120 bytes (66%)`).
+  3. Interactive 40×25 side-by-side grid editor.
+  4. Byte budget progress bar (e.g. `7,842 / 10,240 bytes (76%)`).
 - **Publish Action:** Generates shareable slug and offline-ready Page Pack JSON.
-

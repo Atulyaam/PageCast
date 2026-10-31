@@ -1,10 +1,15 @@
 {
   "version": "v1",
-  "name": "Pre-Submission Quality Check",
-  "description": "Execute comprehensive PageCast quality gate before completion or submission",
-  "trigger": "AgentStop",
-  "matcher": "**/*",
-  "command": "pnpm quality:check",
-  "enabled": true
+  "hooks": [
+    {
+      "name": "Pre-Submission Quality Check",
+      "description": "Execute comprehensive PageCast quality gate before completion or submission",
+      "trigger": "Stop",
+      "action": {
+        "type": "command",
+        "command": "pnpm quality:check"
+      },
+      "timeout": 180
+    }
+  ]
 }
-

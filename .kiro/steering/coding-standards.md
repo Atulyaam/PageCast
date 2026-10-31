@@ -44,13 +44,13 @@ interface ErrorEnvelope {
 
 ## 3. Teletext Formatting & Typography Rules
 
-### 3.1 40×24 Character Grid
-- Every line of Teletext content must be padded or truncated to at most 40 characters.
-- Multi-byte Unicode characters (e.g., Devanagari Hindi) require UTF-8 aware string slicing to avoid mid-character truncation and layout misalignment.
-- Row 0 is the broadcast header line:
-  `P[Page]  PAGECAST  [Day] [DD] [Mon]  [HH:MM:SS]` (e.g., `P100  PAGECAST  SAT 31 OCT  10:04:12`).
-- Row 23 is the Fastext navigation prompt line:
-  `RED: [Label]  GRN: [Label]  YEL: [Label]  CYN: [Label]`.
+### 3.1 40×25 Character Grid
+- Every line of Teletext content must be padded or truncated to exactly 40 logical character cells.
+- The page must contain exactly 25 rows:
+  - Row 1 (index 0): Header line: `P[Page]  PAGECAST  [Day] [DD] [Mon]  [HH:MM:SS]` (e.g., `P100  PAGECAST  SAT 31 OCT  10:04:12`).
+  - Rows 2–24 (indices 1–23): 23 content rows.
+  - Row 25 (index 24): Navigation/status line: `RED: [Label]  GRN: [Label]  YEL: [Label]  CYN: [Label]`.
+- Multi-byte Unicode characters (e.g., Devanagari Hindi) require UTF-8 and grapheme cluster-aware handling to avoid mid-character truncation and layout misalignment.
 
 ### 3.2 Palette & Color Tokens
 - Only use the 8 standard Teletext colors defined in CSS design tokens:
@@ -70,4 +70,3 @@ interface ErrorEnvelope {
   - Keys `1`, `2`, `3`, `4` (or F1–F4) map to Fastext colors (Red, Green, Yellow, Cyan).
   - Focus rings must be clearly visible and styled in yellow or cyan against dark backgrounds.
 - **Reduced Motion:** Honor `prefers-reduced-motion` media queries by disabling CRT flicker and scanline animations.
-

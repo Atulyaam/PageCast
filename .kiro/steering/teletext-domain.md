@@ -9,13 +9,13 @@ pattern: src/domain/**
 
 The `src/domain/` directory contains pure, deterministic engines powering PageCast. It has zero dependencies on React, Next.js, or browser APIs.
 
-### 1.1 The 40×24 Teletext Character Grid
-- Every Teletext page is composed of exactly **24 rows**.
-- Every row contains at most **40 character cells**.
-- Total character capacity per page: `24 * 40 = 960 character cells`.
-- Row 0 is the **Header Row** (reserved for page number, magazine name, date, time).
-- Row 23 is the **Navigation Row** (Fastext prompts: Red, Green, Yellow, Cyan links).
-- Rows 1–22 contain **Content Rows** (headlines, dividers, body text, sub-headings, ASCII mosaic art).
+### 1.1 The 40×25 Teletext Character Grid
+- Every Teletext page is composed of exactly **25 rows**.
+- Every row contains exactly **40 logical character cells**.
+- Total character capacity per page: `25 * 40 = 1,000 logical character cells`.
+- **Row 1** (0-indexed: index 0) is the **Header Row** (reserved for page number, magazine name, date, time).
+- **Rows 2–24** (0-indexed: indices 1–23) contain **23 Content Rows** (headlines, dividers, body text, sub-headings, ASCII mosaic art).
+- **Row 25** (0-indexed: index 24) is the **Navigation Row** (Fastext prompts: Red, Green, Yellow, Cyan links, or source link).
 
 ### 1.2 Magazine & Page Indexing Structure
 - Page numbers are 3-digit integers ranging from `100` to `899`.
@@ -56,7 +56,7 @@ export interface TeletextPage {
   subPageNumber?: number; // 1 - 99
   subPageCount?: number;
   title: string;
-  rows: readonly TeletextRow[]; // Length <= 24
+  rows: readonly TeletextRow[]; // exactly 25 rows
   fastext: {
     red: number;
     green: number;
@@ -76,11 +76,11 @@ export interface PagePack {
 
 ---
 
-## 3. Sub-5KB Byte Budget Enforcement
+## 3. 10 KiB Byte Budget Enforcement
 
-### 3.1 The 5,120-Byte Hard Limit
-- In PageCast, an entire Page Pack (including index, 2–4 story pages, and metadata) must weigh **less than or equal to 5,120 bytes (5 KB) uncompressed UTF-8 JSON**.
-- When compressed with gzip or brotli over HTTP or service worker caches, this typically delivers under **1.8 KB over the wire**.
+### 3.1 The 10,240-Byte Hard Limit
+- In PageCast, an entire Page Pack (including index, 2–4 story pages, and metadata) must weigh **less than or equal to 10,240 bytes (10 KiB) uncompressed UTF-8 JSON** (`PAGECAST_MAX_PACK_BYTES=10240`).
+- When compressed with gzip or brotli over HTTP or service worker caches, this typically delivers under **3 KB over the wire**.
 
 ### 3.2 UTF-8 Multi-Byte Character Budgeting
 - In JavaScript, `string.length` counts UTF-16 code units, not UTF-8 bytes.
@@ -88,5 +88,4 @@ export interface PagePack {
 - Extended Latin, accented characters = 2 bytes each.
 - Devanagari (Hindi) and CJK characters = 3 bytes each.
 - Emojis = 4 bytes each.
-- **Rule:** The byte budget calculator MUST measure serialized UTF-8 bytes using `new TextEncoder().encode(serialized).length`, rejecting any pack whose serialized byte length exceeds 5,120 bytes.
-
+- **Rule:** The byte budget calculator MUST measure serialized UTF-8 bytes using `new TextEncoder().encode(serialized).length`, rejecting any pack whose serialized byte length exceeds 10,240 bytes.

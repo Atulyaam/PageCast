@@ -31,8 +31,8 @@ describe("UTF-8 Encoding & Byte Budget Smoke Tests", () => {
     expect(encoder.encode(teletextHeaderLine).byteLength).toBe(40);
   });
 
-  it("enforces the sub-5KB (5,120 bytes) upper budget bound", () => {
-    const MAX_PACK_BYTES = 5120;
+  it("enforces the canonical 10 KiB (10,240 bytes) upper budget bound", () => {
+    const MAX_PACK_BYTES = 10240;
     const samplePack = {
       id: "test-pack-001",
       version: 1,
@@ -41,7 +41,9 @@ describe("UTF-8 Encoding & Byte Budget Smoke Tests", () => {
         {
           pageNumber: 100,
           title: "Index",
-          rows: [{ spans: [{ text: "P100  PAGECAST  INDEX" }] }],
+          rows: Array.from({ length: 25 }, (_, i) => ({
+            spans: [{ text: `Row ${i + 1} content`.padEnd(40, " ") }],
+          })),
           fastext: { red: 101, green: 200, yellow: 300, cyan: 400 },
         },
       ],
@@ -50,7 +52,7 @@ describe("UTF-8 Encoding & Byte Budget Smoke Tests", () => {
     const serialized = JSON.stringify(samplePack);
     const byteLength = new TextEncoder().encode(serialized).byteLength;
 
+    expect(samplePack.pages[0].rows.length).toBe(25);
     expect(byteLength).toBeLessThan(MAX_PACK_BYTES);
-    expect(byteLength).toBeLessThan(300); // Extremely compact JSON
   });
 });

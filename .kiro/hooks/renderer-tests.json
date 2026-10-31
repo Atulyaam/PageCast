@@ -1,10 +1,16 @@
 {
   "version": "v1",
-  "name": "Renderer Domain Tests on Save",
-  "description": "Run domain renderer and layout engine unit and property tests when modified",
-  "trigger": "PostFileSave",
-  "matcher": "src/domain/{layout-engine,page-pack}/**/*.{ts,tsx}",
-  "command": "pnpm test:run tests/unit/ tests/property/",
-  "enabled": true
+  "hooks": [
+    {
+      "name": "Renderer Domain Tests on Save",
+      "description": "Run domain renderer and layout engine unit and property tests when modified",
+      "trigger": "PostFileSave",
+      "matcher": "^src/domain/(layout-engine|page-pack)/.*\\.(ts|tsx)$",
+      "action": {
+        "type": "command",
+        "command": "pnpm test:run tests/unit/ tests/property/"
+      },
+      "timeout": 60
+    }
+  ]
 }
-
