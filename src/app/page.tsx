@@ -11,12 +11,12 @@ export default function Home() {
             <span className="text-teletext-yellow font-mono text-xl font-bold tracking-tight">
               PAGECAST
             </span>
-            <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-[11px]">
+            <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-xs">
               TELETEXT 2026
             </span>
           </div>
 
-          <nav className="flex items-center gap-4 font-mono text-xs">
+          <nav className="flex items-center gap-4 font-mono text-xs sm:text-sm">
             <Link href="/" className="text-teletext-yellow transition-all hover:underline">
               READER
             </Link>

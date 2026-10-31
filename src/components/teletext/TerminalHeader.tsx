@@ -75,7 +75,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
     <div
       role="region"
       aria-label="Teletext Broadcast Status Bar"
-      className={`flex w-full flex-wrap items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-2 font-mono text-xs text-zinc-400 shadow-md ${className}`.trim()}
+      className={`flex w-full flex-wrap items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-2 font-mono text-xs text-zinc-400 shadow-md sm:text-sm ${className}`.trim()}
     >
       {/* Broadcast Stream Status & Magazine Tag */}
       <div className="flex items-center gap-3">
@@ -99,19 +99,19 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         )}
 
         {isSavedCopy && (
-          <span className="hidden rounded border border-emerald-500 bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 sm:inline-block">
+          <span className="hidden rounded border border-emerald-500 bg-emerald-500/20 px-1.5 py-0.5 text-[11px] font-bold text-emerald-400 sm:inline-block">
             ★ LOCAL COPY
           </span>
         )}
 
         {revision !== undefined && (
-          <span className="hidden rounded border border-cyan-800 bg-cyan-950/60 px-1.5 py-0.5 text-[10px] font-bold text-cyan-400 sm:inline-block">
+          <span className="hidden rounded border border-cyan-800 bg-cyan-950/60 px-1.5 py-0.5 text-[11px] font-bold text-cyan-400 sm:inline-block">
             Rev {revision}
           </span>
         )}
 
         {updatedAt && (
-          <span className="hidden text-[10px] text-zinc-500 md:inline-block">
+          <span className="hidden text-[11px] text-zinc-500 md:inline-block">
             • {formatRelativeFreshness(updatedAt)}
           </span>
         )}
@@ -130,7 +130,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onToggleScanlines}
             aria-pressed={showScanlines}
-            className={`cursor-pointer border px-2 py-0.5 text-[11px] font-bold transition-colors ${
+            className={`cursor-pointer border px-2 py-0.5 text-xs font-bold transition-colors ${
               showScanlines
                 ? "border-yellow-400 bg-yellow-400 text-black"
                 : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
@@ -143,7 +143,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onTogglePhosphorGlow}
             aria-pressed={phosphorGlow}
-            className={`cursor-pointer border px-2 py-0.5 text-[11px] font-bold transition-colors ${
+            className={`cursor-pointer border px-2 py-0.5 text-xs font-bold transition-colors ${
               phosphorGlow
                 ? "border-cyan-400 bg-cyan-400 text-black"
                 : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"

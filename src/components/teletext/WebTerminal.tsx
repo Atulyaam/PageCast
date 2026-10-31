@@ -14,7 +14,13 @@
  * - URL shallow synchronization and deep-linking support
  */
 
-import React, { useState, useEffect, useCallback, useTransition, useSyncExternalStore } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useTransition,
+  useSyncExternalStore,
+} from "react";
 import type { TeletextPage } from "@/domain/teletext/types";
 import { getSeedPage, getSeedPageCatalog, page100 } from "@/data/seed-pages";
 import { isValidPageNumber } from "@/domain/validation/page-number";
@@ -353,13 +359,13 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
       className={`mx-auto flex w-full max-w-4xl flex-col items-center gap-3 ${className}`.trim()}
     >
       {/* Top Utility & Mode Bar */}
-      <div className="border-surface-border bg-surface-panel flex w-full flex-wrap items-center justify-between gap-2 rounded border px-3 py-1.5 font-mono text-xs">
+      <div className="border-surface-border bg-surface-panel flex w-full flex-wrap items-center justify-between gap-2 rounded border px-3 py-1.5 font-mono text-xs sm:text-sm">
         <div className="flex items-center gap-2">
           {/* View Mode Toggle */}
           <button
             type="button"
             onClick={() => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt"))}
-            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all ${
+            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
               viewMode === "accessible"
                 ? "border-teletext-green bg-teletext-green text-teletext-black font-bold"
                 : "border-surface-border bg-surface-terminal text-text-primary hover:text-teletext-yellow"
@@ -377,7 +383,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           <button
             type="button"
             onClick={handleToggleDataSaver}
-            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all ${
+            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
               isDataSaver
                 ? "border-cyan-400 bg-cyan-950/70 font-bold text-cyan-300"
                 : "border-surface-border bg-surface-terminal text-text-primary hover:text-teletext-yellow"
@@ -393,7 +399,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
           {/* Buffer Dialing Indicator */}
           {dialBuffer && (
-            <span className="border-teletext-yellow bg-teletext-yellow/20 text-teletext-yellow flex animate-pulse items-center gap-1 rounded border px-2 py-0.5 text-xs font-bold">
+            <span className="border-teletext-yellow bg-teletext-yellow/20 text-teletext-yellow flex animate-pulse items-center gap-1 rounded border px-2 py-0.5 text-xs font-bold sm:text-sm">
               DIALING: P{dialBuffer}__
             </span>
           )}
@@ -406,7 +412,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
             type="button"
             onClick={handleToggleSave}
             disabled={!pageData?.pack}
-            className={`flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
               isSaved
                 ? "border-teletext-green bg-teletext-green/20 text-teletext-green"
                 : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
@@ -423,7 +429,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           <button
             type="button"
             onClick={() => setIsEvidenceOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors sm:text-sm"
             aria-label="Inspect source sentence evidence and attribution"
           >
             EVIDENCE [E]
@@ -432,7 +438,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           <button
             type="button"
             onClick={() => setIsExportOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors sm:text-sm"
             aria-label="Share bulletin or export PagePack QR code"
           >
             SHARE / QR

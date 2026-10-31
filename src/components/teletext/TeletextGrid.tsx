@@ -47,7 +47,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
         <div
           className={`${
             useSystemFont ? "font-mono" : "font-teletext"
-          } flex h-full flex-col justify-between text-[10px] leading-none tracking-normal sm:text-xs md:text-sm lg:text-base`}
+          } flex h-full flex-col justify-between text-[11px] leading-none tracking-tight sm:text-xs sm:tracking-normal md:text-sm lg:text-base`}
         >
           {page.rows.map((row, rowIndex) => (
             <TeletextRow

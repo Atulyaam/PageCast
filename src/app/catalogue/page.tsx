@@ -120,7 +120,7 @@ export default function BroadcastCataloguePage() {
             </Link>
           </div>
 
-          <nav className="flex items-center gap-3 text-xs">
+          <nav className="flex items-center gap-3 text-xs sm:text-sm">
             <Link
               href="/"
               className="border border-transparent px-2.5 py-1 text-zinc-400 hover:border-zinc-800 hover:text-white"
@@ -180,7 +180,7 @@ export default function BroadcastCataloguePage() {
           <div className="flex-1">
             <label
               htmlFor="catalogue-search"
-              className="mb-1 block text-[10px] tracking-widest text-zinc-500 uppercase"
+              className="mb-1 block text-xs tracking-widest text-zinc-400 uppercase"
             >
               Search Bulletins (Page or Title)
             </label>
@@ -190,13 +190,13 @@ export default function BroadcastCataloguePage() {
               placeholder="e.g. 101, cyclone, technology..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-zinc-700 bg-black px-3 py-1.5 text-xs text-zinc-200 focus:border-cyan-400 focus:outline-hidden"
+              className="w-full border border-zinc-700 bg-black px-3 py-1.5 text-sm text-zinc-200 focus:border-cyan-400 focus:outline-hidden"
             />
           </div>
 
           {/* Language Selector */}
           <div>
-            <label className="mb-1 block text-[10px] tracking-widest text-zinc-500 uppercase">
+            <label className="mb-1 block text-xs tracking-widest text-zinc-400 uppercase">
               Language Filter
             </label>
             <div className="flex items-center gap-1">

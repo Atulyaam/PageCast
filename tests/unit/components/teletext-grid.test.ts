@@ -92,4 +92,39 @@ describe("Teletext React Components", () => {
     expect(html).toContain("crt-scanlines");
     expect(html).toContain("crt-glow");
   });
+
+  it("verifies readable typography scaling (11px mobile, responsive breakpoints) while preserving 40x25 grid (PHASE-4)", () => {
+    const html = renderToString(
+      React.createElement(TeletextGrid, {
+        page: samplePage,
+        showScanlines: false,
+        phosphorGlow: false,
+      })
+    );
+
+    // Verify 11px base on mobile with responsive scaling
+    expect(html).toContain("text-[11px]");
+    expect(html).toContain("sm:text-xs");
+    expect(html).toContain("md:text-sm");
+    expect(html).toContain("lg:text-base");
+    expect(html).toContain("tracking-tight");
+
+    // Verify strictly 25 rows in output HTML
+    const rowMatches = html.match(/role="row"/g);
+    expect(rowMatches).toHaveLength(25);
+  });
+
+  it("verifies system font mode preserves 40x25 grid and font-mono stack", () => {
+    const html = renderToString(
+      React.createElement(TeletextGrid, {
+        page: samplePage,
+        useSystemFont: true,
+      })
+    );
+
+    expect(html).toContain("font-mono");
+    expect(html).not.toContain("font-teletext");
+    const rowMatches = html.match(/role="row"/g);
+    expect(rowMatches).toHaveLength(25);
+  });
 });

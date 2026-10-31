@@ -62,11 +62,11 @@ export const TeletextFastextBar: React.FC<TeletextFastextBarProps> = ({
           key={item.color}
           type="button"
           onClick={() => onNavigate(item.page)}
-          className={`flex items-center justify-between rounded border px-3 py-2 font-mono text-xs shadow-md transition-all active:scale-95 sm:text-sm ${item.bgClass}`}
+          className={`flex items-center justify-between rounded border px-3 py-2 font-mono text-sm font-semibold shadow-md transition-all active:scale-95 sm:text-base ${item.bgClass}`}
           title={`Shortcut key [${item.key}]: Navigate to Page ${item.page}`}
         >
           <span className="truncate">{item.label}</span>
-          <span className="ml-1 rounded bg-black/30 px-1.5 py-0.5 text-[10px] font-bold uppercase">
+          <span className="ml-1 rounded bg-black/30 px-1.5 py-0.5 text-[11px] font-bold uppercase">
             [{item.key}]
           </span>
         </button>
