@@ -59,7 +59,7 @@ export default function PublisherIngestPage() {
             <h2 id="compose-section" className="sr-only">
               Step 2: Compose and Preview Teletext Bulletin
             </h2>
-            <BulletinComposer initialSource={extractedSource} />
+            <BulletinComposer key={extractedSource?.id ?? "none"} initialSource={extractedSource} />
           </section>
         </div>
       </div>

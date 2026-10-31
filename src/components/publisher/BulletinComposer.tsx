@@ -18,7 +18,7 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
   onPagePackReady,
   className = "",
 }) => {
-  const [source, setSource] = useState<ExtractedSource | null>(initialSource);
+  const source = initialSource;
   const [mode, setMode] = useState<"ai" | "fallback">("ai");
   const [targetPageNumber, setTargetPageNumber] = useState<number>(201);
   const [language, setLanguage] = useState<"en" | "hi">(initialSource?.language ?? "en");
@@ -31,16 +31,6 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
     withinBudget: boolean;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  // Synchronize when parent passes a newly extracted source
-  React.useEffect(() => {
-    if (initialSource) {
-      setSource(initialSource);
-      if (initialSource.language) {
-        setLanguage(initialSource.language);
-      }
-    }
-  }, [initialSource]);
 
   const handleCompose = async () => {
     if (!source) return;

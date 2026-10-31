@@ -3,7 +3,21 @@ import nextConfig from "eslint-config-next";
 /** @type {import('eslint').Linter.Config[]} */
 const eslintConfig = [
   {
-    ignores: [".next/**", "out/**", "build/**", "dist/**", "node_modules/**", "docs/**", "*.md"],
+    ignores: [
+      ".next/",
+      ".next/**",
+      "out/",
+      "out/**",
+      "build/",
+      "build/**",
+      "dist/",
+      "dist/**",
+      "node_modules/",
+      "node_modules/**",
+      "docs/",
+      "docs/**",
+      "*.md",
+    ],
   },
   ...nextConfig,
   {
