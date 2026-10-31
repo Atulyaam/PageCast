@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WebTerminal } from "@/components/teletext/WebTerminal";
 import { isValidPageNumber } from "@/domain/validation/page-number";
-import { getSeedPage } from "@/data/seed-pages";
 
 interface PageProps {
   params: Promise<{
@@ -15,11 +14,6 @@ export default async function PageRoute({ params }: PageProps) {
   const num = parseInt(pageNumber, 10);
 
   if (!isValidPageNumber(num)) {
-    notFound();
-  }
-
-  const page = getSeedPage(num);
-  if (!page) {
     notFound();
   }
 
@@ -49,6 +43,12 @@ export default async function PageRoute({ params }: PageProps) {
               className="text-text-muted hover:text-teletext-white transition-all"
             >
               CATALOGUE
+            </Link>
+            <Link
+              href={`/terminal?page=${num}`}
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              FULLSCREEN
             </Link>
           </nav>
         </div>

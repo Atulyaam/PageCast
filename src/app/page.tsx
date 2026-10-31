@@ -21,6 +21,12 @@ export default function Home() {
               READER
             </Link>
             <Link
+              href="/terminal"
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              TERMINAL
+            </Link>
+            <Link
               href="/catalogue"
               className="text-text-muted hover:text-teletext-white transition-all"
             >
