@@ -48,5 +48,8 @@ jobs:
       - name: Run TypeScript typecheck
         run: pnpm typecheck
 
+      - name: Run unit and property tests
+        run: pnpm test:run
+
       - name: Build Next.js application
         run: pnpm build
