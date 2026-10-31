@@ -27,16 +27,34 @@ import { savePageLocally, removeSavedPage, isPageSaved } from "@/lib/storage/sav
 import { TerminalHeader } from "./TerminalHeader";
 import { TerminalLoading } from "./TerminalLoading";
 import { TerminalNotFound } from "./TerminalNotFound";
+import dynamic from "next/dynamic";
 import { SubPageCarousel } from "./SubPageCarousel";
 import { TeletextGrid } from "./TeletextGrid";
 import { TeletextFastextBar } from "./TeletextFastextBar";
 import { TeletextDialer } from "./TeletextDialer";
 import { AudioControls } from "./AudioControls";
 import { AccessibleTextView } from "./AccessibleTextView";
-import { KeyboardShortcutsModal } from "./KeyboardShortcutsModal";
-import { ExportDialog } from "@/components/publisher/ExportDialog";
-import { ImportDialog } from "./ImportDialog";
-import { QrScannerModal } from "./QrScannerModal";
+
+// Code splitting & lazy loading for heavy modals (TASK-S5-09 / PERF-001)
+const KeyboardShortcutsModal = dynamic(
+  () => import("./KeyboardShortcutsModal").then((mod) => mod.KeyboardShortcutsModal),
+  { ssr: false }
+);
+
+const ExportDialog = dynamic(
+  () => import("@/components/publisher/ExportDialog").then((mod) => mod.ExportDialog),
+  { ssr: false }
+);
+
+const ImportDialog = dynamic(
+  () => import("./ImportDialog").then((mod) => mod.ImportDialog),
+  { ssr: false }
+);
+
+const QrScannerModal = dynamic(
+  () => import("./QrScannerModal").then((mod) => mod.QrScannerModal),
+  { ssr: false }
+);
 
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;

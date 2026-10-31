@@ -150,7 +150,7 @@ describe("Automated Accessibility Audit & Focus Traps (TASK-S5-07 / NFR-011, UXR
       const html = renderToString(
         React.createElement(AccessibleTextView, {
           page: page100,
-          onSwitchToCrt: () => {},
+          onToggleViewMode: () => {},
         })
       );
 

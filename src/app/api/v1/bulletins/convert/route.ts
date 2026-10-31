@@ -67,7 +67,7 @@ export async function POST(request: Request) {
       status: 200,
       durationMs: performance.now() - startTime,
       meta: {
-        pageNumber: draft.targetPageNumber,
+        pageNumber: draft.pageNumber,
         payloadBytes: result.payloadBytes,
         withinBudget: result.withinBudget,
         pageCount: result.pageCount,

@@ -81,9 +81,9 @@ export async function POST(request: Request) {
       status: 201,
       durationMs: performance.now() - startTime,
       meta: {
-        pageNumber: result.page_number,
-        title: result.title,
-        payloadBytes: result.payload_bytes,
+        pageNumber: result.pageNumber,
+        slug: result.slug,
+        payloadBytes: result.payloadBytes,
       },
     });
 

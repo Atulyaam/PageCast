@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       meta: {
         provider: draft.metadata.provider,
         model: draft.metadata.model,
-        pageNumber: draft.targetPageNumber,
+        pageNumber: draft.pageNumber,
       },
     });
 

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 export interface FocusTrapProps {
-  readonly children: React.ReactNode;
+  readonly children?: React.ReactNode;
   readonly active?: boolean;
   readonly onClose?: () => void;
   readonly autoFocusSelector?: string;
