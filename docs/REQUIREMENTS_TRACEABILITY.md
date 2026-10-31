@@ -1,10 +1,10 @@
 # PageCast — Requirements Traceability Matrix
 
-**Phase:** Sprint 5 — Quality Hardening, Accessibility, Performance & Production Deployment  
+**Phase:** Master Autonomous Execution (Enhancements ENH-01 to ENH-06)  
 **Date:** 31 October 2026  
 **Source:** `01_pagecast_project_spec_kiroween_2026.md`  
-**Total Requirements:** 116  
-**Test Suite Baseline:** 394 automated tests across 61 test files (100% pass rate)
+**Total Requirements:** 122 (116 Core + 6 High-Impact Product Enhancements)  
+**Test Suite Baseline:** 439 automated tests across 69 test files (100% pass rate)
 
 > [!NOTE]
 > Status key: `PENDING` = scheduled for final Sprint 6 submission/judging | `IN PROGRESS` = under active development | `VERIFIED` = implemented and verified by automated regression test suite or formal audit.
@@ -263,7 +263,20 @@
 | KIRO-015 | Create `page-budget` hook | Must | §18.3 | Budget regression tests run on PagePack serialization changes | S1 | VERIFIED |
 | KIRO-016 | Create `pre-submit-check` hook | Must | §18.3 | Lint + typecheck + unit/PBT + build before release | S5 | VERIFIED |
 | KIRO-017 | Maintain `docs/kiro-usage-log.md` throughout development | Must | §18.5 | Log entries for every Kiro tool use with actual results | S0–S5 | VERIFIED |
-| KIRO-018 | Optional: PageCast MCP server (after core app works) | Could | §18.4 | validate_page_grid, measure_pagepack_bytes, etc. | S5+ | PENDING |
+| KIRO-018 | PageCast MCP server (stdio protocol) | Could | §18.4 | Exposes validate_page_grid, measure_pagepack_bytes, etc. | S5+ | VERIFIED |
+
+---
+
+## Winning Differentiator Enhancements (ENH)
+
+| Req ID | Description | Priority | Source Feature | Acceptance Criteria | Test Strategy | Sprint | Status |
+|---|---|---|---|---|---|---|---|
+| ENH-01 | Source Evidence Explorer Drawer | Should | Winning Strategy §1 | Claim-to-sentence linking, SHA-256 sentence fingerprints, reviewer timestamps, `E` hotkey | `tests/unit/components/evidence-drawer.test.ts` (7 tests) | S5+ | VERIFIED |
+| ENH-02 | Data Efficiency Lab Dashboard (`/lab`) | Should | Winning Strategy §2 | Pure calculator, empirical benchmark cases, network latency simulation (2G-Sat), methodology docs | `tests/unit/pages/efficiency-lab.test.ts` (8 tests) | S5+ | VERIFIED |
+| ENH-03 | Community Broadcast Kit & Printable Posters | Should | Winning Strategy §3 | 4 domain templates (Academic, Health, Emergency, Civic), A4 printable poster generator with `@media print` | `community-templates.test.ts`, `poster-modal.test.ts`, `source-import.test.ts` (12 tests) | S5+ | VERIFIED |
+| ENH-04 | PageCast Domain QA MCP Server | Should | Winning Strategy §4 | Stdio JSON-RPC 2.0 server with 5 domain tools for autonomous Kiro agents | `tests/unit/mcp/domain-qa-server.test.ts` (9 tests) | S5+ | VERIFIED |
+| ENH-05 | Low-Bandwidth Data Saver Profile | Should | Winning Strategy §5 | System monospace font, CRT glow off, cache-first resolution, live session byte meter, `D` hotkey | `tests/unit/components/data-saver.test.ts` (4 tests) | S5+ | VERIFIED |
+| ENH-06 | Bulletin Freshness & Version History | Should | Winning Strategy §6 | Header revision badges, relative freshness, stale copy alert banner with live refresh, non-destructive expiry | `tests/unit/components/freshness-versioning.test.ts` (5 tests) | S5+ | VERIFIED |
 
 ---
 
@@ -284,6 +297,6 @@
 
 ---
 
-*Total requirements identified: 116 (FR: 38, NFR: 18, UXR: 18, TR: 20, SEC: 13, PERF: 6, TEST: 14, KIRO: 18, SUB: 10)*  
-*Verified count: 108 / 116 (93.1%)*  
-*Remaining pending count: 8 / 116 (Final external submission items: GitHub push, YouTube video, Devpost form, credit grant form, live judging URL).*
+*Total requirements tracked: 122 (FR: 38, NFR: 18, UXR: 18, TR: 20, SEC: 13, PERF: 6, TEST: 14, KIRO: 18, ENH: 6, SUB: 10)*  
+*Verified count: 115 / 122 (94.3%)*  
+*Remaining pending count: 7 / 122 (External submission activities: GitHub public push, YouTube video upload, Devpost submission, credit grant form, live judging URL).*
