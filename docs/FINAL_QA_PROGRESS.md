@@ -17,9 +17,9 @@
 | **Phase 1** | Repository & Baseline Audit | **VERIFIED** | `56b8dd1` | 439 passing (69 suites) | Verified clean baseline, zero secret leaks |
 | **Phase 2** | Critical Bug Fix: PWA Manifest Route | **VERIFIED** | `6bde36d` | 442 passing (69 suites) | Removed conflicting `public/manifest.webmanifest`, verified HTTP 200, +3 tests |
 | **Phase 3** | Browser Warnings & Hydration Audit | **VERIFIED** | `659c5b6` | 442 passing (69 suites) | Replaced client-render storage read with `useSyncExternalStore`, added `suppressHydrationWarning` on root layout & `<time>` tags, verified zero application `eval()` |
-| **Phase 4** | Typography & Readability Polish | **VERIFIED** | Pending commit | 444 passing (69 suites) | Increased base font from 14px to 15px, mobile grid to 11px with tracking-tight, improved button & form label typography, +2 tests |
-| **Phase 5** | Full Application Browser Testing | **IN PROGRESS** | — | — | End-to-end user workflow verification |
-| **Phase 6** | Offline & PWA Deep Testing | **NOT STARTED** | — | — | ServiceWorker, IndexedDB, offline fallback |
+| **Phase 4** | Typography & Readability Polish | **VERIFIED** | `2d33cdd` | 444 passing (69 suites) | Increased base font from 14px to 15px, mobile grid to 11px with tracking-tight, improved button & form label typography, +2 tests |
+| **Phase 5** | Full Application Browser Testing | **VERIFIED** | Pending commit | 444 passing (69 suites) | Verified 17/17 live HTTP routes, reader & publisher workflows, Data Efficiency Lab, catalogue, axe audits |
+| **Phase 6** | Offline & PWA Deep Testing | **IN PROGRESS** | — | — | ServiceWorker, IndexedDB, offline fallback |
 | **Phase 7** | Multi-Frame QR & Optical Transfer | **NOT STARTED** | — | — | Burst generation, frame cycling, CRC/SHA-256 |
 | **Phase 8** | Community Poster & Print Testing | **NOT STARTED** | — | — | A4/Letter print layout, @media print styling |
 | **Phase 9** | MCP Server Validation | **NOT STARTED** | — | — | Stdio protocol, schema validation, 5 QA tools |
