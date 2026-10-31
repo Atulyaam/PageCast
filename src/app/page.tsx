@@ -1,38 +1,49 @@
-export default function HomePage() {
+import Link from "next/link";
+import { WebTerminal } from "@/components/teletext/WebTerminal";
+
+export default function Home() {
   return (
-    <main
-      style={{
-        fontFamily: "system-ui, sans-serif",
-        padding: "2rem",
-        maxWidth: "800px",
-        margin: "0 auto",
-        lineHeight: "1.6",
-      }}
-    >
-      <h1>PageCast</h1>
-      <p>
-        AI-assisted, low-bandwidth, offline-first Teletext information publishing and reading
-        platform.
-      </p>
-      <section
-        style={{
-          marginTop: "2rem",
-          padding: "1rem",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-        }}
-      >
-        <h2>System Status</h2>
-        <p>
-          <strong>Environment:</strong> Foundation Initialized (Sprint 0)
-        </p>
-        <p>
-          <strong>Framework:</strong> Next.js 16 (App Router)
-        </p>
-        <p>
-          <strong>Payload Target:</strong> &le; 10 KiB (10,240 bytes) per PagePack
-        </p>
-      </section>
-    </main>
+    <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
+      {/* Top Header */}
+      <header className="border-surface-border bg-surface-panel/80 sticky top-0 z-30 border-b px-4 py-3 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-teletext-yellow font-mono text-xl font-bold tracking-tight">
+              PAGECAST
+            </span>
+            <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-[11px]">
+              TELETEXT 2026
+            </span>
+          </div>
+
+          <nav className="flex items-center gap-4 font-mono text-xs">
+            <Link href="/" className="text-teletext-yellow transition-all hover:underline">
+              READER
+            </Link>
+            <Link
+              href="/catalogue"
+              className="text-text-muted hover:text-teletext-white transition-all"
+            >
+              CATALOGUE
+            </Link>
+            <span className="text-surface-border-subtle hidden sm:inline">|</span>
+            <span className="text-text-muted hidden sm:inline">KIROWEEN 2026</span>
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Terminal Area */}
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center p-4 sm:p-6">
+        <WebTerminal initialPageNumber={100} />
+      </main>
+
+      {/* Footer */}
+      <footer className="border-surface-border text-text-muted border-t px-4 py-4 text-center font-mono text-xs">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-2 sm:flex-row">
+          <span>PAGECAST &bull; AI-Powered Low-Bandwidth Teletext &bull; Kiroween 2026</span>
+          <span className="text-teletext-green">100% OFFLINE READY &bull; SUB-10 KiB</span>
+        </div>
+      </footer>
+    </div>
   );
 }
