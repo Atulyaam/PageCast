@@ -4,6 +4,8 @@ import {
   getGraphemeCount,
   sliceByGraphemes,
   padToColumns,
+  getClusterDisplayWidth,
+  getDisplayWidth,
 } from "@/domain/layout-engine/graphemes";
 
 describe("Unicode-Aware Grapheme Segmentation (Intl.Segmenter)", () => {
@@ -77,5 +79,36 @@ describe("Unicode-Aware Grapheme Segmentation (Intl.Segmenter)", () => {
     expect(clusters[0]).toBe("📺");
     expect(clusters[1]).toBe(" ");
     expect(getGraphemeCount(text)).toBe(10);
+  });
+
+  it("calculates terminal display width accurately distinguishing grapheme count from cell width", () => {
+    // Standard ASCII: 1 grapheme = 1 cell
+    expect(getDisplayWidth("PAGECAST")).toBe(8);
+
+    // Hindi Devanagari: conjuncts are 1 monospace cell wide
+    // "नमस्ते": 3 clusters ('न', 'म', 'स्ते'), display width is 3 cells
+    expect(getDisplayWidth("नमस्ते", "hi")).toBe(3);
+    // "पेजकास्ट": 4 clusters ('पे', 'ज', 'का', 'स्ट'), display width is 4 cells
+    expect(getDisplayWidth("पेजकास्ट", "hi")).toBe(4);
+    // "नई दिल्ली": 5 clusters ('न', 'ई', ' ', 'दि', 'ल्ली'), display width is 5 cells
+    expect(getDisplayWidth("नई दिल्ली", "hi")).toBe(5);
+
+    // Emojis: 1 cluster but 2 terminal character cells wide
+    expect(getClusterDisplayWidth("📺")).toBe(2);
+    // "📺 PAGECAST" is 10 graphemes, but occupies 11 terminal display cells (2 for 📺 + 1 space + 8 chars)
+    expect(getDisplayWidth("📺 PAGECAST")).toBe(11);
+  });
+
+  it("verifies column alignment for Hindi Teletext rows", () => {
+    const hindiHeadline = "मौसम बुलेटिन - नई दिल्ली";
+    const padded = padToColumns(hindiHeadline, 40, " ", "hi");
+
+    // Must have exactly 40 grapheme clusters
+    expect(getGraphemeCount(padded, "hi")).toBe(40);
+    // Starts with the headline intact
+    expect(padded.startsWith(hindiHeadline)).toBe(true);
+    // No severed conjuncts or trailing isolated viramas
+    const clusters = segmentGraphemes(padded, "hi");
+    expect(clusters.length).toBe(40);
   });
 });

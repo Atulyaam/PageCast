@@ -1,9 +1,12 @@
 /**
- * Unicode-Aware Grapheme Segmentation and Text Measurement
+ * Unicode-Aware Grapheme Segmentation and Terminal Display Width
  *
  * Employs standard Intl.Segmenter with granularity: 'grapheme' to guarantee
  * that multi-codepoint grapheme clusters (such as Devanagari Hindi conjuncts,
  * matras, viramas, and surrogate pairs) are never split mid-cluster.
+ *
+ * Additionally provides POSIX/Unicode Annex 11 terminal display width calculation
+ * to account for wide characters (emojis, CJK) and zero-width code points.
  */
 
 /**
@@ -36,6 +39,64 @@ export function segmentGraphemes(text: string, locale = "und"): readonly string[
  */
 export function getGraphemeCount(text: string, locale = "und"): number {
   return segmentGraphemes(text, locale).length;
+}
+
+/**
+ * Determines the terminal display width of a single grapheme cluster.
+ * Returns 2 for wide characters (e.g. CJK, fullwidth, emojis),
+ * 0 for zero-width characters, and 1 for standard characters (including Indic conjuncts).
+ */
+export function getClusterDisplayWidth(cluster: string): number {
+  if (!cluster) {
+    return 0;
+  }
+  const codePoint = cluster.codePointAt(0);
+  if (codePoint === undefined) {
+    return 0;
+  }
+
+  // Zero-width characters (ZWJ, ZWNJ, variation selectors)
+  if (
+    codePoint === 0x200b ||
+    codePoint === 0x200c ||
+    codePoint === 0x200d ||
+    codePoint === 0xfeff ||
+    (codePoint >= 0xfe00 && codePoint <= 0xfe0f)
+  ) {
+    return 0;
+  }
+
+  // Wide characters / Emojis (occupy 2 terminal columns in monospace display)
+  if (
+    (codePoint >= 0x1100 && codePoint <= 0x115f) || // Hangul Jamo
+    (codePoint >= 0x2e80 && codePoint <= 0x9fff) || // CJK Radicals, Ideographs
+    (codePoint >= 0xac00 && codePoint <= 0xd7a3) || // Hangul Syllables
+    (codePoint >= 0xf900 && codePoint <= 0xfaff) || // CJK Compatibility Ideographs
+    (codePoint >= 0xfe10 && codePoint <= 0xfe19) || // Vertical forms
+    (codePoint >= 0xfe30 && codePoint <= 0xfe6f) || // CJK Compatibility Forms
+    (codePoint >= 0xff00 && codePoint <= 0xff60) || // Fullwidth Forms
+    (codePoint >= 0xffe0 && codePoint <= 0xffe6) || // Fullwidth Signs
+    (codePoint >= 0x1f300 && codePoint <= 0x1faff) || // Miscellaneous Symbols & Pictographs / Emojis
+    (codePoint >= 0x2600 && codePoint <= 0x27bf) // Misc symbols & Dingbats
+  ) {
+    return 2;
+  }
+
+  return 1;
+}
+
+/**
+ * Returns the terminal display width (in monospace character cells) of a string.
+ * Accurately accounts for single-width Indic conjuncts, double-width emojis/CJK,
+ * and zero-width format controls.
+ */
+export function getDisplayWidth(text: string, locale = "und"): number {
+  const clusters = segmentGraphemes(text, locale);
+  let totalWidth = 0;
+  for (const cluster of clusters) {
+    totalWidth += getClusterDisplayWidth(cluster);
+  }
+  return totalWidth;
 }
 
 /**
