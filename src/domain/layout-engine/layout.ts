@@ -2,6 +2,9 @@ import type { TeletextPage, TeletextRow, TeletextSpan, FastextLinks } from "../t
 import { getGraphemeCount, segmentGraphemes, padToColumns } from "./graphemes";
 import { formatHeaderRow, formatNavigationRow } from "./header";
 
+export const TELETEXT_ROWS = 25;
+export const TELETEXT_COLS = 40;
+
 export interface LayoutPageParams {
   pageNumber: number;
   subPageNumber?: number;
