@@ -56,4 +56,3 @@ export interface McpToolResult {
   readonly content: readonly McpContentItem[];
   readonly isError?: boolean;
 }
-

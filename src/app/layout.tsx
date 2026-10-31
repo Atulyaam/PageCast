@@ -34,11 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="manifest" href="/manifest.webmanifest" />
-      </head>
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <ServiceWorkerRegister />
         {children}
       </body>

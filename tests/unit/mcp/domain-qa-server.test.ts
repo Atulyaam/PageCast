@@ -218,4 +218,3 @@ describe("PageCast Domain QA MCP Server (ENH-04)", () => {
     expect(parsed.error.code).toBe(-32700);
   });
 });
-

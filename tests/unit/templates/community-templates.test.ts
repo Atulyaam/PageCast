@@ -87,4 +87,3 @@ describe("Community Broadcast Kit Templates (ENH-03)", () => {
     expect(custom.targetPageNumber).toBe(401);
   });
 });
-

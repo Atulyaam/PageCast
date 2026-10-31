@@ -53,4 +53,38 @@ describe("PWA Manifest & Icon Validation (TASK-S4-OFF-01 / FR-070)", () => {
       expect(buffer[i]).toBe(pngSignature[i]);
     }
   });
+
+  it("ensures public/manifest.webmanifest does not exist to prevent App Router route collisions (FIX-PHASE-2)", () => {
+    // Having both public/manifest.webmanifest and src/app/manifest.ts causes Next.js HTTP 500 error:
+    // 'A conflicting public file and page file was found for path /manifest.webmanifest'
+    const publicManifest = path.resolve(process.cwd(), "public/manifest.webmanifest");
+    expect(fs.existsSync(publicManifest)).toBe(false);
+  });
+
+  it("verifies every icon referenced in manifest() exists in public/ directory with valid size", () => {
+    const config = manifest();
+    const publicDir = path.resolve(process.cwd(), "public");
+
+    expect(config.icons).toBeDefined();
+    for (const icon of config.icons!) {
+      const relativePath = icon.src.startsWith("/") ? icon.src.slice(1) : icon.src;
+      const fullPath = path.join(publicDir, relativePath);
+
+      expect(fs.existsSync(fullPath)).toBe(true);
+      expect(fs.statSync(fullPath).size).toBeGreaterThan(0);
+      expect(icon.type).toBe("image/png");
+      expect(icon.sizes).toMatch(/^\d+x\d+$/);
+    }
+  });
+
+  it("verifies manifest is JSON serializable and valid", () => {
+    const config = manifest();
+    const jsonString = JSON.stringify(config);
+    expect(() => JSON.parse(jsonString)).not.toThrow();
+
+    const parsed = JSON.parse(jsonString);
+    expect(parsed.name).toBe("PageCast — Low-Bandwidth Teletext");
+    expect(parsed.start_url).toBe("/");
+    expect(parsed.display).toBe("standalone");
+  });
 });
