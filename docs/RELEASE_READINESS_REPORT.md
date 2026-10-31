@@ -210,3 +210,4 @@ Detailed step-by-step instructions provided in `docs/FINAL_MANUAL_VALIDATION_CHE
 2. Provision Supabase production database and execute migrations `001` through `003`.
 3. Complete the physical device manual checklist (`docs/FINAL_MANUAL_VALIDATION_CHECKLIST.md`).
 4. Submit project to Kiroween 2026 (Resurrection Category) using `docs/DEVPOST_SUBMISSION.md` and `docs/DEMO_VIDEO_SCRIPT.md`.
+

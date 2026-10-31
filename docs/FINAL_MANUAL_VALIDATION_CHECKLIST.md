@@ -268,3 +268,4 @@ Statuses used strictly:
 | **12** | **3 (PASS)** | **9 (MANUAL TEST REQUIRED)** | **0 (None)** |
 
 *All 9 pending manual tests represent physical hardware boundaries (physical phones in airplane mode, optical camera-to-screen QR transmission, physical paper printers, external GUI clients, and OS-level speech accessibility). Precise steps and expected outcomes are fully specified above.*
+

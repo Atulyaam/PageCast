@@ -126,3 +126,4 @@ If a production defect is detected post-deployment:
    pm2 restart pagecast
    ```
 3. Database changes are strictly backward-compatible; no database rollback is required for app rollback.
+
