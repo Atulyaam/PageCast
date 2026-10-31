@@ -30,7 +30,7 @@
 | **Phase 1** | ENH-01 | Source Evidence Explorer (Reader Drawer) | **COMMITTED** | `f423f99` | 7 tests (`evidence-drawer.test.ts`), 401 tests total | Fully accessible drawer, `E` hotkey |
 | **Phase 2** | ENH-02 | Data Efficiency Lab (`/lab` Route) | **COMMITTED** | `c98d7dd` | 8 tests (`efficiency-lab.test.ts`), 409 tests total | Pure calculator, 5 benchmarks, interactive dashboard, methodology docs |
 | **Phase 3** | ENH-03 | Community Broadcast Kit & Printable Posters | **COMMITTED** | `2c13770` | 12 tests (`community-templates`, `poster-modal`, `source-import`), 421 tests total | 4 bilingual presets, printable A4 poster generator with @media print |
-| **Phase 4** | ENH-04 | PageCast Domain QA MCP Server | **COMMITTED** | Pending commit | 9 tests (`domain-qa-server.test.ts`), 430 tests total | Stdio JSON-RPC 2.0 MCP server exposing 5 domain QA validation tools |
+| **Phase 4** | ENH-04 | PageCast Domain QA MCP Server | **COMMITTED** | `6f33964` | 9 tests (`domain-qa-server.test.ts`), 430 tests total | Stdio JSON-RPC 2.0 MCP server exposing 5 domain QA validation tools |
 | **Phase 5** | ENH-05 | Low-Bandwidth Data Saver Profile | **NOT STARTED** | — | — | Pending Phase 4 completion |
 | **Phase 6** | ENH-06 | Bulletin Freshness & Version History | **NOT STARTED** | — | — | Pending Phase 5 completion |
 | **Phase 7** | AUDIT-2 | Integration & Security Audit | **NOT STARTED** | — | — | End-to-end audit |
