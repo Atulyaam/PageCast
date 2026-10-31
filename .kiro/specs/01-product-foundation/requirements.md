@@ -127,3 +127,4 @@ Requirements in this document follow the **EARS** (Easy Approach to Requirements
 - **SEC-001 to SEC-013:** IP blocking, timeout enforcement, HTML sanitation, CSP headers, rate-limiting, and env verification.
 - **PERF-001 to PERF-010:** Sub-5KB pack budget, <200ms render latency, <200KB bundle size.
 - **TEST-001 to TEST-012:** Unit, property-based (fast-check ≥100 runs), integration, accessibility, and build verification.
+

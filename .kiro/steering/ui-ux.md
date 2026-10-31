@@ -77,3 +77,4 @@ Row 23: [RED: News  GRN: Weather  YEL: Sport  CYN: Index] (Fastext Bar)
   3. Interactive 40×24 side-by-side grid editor.
   4. Byte budget progress bar (e.g. `3,420 / 5,120 bytes (66%)`).
 - **Publish Action:** Generates shareable slug and offline-ready Page Pack JSON.
+

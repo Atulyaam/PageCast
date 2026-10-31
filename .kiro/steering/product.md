@@ -49,3 +49,4 @@ PageCast combines retro 1970s broadcast engineering principles with 2026 AI lang
 - **Publisher Studio:** Input an article URL or raw text, run AI conversion into a structured 40×24 Teletext Page Pack, inspect page budget breakdown, edit lines, and publish.
 - **Web Teletext Terminal:** Fully interactive web-based Teletext CRT display with 40×24 grid, 100–899 page dialing, 4 Fastext shortcut links, sub-page carousel cycling, and CRT visual controls.
 - **Low-Bandwidth Architecture:** Strict enforcement of the sub-5KB byte budget per pack with deterministic property-based testing and zero client runtime dependencies beyond React.
+

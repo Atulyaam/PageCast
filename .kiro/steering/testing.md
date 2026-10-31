@@ -61,3 +61,4 @@ pnpm test:run
 # Run full project quality verification suite
 pnpm quality:check
 ```
+

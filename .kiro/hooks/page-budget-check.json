@@ -7,3 +7,4 @@
   "command": "pnpm test:run tests/property/ tests/unit/",
   "enabled": true
 }
+

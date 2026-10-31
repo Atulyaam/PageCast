@@ -46,3 +46,4 @@ TASK-S0-09 establishes the formal Kiro specification foundation in `.kiro/specs/
 ## 4. Next Step
 
 Proceed directly to **TASK-S0-10: Kiro Automation Hooks Configuration**.
+

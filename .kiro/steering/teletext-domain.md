@@ -89,3 +89,4 @@ export interface PagePack {
 - Devanagari (Hindi) and CJK characters = 3 bytes each.
 - Emojis = 4 bytes each.
 - **Rule:** The byte budget calculator MUST measure serialized UTF-8 bytes using `new TextEncoder().encode(serialized).length`, rejecting any pack whose serialized byte length exceeds 5,120 bytes.
+

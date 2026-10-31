@@ -7,3 +7,4 @@
   "command": "pnpm eslint ${file}",
   "enabled": true
 }
+

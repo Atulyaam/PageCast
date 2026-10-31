@@ -70,3 +70,4 @@ interface ErrorEnvelope {
   - Keys `1`, `2`, `3`, `4` (or F1–F4) map to Fastext colors (Red, Green, Yellow, Cyan).
   - Focus rings must be clearly visible and styled in yellow or cyan against dark backgrounds.
 - **Reduced Motion:** Honor `prefers-reduced-motion` media queries by disabling CRT flicker and scanline animations.
+

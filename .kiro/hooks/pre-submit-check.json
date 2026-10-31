@@ -7,3 +7,4 @@
   "command": "pnpm quality:check",
   "enabled": true
 }
+

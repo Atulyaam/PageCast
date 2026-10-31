@@ -192,3 +192,4 @@ The project is **100% ready** to begin **Sprint 1: Core Teletext Engine & Web Te
 - [x] Testing harness ready with Vitest and fast-check for 1,000-run property verification.
 - [x] Kiro steering rules active for prompt adherence, security, and domain invariants.
 - [x] Zero unresolved defects or technical debt.
+

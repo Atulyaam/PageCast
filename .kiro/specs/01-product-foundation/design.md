@@ -163,3 +163,4 @@ flowchart LR
   - Zero sensitive server secrets in browser bundles (`check-env-safety.mjs` verification).
   - CSP Headers: `default-src 'self'`.
   - DOM injection defense: No unsanitized `dangerouslySetInnerHTML`.
+

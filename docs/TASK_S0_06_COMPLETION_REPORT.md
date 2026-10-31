@@ -85,3 +85,4 @@
 
 - **DECISION:** Build does not require actual production secrets to succeed (`pnpm build` generates static shells using non-sensitive defaults).
 - **DECISION:** In Sprint 3, Supabase SSR client must explicitly throw an exception if `SUPABASE_SERVICE_ROLE_KEY` is referenced in a module marked `"use client"`.
+

@@ -65,3 +65,4 @@ Added `pnpm test:run` step to the GitHub Actions workflow immediately following 
 ## 4. Next Step
 
 Proceed directly to **TASK-S0-12: Sprint 0 Final Verification and Quality Gate**.
+

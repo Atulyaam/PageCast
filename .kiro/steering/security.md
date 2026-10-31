@@ -59,3 +59,4 @@ When publishers input article URLs for extraction, the server fetcher must execu
   - Max 10 conversion requests per minute per IP to prevent Gemini API quota exhaustion.
   - Size validation: Disallow raw text payloads exceeding 100 KB in conversion endpoints.
   - Require CAPTCHA or authenticated publisher sessions if public conversion endpoints experience abuse.
+

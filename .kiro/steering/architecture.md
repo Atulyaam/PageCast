@@ -82,3 +82,4 @@ flowchart TD
 | **SSRF Safe Fetching** | Article fetching rejects private IP ranges (RFC 1918, loopback, link-local, AWS/GCP metadata endpoints), limits redirects to 3, enforces 10s timeout, and caps input at 2MB. |
 | **Zero Heavy UI Libs** | No Radix, no Material UI, no Chakra. Pure Tailwind CSS 4 design tokens and semantic HTML to maintain a lean bundle footprint. |
 | **Offline-First Delivery** | Service Worker caches page packs on initial load. The reader terminal can operate entirely offline without network access once cached. |
+
