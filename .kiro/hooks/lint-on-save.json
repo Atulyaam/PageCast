@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "name": "Lint on Save",
+  "description": "Automatically run ESLint on TypeScript and TSX files upon save",
+  "trigger": "PostFileSave",
+  "matcher": "src/**/*.{ts,tsx}",
+  "command": "pnpm eslint ${file}",
+  "enabled": true
+}

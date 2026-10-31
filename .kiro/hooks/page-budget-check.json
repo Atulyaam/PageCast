@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "name": "Page Byte Budget Check on Save",
+  "description": "Run byte budget calculation and sub-5KB invariant tests when budget domain logic is modified",
+  "trigger": "PostFileSave",
+  "matcher": "src/domain/byte-budget/**/*.{ts,tsx}",
+  "command": "pnpm test:run tests/property/ tests/unit/",
+  "enabled": true
+}
