@@ -6,6 +6,7 @@ import type { ExtractedSource, BulletinDraft } from "@/domain/source-provenance/
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import { TeletextGrid } from "@/components/teletext/TeletextGrid";
 import { PAGECAST_MAX_PACK_BYTES } from "@/domain/byte-budget/measure";
+import { PosterModal } from "@/components/publisher/PosterModal";
 
 export interface BulletinComposerProps {
   readonly initialSource?: ExtractedSource | null;
@@ -30,6 +31,7 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
     payloadBytes: number;
     withinBudget: boolean;
   } | null>(null);
+  const [isPosterOpen, setIsPosterOpen] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleCompose = async () => {
@@ -299,8 +301,15 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
             />
           </div>
 
-          {/* Open in Terminal Button */}
-          <div className="mt-6 flex justify-center">
+          {/* Action Buttons */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsPosterOpen(true)}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black shadow-lg transition-transform hover:scale-105 hover:bg-emerald-400"
+            >
+              <span>🖨️ Print Community Poster (A4)</span>
+            </button>
             <Link
               href={`/pages/${packResult.pack.pages[0].pageNumber}`}
               className="bg-teletext-yellow hover:bg-teletext-yellow/80 text-teletext-black inline-flex items-center gap-2 rounded-md px-6 py-2.5 text-sm font-bold shadow-lg transition-transform hover:scale-105"
@@ -310,6 +319,18 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
             </Link>
           </div>
         </div>
+      )}
+
+      {/* Poster Modal */}
+      {isPosterOpen && packResult && (
+        <PosterModal
+          isOpen={true}
+          onClose={() => setIsPosterOpen(false)}
+          pageNumber={packResult.pack.pages[0].pageNumber}
+          title={packResult.pack.title}
+          categoryName="COMMUNITY BROADCAST"
+          pack={packResult.pack}
+        />
       )}
     </div>
   );

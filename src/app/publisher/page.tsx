@@ -288,7 +288,7 @@ export default function PublisherDashboardPage() {
                             onClick={() => setExportPageNumber(pub.pageNumber)}
                             className="cursor-pointer border border-zinc-700 bg-zinc-900 px-2 py-1 text-[11px] font-bold text-emerald-400 hover:bg-zinc-800"
                           >
-                            QR / Export
+                            QR / Poster
                           </button>
                         </td>
                       </tr>

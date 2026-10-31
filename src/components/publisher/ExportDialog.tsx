@@ -15,6 +15,7 @@ import { getBulletinShareUrl } from "@/server/export/qr-distribution";
 import { measurePagePack } from "@/domain/page-pack/codec";
 import { encodeMultiFramePack } from "@/lib/qr/multi-frame-codec";
 import { FocusTrap } from "@/components/common/FocusTrap";
+import { PosterModal } from "@/components/publisher/PosterModal";
 
 export interface ExportDialogProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<"url" | "raw" | "burst">("url");
+  const [isPosterOpen, setIsPosterOpen] = useState<boolean>(false);
 
   // Multi-frame animated burst state (FR-082)
   const [burstFrames, setBurstFrames] = useState<string[]>([]);
@@ -372,17 +374,39 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
                 </span>
               )}
             </div>
-            <button
-              type="button"
-              onClick={handleDownloadJson}
-              disabled={!pack}
-              className="cursor-pointer bg-emerald-600 px-3 py-1.5 text-xs font-bold tracking-wider text-black uppercase hover:bg-emerald-500 disabled:opacity-50"
-            >
-              Download .JSON
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsPosterOpen(true)}
+                className="cursor-pointer border border-emerald-500/60 bg-emerald-950/40 px-3 py-1.5 text-xs font-bold tracking-wider text-emerald-400 uppercase transition-colors hover:bg-emerald-500 hover:text-black"
+              >
+                🖨️ Poster
+              </button>
+              <button
+                type="button"
+                onClick={handleDownloadJson}
+                disabled={!pack}
+                className="cursor-pointer bg-emerald-600 px-3 py-1.5 text-xs font-bold tracking-wider text-black uppercase hover:bg-emerald-500 disabled:opacity-50"
+              >
+                Download .JSON
+              </button>
+            </div>
           </div>
         </div>
       </FocusTrap>
+
+      {/* Poster Modal */}
+      {isPosterOpen && (
+        <PosterModal
+          isOpen={true}
+          onClose={() => setIsPosterOpen(false)}
+          pageNumber={pageNumber}
+          title={pack?.title || `Teletext Bulletin P${pageNumber}`}
+          categoryName="TELETEXT BROADCAST"
+          pack={pack}
+          baseUrl={baseUrl}
+        />
+      )}
     </div>
   );
 };

@@ -2,26 +2,38 @@
 
 import React, { useState } from "react";
 import type { ExtractedSource } from "@/domain/source-provenance/types";
+import {
+  getCommunityTemplates,
+  getCommunityTemplateById,
+  instantiateCommunityTemplate,
+} from "@/domain/templates/community-templates";
 
 export interface SourceImportProps {
   readonly onSourceExtracted: (source: ExtractedSource) => void;
+  readonly defaultMode?: "url" | "text" | "template";
   readonly className?: string;
 }
 
 export const SourceImport: React.FC<SourceImportProps> = ({
   onSourceExtracted,
+  defaultMode = "url",
   className = "",
 }) => {
-  const [mode, setMode] = useState<"url" | "text">("url");
+  const [mode, setMode] = useState<"url" | "text" | "template">(defaultMode);
   const [url, setUrl] = useState("");
   const [rawText, setRawText] = useState("");
   const [title, setTitle] = useState("");
   const [byline, setByline] = useState("");
   const [language, setLanguage] = useState<"en" | "hi">("en");
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("academic-notice");
+  const [templateValues, setTemplateValues] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [extractedPreview, setExtractedPreview] = useState<ExtractedSource | null>(null);
+
+  const templates = getCommunityTemplates();
+  const currentTemplate = getCommunityTemplateById(selectedTemplateId) || templates[0];
 
   const handleUrlSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +103,43 @@ export const SourceImport: React.FC<SourceImportProps> = ({
     }
   };
 
+  const handleTemplateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setLoadingStep("Instantiating community template & generating provenance hashes...");
+    setError(null);
+    setExtractedPreview(null);
+
+    try {
+      const result = instantiateCommunityTemplate(selectedTemplateId, templateValues, language);
+
+      const res = await fetch("/api/v1/sources/from-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: result.textContent,
+          title: result.title,
+          siteName: result.siteName,
+          byline: result.byline,
+          language,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || `HTTP ${res.status}: Failed to process template`);
+      }
+
+      setExtractedPreview(data.source);
+      onSourceExtracted(data.source);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setIsLoading(false);
+      setLoadingStep("");
+    }
+  };
+
   return (
     <div
       className={`bg-surface-panel border-surface-border rounded-terminal border p-4 shadow-xl sm:p-6 ${className}`.trim()}
@@ -101,7 +150,7 @@ export const SourceImport: React.FC<SourceImportProps> = ({
             SOURCE ARTICLE INGESTION
           </h2>
           <p className="text-text-muted text-xs sm:text-sm">
-            Fetch external news articles or paste raw text. Full SSRF & script execution protection.
+            Fetch external articles, paste raw text, or select Community Broadcast templates.
           </p>
         </div>
 
@@ -112,22 +161,33 @@ export const SourceImport: React.FC<SourceImportProps> = ({
             onClick={() => setMode("url")}
             className={`rounded px-3 py-1.5 font-medium transition-colors ${
               mode === "url"
-                ? "bg-teletext-yellow text-teletext-black shadow"
+                ? "bg-teletext-yellow text-teletext-black font-bold shadow"
                 : "text-text-muted hover:text-teletext-white"
             }`}
           >
-            Import from URL
+            Import URL
           </button>
           <button
             type="button"
             onClick={() => setMode("text")}
             className={`rounded px-3 py-1.5 font-medium transition-colors ${
               mode === "text"
-                ? "bg-teletext-yellow text-teletext-black shadow"
+                ? "bg-teletext-yellow text-teletext-black font-bold shadow"
                 : "text-text-muted hover:text-teletext-white"
             }`}
           >
-            Paste Raw Text
+            Paste Text
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("template")}
+            className={`rounded px-3 py-1.5 font-medium transition-colors ${
+              mode === "template"
+                ? "bg-teletext-yellow text-teletext-black font-bold shadow"
+                : "text-text-muted hover:text-teletext-white"
+            }`}
+          >
+            📢 Community Presets
           </button>
         </div>
       </div>
@@ -188,7 +248,7 @@ export const SourceImport: React.FC<SourceImportProps> = ({
             </div>
           </div>
         </form>
-      ) : (
+      ) : mode === "text" ? (
         <form onSubmit={handleTextSubmit} className="space-y-4">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
@@ -249,6 +309,96 @@ export const SourceImport: React.FC<SourceImportProps> = ({
             className="bg-teletext-cyan hover:bg-teletext-cyan/80 text-teletext-black cursor-pointer rounded-md px-4 py-2 text-sm font-bold transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? "Processing..." : "Parse & Segment Notice"}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleTemplateSubmit} className="space-y-4">
+          <div>
+            <label className="text-text-muted mb-1 block text-xs font-semibold uppercase">
+              Select Community Template:
+            </label>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {templates.map((tpl) => (
+                <button
+                  key={tpl.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedTemplateId(tpl.id);
+                    setTemplateValues({});
+                  }}
+                  className={`cursor-pointer rounded-md border p-3 text-left transition-colors ${
+                    selectedTemplateId === tpl.id
+                      ? "border-teletext-yellow bg-teletext-yellow/10 text-white"
+                      : "border-surface-border bg-surface-terminal text-text-muted hover:border-gray-600"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-teletext-yellow text-xs font-bold">{tpl.name}</span>
+                    <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-[10px] text-zinc-300">
+                      P{tpl.recommendedPage}
+                    </span>
+                  </div>
+                  <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed">{tpl.description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-surface-border bg-surface-terminal space-y-3 rounded-md border p-4">
+            <div className="flex items-center justify-between border-b border-gray-800 pb-2">
+              <span className="text-teletext-cyan text-xs font-bold uppercase">
+                {currentTemplate.name} Fields
+              </span>
+              <span className="text-text-muted text-[11px]">
+                Language: {language === "hi" ? "हिंदी" : "English"}
+              </span>
+            </div>
+
+            {currentTemplate.fields.map((field) => {
+              const val =
+                templateValues[field.key] !== undefined
+                  ? templateValues[field.key]
+                  : field.defaultValues[language];
+
+              return (
+                <div key={field.key}>
+                  <label className="text-text-muted mb-1 block text-xs font-medium">
+                    {field.label} {field.required && <span className="text-teletext-red">*</span>}
+                  </label>
+                  {field.multiline ? (
+                    <textarea
+                      rows={4}
+                      value={val}
+                      onChange={(e) =>
+                        setTemplateValues((prev) => ({ ...prev, [field.key]: e.target.value }))
+                      }
+                      placeholder={field.placeholder}
+                      disabled={isLoading}
+                      className="border-surface-border focus:border-teletext-yellow text-teletext-white w-full rounded border bg-black px-3 py-1.5 font-mono text-xs focus:outline-none"
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      value={val}
+                      onChange={(e) =>
+                        setTemplateValues((prev) => ({ ...prev, [field.key]: e.target.value }))
+                      }
+                      placeholder={field.placeholder}
+                      disabled={isLoading}
+                      className="border-surface-border focus:border-teletext-yellow text-teletext-white w-full rounded border bg-black px-3 py-1.5 font-mono text-xs focus:outline-none"
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-teletext-yellow hover:bg-teletext-yellow/80 text-teletext-black cursor-pointer rounded-md px-4 py-2 text-sm font-bold transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoading ? "Instantiating..." : "Use Template & Segment Notice"}
           </button>
         </form>
       )}
