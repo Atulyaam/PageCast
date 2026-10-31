@@ -192,7 +192,7 @@ export function layoutBulletinPage(params: LayoutPageParams): TeletextPage {
   rows.push(...boundedContentRows);
 
   // 3. Row 25 (index 24): Navigation / Fastext Row
-  rows.push(formatNavigationRow(fastext, fastextLabels));
+  rows.push(formatNavigationRow(fastext, fastextLabels, language));
 
   return {
     pageNumber,

@@ -58,16 +58,17 @@ export function formatHeaderRow(
 /**
  * Formats Row 25 (Navigation / Fastext Row) of the 40x25 Teletext grid.
  * Format: 4 equal 10-column zones: Red, Green, Yellow, Cyan.
- * Total width: exactly 40 character cells.
+ * Total width: exactly 40 character cells in any language (English or Hindi).
  */
 export function formatNavigationRow(
   fastext: FastextLinks,
-  labels?: { red?: string; green?: string; yellow?: string; cyan?: string }
+  labels?: { red?: string; green?: string; yellow?: string; cyan?: string },
+  locale = "und"
 ): TeletextRow {
-  const redLabel = (labels?.red ?? `P${fastext.red}`).padEnd(9, " ").slice(0, 9);
-  const grnLabel = (labels?.green ?? `P${fastext.green}`).padEnd(9, " ").slice(0, 9);
-  const yelLabel = (labels?.yellow ?? `P${fastext.yellow}`).padEnd(9, " ").slice(0, 9);
-  const cynLabel = (labels?.cyan ?? `P${fastext.cyan}`).padEnd(9, " ").slice(0, 9);
+  const redLabel = padToColumns(labels?.red ?? `P${fastext.red}`, 9, " ", locale);
+  const grnLabel = padToColumns(labels?.green ?? `P${fastext.green}`, 9, " ", locale);
+  const yelLabel = padToColumns(labels?.yellow ?? `P${fastext.yellow}`, 9, " ", locale);
+  const cynLabel = padToColumns(labels?.cyan ?? `P${fastext.cyan}`, 9, " ", locale);
 
   return {
     spans: [

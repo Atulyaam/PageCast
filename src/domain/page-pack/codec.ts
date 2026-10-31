@@ -14,6 +14,8 @@ export function serializePagePack(pack: PagePackV1): string {
   return JSON.stringify(pack);
 }
 
+export const encodePagePack = serializePagePack;
+
 /**
  * Deserializes and validates a PagePack JSON string using Zod schema.
  */
@@ -21,6 +23,8 @@ export function deserializePagePack(jsonString: string): PagePackV1 {
   const parsed = JSON.parse(jsonString);
   return PagePackV1Schema.parse(parsed) as PagePackV1;
 }
+
+export const decodePagePack = deserializePagePack;
 
 /**
  * Measures the exact UTF-8 byte budget consumption of a PagePack.

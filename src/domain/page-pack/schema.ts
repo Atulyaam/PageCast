@@ -62,3 +62,11 @@ export const PagePackV1Schema = z.object({
 
 export type PagePackV1Validated = z.infer<typeof PagePackV1Schema>;
 export type TeletextPageValidated = z.infer<typeof TeletextPageSchema>;
+
+/**
+ * Validates unknown data against the canonical PagePackV1 schema.
+ */
+export function validatePagePack(data: unknown): PagePackV1Validated {
+  return PagePackV1Schema.parse(data);
+}
+
