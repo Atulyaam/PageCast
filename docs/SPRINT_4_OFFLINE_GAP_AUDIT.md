@@ -72,3 +72,4 @@ The original PageCast product specification (`01_pagecast_project_spec_kiroween_
 - File import dialog for PagePack `.json` files with strict schema and size validation.
 - Multi-frame QR generator and reassembly engine with SHA-256 integrity verification.
 - 100% test pass rate across all new and existing test suites.
+

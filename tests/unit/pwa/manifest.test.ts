@@ -54,3 +54,4 @@ describe("PWA Manifest & Icon Validation (TASK-S4-OFF-01 / FR-070)", () => {
     }
   });
 });
+

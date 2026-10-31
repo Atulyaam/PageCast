@@ -34,3 +34,4 @@ TASK-S4-OFF-03 establishes a versioned client-side IndexedDB persistence archite
 - **Prettier:** Clean code style verified.
 - **ESLint:** Zero warnings or errors.
 - **TypeScript:** Strict `tsc --noEmit` passed with 0 errors.
+

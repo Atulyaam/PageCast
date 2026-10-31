@@ -50,3 +50,4 @@
 ### 4. Traceability
 - **FR-082:** Multi-frame animated QR transfer implemented for air-gapped distribution.
 - **FR-083:** Cryptographic SHA-256 digest validation enforced before ingestion.
+

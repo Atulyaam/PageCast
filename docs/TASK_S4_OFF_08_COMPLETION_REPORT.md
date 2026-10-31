@@ -42,3 +42,4 @@
 ### 4. Traceability
 - **FR-080:** Public link QR generation validated and confirmed functional in web terminal.
 - **TR-009:** Client-side QR generation with zero server dependencies or network overhead.
+

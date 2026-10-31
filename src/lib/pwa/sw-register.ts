@@ -55,3 +55,4 @@ export async function unregisterServiceWorker(): Promise<boolean> {
     return false;
   }
 }
+

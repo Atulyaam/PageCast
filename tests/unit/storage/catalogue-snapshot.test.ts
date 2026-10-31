@@ -80,3 +80,4 @@ describe("Public Catalogue Snapshot Storage (TASK-S4-OFF-07 / FR-075)", () => {
     expect(snapshot?.items[0].pageNumber).toBe(100);
   });
 });
+

@@ -28,3 +28,4 @@ TASK-S4-OFF-07 implements client-side snapshot caching for the public broadcast 
 - **Prettier:** Clean code style verified.
 - **ESLint:** Zero warnings or errors.
 - **TypeScript:** Strict `tsc --noEmit` passed with 0 errors.
+

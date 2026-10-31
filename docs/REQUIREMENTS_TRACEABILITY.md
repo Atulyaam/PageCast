@@ -88,25 +88,25 @@
 
 | Req ID | Description | Priority | Source Section | Dependencies | Acceptance Criteria | Test Strategy | Sprint | Status |
 |---|---|---|---|---|---|---|---|---|
-| FR-070 | Reader can install PageCast as a PWA | Must | §5.6, §14 | TR-007 | Valid manifest, icons, start URL and service worker | Manual PWA install test | S4 | PENDING |
-| FR-071 | Reader can explicitly save a published PagePack locally | Must | §5.6 | TR-008 | Page metadata and content persist in IndexedDB | Integration: IndexedDB save | S4 | PENDING |
-| FR-072 | Reader can open a saved page while offline | Must | §5.6 | FR-071 | No network request required for saved page's content | E2E: airplane-mode test | S4 | PENDING |
-| FR-073 | Application shows which pages are saved | Must | §5.6 | FR-071 | Saved state remains after reload/restart | Integration: state persistence | S4 | PENDING |
-| FR-074 | Reader can remove a saved page | Must | §5.6 | FR-071 | Local record deleted and UI updates | Integration: delete test | S4 | PENDING |
-| FR-075 | Service worker caches only app shell and safe static resources | Must | §5.6, §14.2 | SEC-005 | No auth/session responses or publisher drafts in shared cache | Security test: cache inspection | S4 | PENDING |
-| FR-076 | Reader informed when page unavailable offline | Must | §5.6 | FR-007 | Clear empty/offline state; no false success message | E2E: offline missing page test | S4 | PENDING |
-| FR-077 | Saved page data shall be versioned | Should | §5.6 | FR-071 | App can migrate or invalidate old local records safely | Unit: schema migration test | S4 | PENDING |
+| FR-070 | Reader can install PageCast as a PWA | Must | §5.6, §14 | TR-007 | Valid manifest, icons, start URL and service worker | Manual PWA install test | S4 | VERIFIED |
+| FR-071 | Reader can explicitly save a published PagePack locally | Must | §5.6 | TR-008 | Page metadata and content persist in IndexedDB | Integration: IndexedDB save | S4 | VERIFIED |
+| FR-072 | Reader can open a saved page while offline | Must | §5.6 | FR-071 | No network request required for saved page's content | E2E: airplane-mode test | S4 | VERIFIED |
+| FR-073 | Application shows which pages are saved | Must | §5.6 | FR-071 | Saved state remains after reload/restart | Integration: state persistence | S4 | VERIFIED |
+| FR-074 | Reader can remove a saved page | Must | §5.6 | FR-071 | Local record deleted and UI updates | Integration: delete test | S4 | VERIFIED |
+| FR-075 | Service worker caches only app shell and safe static resources | Must | §5.6, §14.2 | SEC-005 | No auth/session responses or publisher drafts in shared cache | Security test: cache inspection | S4 | VERIFIED |
+| FR-076 | Reader informed when page unavailable offline | Must | §5.6 | FR-007 | Clear empty/offline state; no false success message | E2E: offline missing page test | S4 | VERIFIED |
+| FR-077 | Saved page data shall be versioned | Should | §5.6 | FR-071 | App can migrate or invalidate old local records safely | Unit: schema migration test | S4 | VERIFIED |
 
 ### FR — QR Sharing and Import
 
 | Req ID | Description | Priority | Source Section | Dependencies | Acceptance Criteria | Test Strategy | Sprint | Status |
 |---|---|---|---|---|---|---|---|---|
-| FR-080 | Generate QR code for a public page URL | Must | §5.7, §14.3 | TR-009 | Scanning opens the public page when internet is available | Manual QR scan test | S4 | PENDING |
-| FR-081 | Export PagePack as downloadable JSON file | Must | §5.7 | FR-056 | Exported file can be imported and validated | Integration: export/import test | S4 | PENDING |
-| FR-082 | Multi-frame QR export/import (P1) | Should | §5.7, §14.3 | FR-081, TR-009 | Sequence frames contain bundle ID, index, total count, chunk data and integrity metadata | Integration: multi-frame QR test | S4 | PENDING |
-| FR-083 | Importer rejects incomplete or altered bundles | Should | §5.7 | FR-082 | Final SHA-256 digest must match before saving | Unit: digest validation | S4 | PENDING |
-| FR-084 | Importer rejects untrusted or unsupported PagePack versions | Should | §5.7 | FR-082, TR-001 | No page stored until schema, digest and size checks pass | Unit: import validation | S4 | PENDING |
-| FR-085 | QR import shall not automatically execute links or scripts | Must | §5.7 | SEC-006 | Imported content rendered as text using safe renderer | Security test: QR import safety | S4 | PENDING |
+| FR-080 | Generate QR code for a public page URL | Must | §5.7, §14.3 | TR-009 | Scanning opens the public page when internet is available | Manual QR scan test | S4 | VERIFIED |
+| FR-081 | Export PagePack as downloadable JSON file | Must | §5.7 | FR-056 | Exported file can be imported and validated | Integration: export/import test | S4 | VERIFIED |
+| FR-082 | Multi-frame QR export/import (P1) | Should | §5.7, §14.3 | FR-081, TR-009 | Sequence frames contain bundle ID, index, total count, chunk data and integrity metadata | Integration: multi-frame QR test | S4 | VERIFIED |
+| FR-083 | Importer rejects incomplete or altered bundles | Should | §5.7 | FR-082 | Final SHA-256 digest must match before saving | Unit: digest validation | S4 | VERIFIED |
+| FR-084 | Importer rejects untrusted or unsupported PagePack versions | Should | §5.7 | FR-082, TR-001 | No page stored until schema, digest and size checks pass | Unit: import validation | S4 | VERIFIED |
+| FR-085 | QR import shall not automatically execute links or scripts | Must | §5.7 | SEC-006 | Imported content rendered as text using safe renderer | Security test: QR import safety | S4 | VERIFIED |
 
 ---
 
@@ -118,7 +118,7 @@
 | NFR-002 | Performance | LCP ≤ 2.5 s on mobile 4G profile | Should | §6 | NFR-003 | Record actual Lighthouse results | Lighthouse CI | S5 | PENDING |
 | NFR-003 | Bundle size | Reader JS ≤ 200 KiB gzip for initial reader route | Should | §6 | TR-001 | Measured at build time | Bundle analyzer | S5 | PENDING |
 | NFR-004 | Payload | Published PagePack ≤ 10,240 UTF-8 bytes | Must | §6 | FR-052 | TextEncoder measurement | Automated budget check | S1/S3 | PENDING |
-| NFR-005 | Reliability | Core saved-page reading must not depend on AI/DB/network after save | Must | §6 | FR-072 | Offline read passes without network | E2E: airplane mode | S4 | PENDING |
+| NFR-005 | Reliability | Core saved-page reading must not depend on AI/DB/network after save | Must | §6 | FR-072 | Offline read passes without network | E2E: airplane mode | S4 | VERIFIED |
 | NFR-006 | Security | Never expose AI provider secrets in browser bundles | Must | §6, §17 | SEC-004 | No secrets in client JS source maps | CI: secret scan | S0 | PENDING |
 | NFR-007 | Security | URL ingestion must resist SSRF | Must | §6, §11.1 | SEC-001, SEC-002 | Security test suite passes | Security tests | S2 | PENDING |
 | NFR-008 | Security | Treat all imported article text and PagePacks as untrusted | Must | §6, §11.2 | SEC-003, SEC-006 | Validation + safe rendering | Security tests | S2/S4 | PENDING |
@@ -149,8 +149,8 @@
 | UXR-008 | Bulletin Composer — AI draft, edit and language selection | Must | §15.2 | FR-030, FR-062 | Editor can modify all fields; language selector functional | E2E: composer | S2 | PENDING |
 | UXR-009 | Teletext Preview — actual 40×25 grid and byte budget meter | Must | §15.2 | FR-050, FR-053 | Live preview shows correct grid; byte counter updates | E2E: preview screen | S3 | PENDING |
 | UXR-010 | Publish Confirmation — validate source, approval and budget | Must | §15.2 | FR-065 | All validation gates shown before publish button active | E2E: publish confirmation | S3 | PENDING |
-| UXR-011 | Share / QR screen — link QR, JSON export and later animated QR | Must/Should | §15.2 | FR-080, FR-081 | QR generated; JSON download works | E2E: share screen | S4 | PENDING |
-| UXR-012 | Offline / Error States — unavailable network/content and recovery | Must | §15.2 | FR-076 | Clear offline/error messages; no false success | E2E: offline states | S4 | PENDING |
+| UXR-011 | Share / QR screen — link QR, JSON export and later animated QR | Must/Should | §15.2 | FR-080, FR-081 | QR generated; JSON download works | E2E: share screen | S4 | VERIFIED |
+| UXR-012 | Offline / Error States — unavailable network/content and recovery | Must | §15.2 | FR-076 | Clear offline/error messages; no false success | E2E: offline states | S4 | VERIFIED |
 | UXR-013 | Help / About screen — explain Teletext concept, limits and sources | Should | §15.2 | — | Content policy reachable; limitations explained | Manual review | S5 | PENDING |
 | UXR-014 | Dark charcoal/near-black shell with high-contrast Teletext palette | Must | §15.1 | FR-009 | Palette tokens applied consistently | Visual snapshot | S1 | PENDING |
 | UXR-015 | Monospace headlines and page numbers | Must | §15.1 | TR-011 | Noto Sans Mono applied to grid | Visual inspection | S1 | PENDING |
@@ -170,15 +170,15 @@
 | TR-004 | Mozilla Readability + jsdom integration (scripts disabled) | Must | §7.3, §11.2 | SEC-001 | Extracts article content without executing scripts | Unit: extraction test | S2 | PENDING |
 | TR-005 | Vercel AI SDK with configurable provider/model | Must | §7.3, §17 | NFR-006 | AI integration swappable via env vars | Integration test | S2 | PENDING |
 | TR-006 | Supabase Auth + `@supabase/ssr` cookie-based auth | Must | §7.2, §9.3 | — | Server-side session verification | Integration: auth | S3 | PENDING |
-| TR-007 | Web App Manifest + Service Worker (Serwist or manual) | Must | §7.4, §14 | — | PWA installable; app shell cached | Manual PWA test | S4 | PENDING |
-| TR-008 | Dexie.js over IndexedDB for typed PagePack persistence | Must | §7.4, §14.1 | TR-001 | Pages saved and retrieved offline | Integration: Dexie tests | S4 | PENDING |
-| TR-009 | `qrcode` for QR generation; `@zxing/browser` for scanning | Must/Should | §7.4 | FR-080 | QR generated and scannable | Manual QR test | S4 | PENDING |
+| TR-007 | Web App Manifest + Service Worker (Serwist or manual) | Must | §7.4, §14 | — | PWA installable; app shell cached | Manual PWA test | S4 | VERIFIED |
+| TR-008 | Dexie.js over IndexedDB for typed PagePack persistence | Must | §7.4, §14.1 | TR-001 | Pages saved and retrieved offline | Integration: Dexie tests | S4 | VERIFIED |
+| TR-009 | `qrcode` for QR generation; `@zxing/browser` for scanning | Must/Should | §7.4 | FR-080 | QR generated and scannable | Manual QR test | S4 | VERIFIED |
 | TR-010 | Vercel deployment + GitHub Actions CI | Must | §7.6, §21 | — | CI runs lint/typecheck/test/build; deployment live | CI green | S5 | PENDING |
 | TR-011 | Noto Sans Mono / Noto Sans Devanagari fonts | Must | §7.1 | FR-010 | Both font families loaded; grid renders correctly | Visual + unit | S1 | PENDING |
 | TR-012 | `TextEncoder` byte measurement for PagePack | Must | §5.4, §9.1 | TR-001 | Byte count matches spec definition exactly | Unit: byte counter | S1 | PENDING |
 | TR-013 | Zod validation on all API route inputs | Must | §10 | TR-001 | Invalid requests rejected with typed error codes | Integration: API validation | S3 | PENDING |
 | TR-014 | Rate limiting on extraction and AI generation endpoints | Must | §10, §19-S5 | TR-013 | Repeated rapid calls are rejected | Integration: rate limit | S5 | PENDING |
-| TR-015 | Web Crypto SHA-256 for PagePack import integrity | Should | §7.4, §14.3 | FR-083 | Digest matches before saving imported pack | Unit: hash verification | S4 | PENDING |
+| TR-015 | Web Crypto SHA-256 for PagePack import integrity | Should | §7.4, §14.3 | FR-083 | Digest matches before saving imported pack | Unit: hash verification | S4 | VERIFIED |
 | TR-016 | Domain layer (`src/domain/`) free of React/Next.js/Supabase imports | Must | §16, §8.1 | TR-001 | Domain tests run in Node without any framework | Unit tests in pure Node | S1 | PENDING |
 | TR-017 | TypeScript strict mode + ESLint + Prettier | Must | §7.5, §16 | — | tsc --noEmit passes; lint clean | CI checks | S0 | PENDING |
 | TR-018 | pnpm with committed lockfile; frozen-lockfile CI installs | Must | §7.7 | — | CI installs from lockfile without updates | CI verification | S0 | PENDING |
@@ -195,8 +195,8 @@
 | SEC-002 | Resolve DNS and re-check on every redirect (max 3) | Must | §11.1 | SEC-001 | DNS rebinding and redirect-to-private attacks blocked | Security tests | S2 | PENDING |
 | SEC-003 | Treat article HTML/text as untrusted; prevent prompt injection | Must | §11.2, §12.3 | FR-039 | Injected instructions in source text ignored by model | Security tests | S2 | PENDING |
 | SEC-004 | Server-only secrets: AI keys + Supabase service-role key | Must | §11, §17, §9.3 | NFR-006 | No secrets in client bundles or NEXT_PUBLIC_ vars | CI: secret scan | S0 | PENDING |
-| SEC-005 | Service worker does not cache auth/session/draft responses | Must | §14.2, §5.6 | FR-075 | Cache inspection shows only public static resources | Security test: SW cache | S4 | PENDING |
-| SEC-006 | QR import content rendered as safe text, not executed | Must | §5.7, §11.2 | FR-085 | No script execution from imported content | Security test: QR import | S4 | PENDING |
+| SEC-005 | Service worker does not cache auth/session/draft responses | Must | §14.2, §5.6 | FR-075 | Cache inspection shows only public static resources | Security test: SW cache | S4 | VERIFIED |
+| SEC-006 | QR import content rendered as safe text, not executed | Must | §5.7, §11.2 | FR-085 | No script execution from imported content | Security test: QR import | S4 | VERIFIED |
 | SEC-007 | Supabase Row Level Security enabled and tested | Must | §9.3, §7.2 | NFR-009 | RLS blocks unauthorized access via direct API calls | Integration: RLS tests | S3 | PENDING |
 | SEC-008 | Request body size limits on all API endpoints | Must | §10 | TR-013 | Oversized requests rejected before processing | Unit: request size | S3 | PENDING |
 | SEC-009 | No full article text stored long-term in database | Should | §9.2, §11.3 | NFR-010 | Source sentences stored as hashes/short excerpts only | Database schema review | S3 | PENDING |
@@ -236,8 +236,8 @@
 | TEST-010 | Hindi grapheme split property test | Must | §13.4/P3 | TR-003 | No grapheme cluster split in any generated layout | S1 | PENDING |
 | TEST-011 | Deterministic rendering property test | Must | §13.4/P4 | FR-017, FR-055 | Same input + renderer version = same grid output | S1 | PENDING |
 | TEST-012 | Integration tests for full pipeline: URL→draft→publish→read | Must | §20.3 | All FR | Pipeline tests pass end-to-end | S3/S5 | PENDING |
-| TEST-013 | Offline read after save — Playwright with service-worker intercept | Must | §20.4/E2E-04 | FR-072 | Saved page readable after network disable | S4 | PENDING |
-| TEST-014 | Import integrity test — SHA-256 mismatch rejection | Should | §20.4/E2E-06 | FR-083 | Altered pack rejected on import | S4 | PENDING |
+| TEST-013 | Offline read after save — Playwright with service-worker intercept | Must | §20.4/E2E-04 | FR-072 | Saved page readable after network disable | S4 | VERIFIED |
+| TEST-014 | Import integrity test — SHA-256 mismatch rejection | Should | §20.4/E2E-06 | FR-083 | Altered pack rejected on import | S4 | VERIFIED |
 
 ---
 

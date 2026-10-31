@@ -35,3 +35,4 @@ TASK-S4-OFF-06 establishes genuine network-independent reading for PageCast. Whe
 - **Prettier:** Clean code style verified.
 - **ESLint:** Zero warnings or errors.
 - **TypeScript:** Strict `tsc --noEmit` passed with 0 errors.
+

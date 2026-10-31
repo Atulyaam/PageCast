@@ -39,3 +39,4 @@ TASK-S4-OFF-01 implements the foundational installable Progressive Web Applicati
 - **Prettier:** 100% formatted.
 - **ESLint:** Clean run with React 19 compiler purity rules satisfied.
 - **TypeScript:** Strict `tsc --noEmit` passed with 0 errors.
+

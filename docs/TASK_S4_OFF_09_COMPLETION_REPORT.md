@@ -57,3 +57,4 @@
 - **FR-081:** PagePack JSON export and import client-side UI implemented and verified.
 - **FR-084:** Import schema, version, geometry, and boundary validation strictly enforced.
 - **FR-085:** Strict 10,240-byte ceiling verification enforced prior to storage.
+

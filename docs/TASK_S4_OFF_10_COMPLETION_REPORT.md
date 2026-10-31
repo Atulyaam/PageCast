@@ -47,3 +47,4 @@
 
 ### 4. Traceability
 - **TR-009:** Client-side optical QR scanning and packet ingestion fully realized with camera permissions and offline fallback.
+

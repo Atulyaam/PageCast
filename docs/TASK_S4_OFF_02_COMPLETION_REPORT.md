@@ -36,3 +36,4 @@ TASK-S4-OFF-02 implements a secure, versioned, offline-aware Service Worker (`pu
 - **Prettier:** Clean code style verified.
 - **ESLint:** Clean run with 0 errors.
 - **TypeScript:** Strict `tsc --noEmit` passed with 0 errors.
+
