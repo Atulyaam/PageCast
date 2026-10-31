@@ -10,7 +10,7 @@ describe("Article Content Extractor Suite", () => {
   it("decodes HTML entities into Unicode characters", () => {
     const raw = "Tom &amp; Jerry &quot;Show&quot; &#39;Special&#39; &mdash; 5 &lt; 10 &gt; 2";
     const decoded = decodeHtmlEntities(raw);
-    expect(decoded).toBe('Tom & Jerry "Show" \'Special\' — 5 < 10 > 2');
+    expect(decoded).toBe("Tom & Jerry \"Show\" 'Special' — 5 < 10 > 2");
   });
 
   it("strips scripts, styles, navigation, footer, and ads", () => {

@@ -132,7 +132,8 @@ function extractMeta(html: string, attrName: string, attrValue: string): string 
  */
 function extractTitle(html: string): string {
   // 1. og:title or twitter:title
-  const ogTitle = extractMeta(html, "property", "og:title") || extractMeta(html, "name", "twitter:title");
+  const ogTitle =
+    extractMeta(html, "property", "og:title") || extractMeta(html, "name", "twitter:title");
   if (ogTitle) {
     return ogTitle;
   }
@@ -200,11 +201,9 @@ export function extractArticleFromHtml(
     extractMeta(html, "property", "og:site_name") ??
     new URL(canonicalUrl).hostname.replace(/^www\./, "");
   const byline =
-    extractMeta(html, "name", "author") ??
-    extractMeta(html, "property", "article:author");
+    extractMeta(html, "name", "author") ?? extractMeta(html, "property", "article:author");
   const publishedTime =
-    extractMeta(html, "property", "article:published_time") ??
-    extractMeta(html, "name", "pubdate");
+    extractMeta(html, "property", "article:published_time") ?? extractMeta(html, "name", "pubdate");
 
   let rawContent = extractMainBody(html);
   if (rawContent.length > maxChars) {

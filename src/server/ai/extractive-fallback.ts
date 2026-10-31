@@ -8,7 +8,11 @@
  * Never hallucinate facts or invent sentence IDs.
  */
 
-import type { ExtractedSource, BulletinDraft, BulletinKeyPoint } from "@/domain/source-provenance/types";
+import type {
+  ExtractedSource,
+  BulletinDraft,
+  BulletinKeyPoint,
+} from "@/domain/source-provenance/types";
 import { validateBulletinDraft } from "@/domain/source-provenance/schema";
 
 export interface ExtractiveSummarizerOptions {
@@ -18,18 +22,99 @@ export interface ExtractiveSummarizerOptions {
 }
 
 const ENGLISH_STOP_WORDS = new Set([
-  "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for",
-  "of", "with", "by", "from", "up", "about", "into", "over", "after",
-  "is", "are", "was", "were", "be", "been", "being", "have", "has", "had",
-  "do", "does", "did", "can", "could", "will", "would", "shall", "should",
-  "it", "its", "they", "them", "their", "we", "us", "our", "you", "your",
-  "this", "that", "these", "those", "not", "also", "more", "as", "such"
+  "the",
+  "a",
+  "an",
+  "and",
+  "or",
+  "but",
+  "in",
+  "on",
+  "at",
+  "to",
+  "for",
+  "of",
+  "with",
+  "by",
+  "from",
+  "up",
+  "about",
+  "into",
+  "over",
+  "after",
+  "is",
+  "are",
+  "was",
+  "were",
+  "be",
+  "been",
+  "being",
+  "have",
+  "has",
+  "had",
+  "do",
+  "does",
+  "did",
+  "can",
+  "could",
+  "will",
+  "would",
+  "shall",
+  "should",
+  "it",
+  "its",
+  "they",
+  "them",
+  "their",
+  "we",
+  "us",
+  "our",
+  "you",
+  "your",
+  "this",
+  "that",
+  "these",
+  "those",
+  "not",
+  "also",
+  "more",
+  "as",
+  "such",
 ]);
 
 const HINDI_STOP_WORDS = new Set([
-  "है", "हैं", "था", "थे", "थी", "का", "की", "के", "में", "से", "को",
-  "पर", "और", "या", "यह", "वह", "ये", "वे", "तो", "ही", "भी", "ने",
-  "किया", "गया", "गई", "गए", "कर", "रहे", "रहा", "रही", "होता", "होती"
+  "है",
+  "हैं",
+  "था",
+  "थे",
+  "थी",
+  "का",
+  "की",
+  "के",
+  "में",
+  "से",
+  "को",
+  "पर",
+  "और",
+  "या",
+  "यह",
+  "वह",
+  "ये",
+  "वे",
+  "तो",
+  "ही",
+  "भी",
+  "ने",
+  "किया",
+  "गया",
+  "गई",
+  "गए",
+  "कर",
+  "रहे",
+  "रहा",
+  "रही",
+  "होता",
+  "होती",
 ]);
 
 /**
@@ -140,8 +225,7 @@ export function generateExtractiveBulletin(
 
   // Summary: use first sentence (or trimmed version)
   const leadSentence = sentences[0].text;
-  const summary =
-    leadSentence.length > 200 ? `${leadSentence.slice(0, 197)}...` : leadSentence;
+  const summary = leadSentence.length > 200 ? `${leadSentence.slice(0, 197)}...` : leadSentence;
 
   // Key Points: score sentences, pick top N (excluding lead if more sentences available)
   const scored = scoreSentences(sentences, isHindi);
@@ -183,7 +267,8 @@ export function generateExtractiveBulletin(
     sections: [
       {
         heading: isHindi ? "मुख्य बिंदु" : "KEY DEVELOPMENTS",
-        points: points.length > 0 ? points : [{ text: summary, sourceSentenceIds: [sentences[0].id] }],
+        points:
+          points.length > 0 ? points : [{ text: summary, sourceSentenceIds: [sentences[0].id] }],
       },
     ],
     language,

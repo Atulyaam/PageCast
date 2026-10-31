@@ -109,7 +109,7 @@ describe("URL Safety & SSRF Defense Suite", () => {
 
       // Standard ports pass
       const httpStandard = await validateUrlForIngestion("http://example.com:80/news", {
-        dnsLookup: async () => [{ address: "93.184.216.34", family: 4 }],
+        dnsLookup: (async () => [{ address: "93.184.216.34", family: 4 }]) as any,
       });
       expect(httpStandard.valid).toBe(true);
     });
@@ -202,7 +202,7 @@ describe("URL Safety & SSRF Defense Suite", () => {
       try {
         await expect(
           safeFetchArticle("https://public-site.com/redirect", {
-            dnsLookup: (async (host) => {
+            dnsLookup: (async (host: string) => {
               if (host === "public-site.com") return [{ address: "93.184.216.34", family: 4 }];
               return [{ address: "127.0.0.1", family: 4 }];
             }) as any,

@@ -120,8 +120,7 @@ export class GeminiAiProvider implements AiProvider {
       );
     }
 
-    const textCandidate =
-      responseJson?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const textCandidate = responseJson?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!textCandidate) {
       throw new AiProviderError(

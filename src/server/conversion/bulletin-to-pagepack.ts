@@ -46,9 +46,7 @@ function createSafeSlug(title: string, pageNumber: number): string {
     .replace(/-+/g, "-")
     .slice(0, 30);
 
-  return asciiClean.length >= 3
-    ? `${asciiClean}-${pageNumber}`
-    : `bulletin-p${pageNumber}`;
+  return asciiClean.length >= 3 ? `${asciiClean}-${pageNumber}` : `bulletin-p${pageNumber}`;
 }
 
 /**

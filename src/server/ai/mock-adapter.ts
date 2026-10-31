@@ -49,13 +49,8 @@ export class MockAiProvider implements AiProvider {
 
     // Build key points using actual source sentence IDs to guarantee valid provenance
     const points = sentences.slice(0, 3).map((s, idx) => ({
-      text:
-        s.text.length > 80
-          ? `${s.text.slice(0, 77)}...`
-          : s.text,
-      sourceSentenceIds: this.options.simulateHallucinatedIds
-        ? ["s999_fabricated"]
-        : [s.id],
+      text: s.text.length > 80 ? `${s.text.slice(0, 77)}...` : s.text,
+      sourceSentenceIds: this.options.simulateHallucinatedIds ? ["s999_fabricated"] : [s.id],
     }));
 
     // If source had fewer than 1 sentence, provide a fallback

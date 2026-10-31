@@ -26,6 +26,12 @@ export default function Home() {
             >
               CATALOGUE
             </Link>
+            <Link
+              href="/publisher/ingest"
+              className="border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 rounded border px-2 py-0.5 transition-all"
+            >
+              PUBLISHER STUDIO
+            </Link>
             <span className="text-surface-border-subtle hidden sm:inline">|</span>
             <span className="text-text-muted hidden sm:inline">KIROWEEN 2026</span>
           </nav>

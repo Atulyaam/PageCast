@@ -82,17 +82,12 @@ function performSingleSafeRequest(
         "Accept-Encoding": "identity", // Disable compression in base fetch to accurately bound bytes
         Connection: "close",
       },
-      lookup: pinningLookup as unknown as typeof http.request extends (
-        options: infer O,
-        ...args: any[]
-      ) => any
-        ? O
-        : never,
+      lookup: pinningLookup as any,
       // For HTTPS, SNI servername must match the requested domain name
       ...(isHttps ? { servername: parsed.hostname } : {}),
     };
 
-    let timer: NodeJS.Timeout | null = null;
+    let timer: NodeJS.Timeout | number | null = null;
     let settled = false;
 
     const req = transport.request(requestOptions, (res) => {

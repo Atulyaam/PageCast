@@ -69,4 +69,3 @@ export type TeletextPageValidated = z.infer<typeof TeletextPageSchema>;
 export function validatePagePack(data: unknown): PagePackV1Validated {
   return PagePackV1Schema.parse(data);
 }
-

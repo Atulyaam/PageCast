@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { convertDraftToPagePack, convertDraftToTeletextPages } from "@/server/conversion/bulletin-to-pagepack";
+import {
+  convertDraftToPagePack,
+  convertDraftToTeletextPages,
+} from "@/server/conversion/bulletin-to-pagepack";
 import { composeBulletin } from "@/server/ai/composer";
 import { MockAiProvider } from "@/server/ai/mock-adapter";
 import { extractFromPastedText } from "@/server/ingestion/extractor";
@@ -103,7 +106,7 @@ describe("Edge Conversion Pipeline Integration Suite", () => {
     const deserialized = decodePagePack(serialized);
 
     expect(deserialized.version).toBe(pack.version);
-    expect(deserialized.edition).toBe(pack.edition);
+    expect(deserialized.createdAt).toBe(pack.createdAt);
     expect(deserialized.pages[0].pageNumber).toBe(300);
     expect(deserialized.pages[0].rows.length).toBe(25);
   });
