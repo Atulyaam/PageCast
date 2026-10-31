@@ -21,6 +21,7 @@ import { isValidPageNumber } from "@/domain/validation/page-number";
 import { fetchPublishedPage, type PublishedPageResponse } from "@/lib/reader/reader-client";
 import { getTeletextSynthesizer } from "@/lib/audio/teletext-synthesizer";
 import { useTeletextKeyboard } from "@/hooks/useTeletextKeyboard";
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import { savePageLocally, removeSavedPage, isPageSaved } from "@/lib/storage/saved-pages";
 
 import { TerminalHeader } from "./TerminalHeader";
@@ -59,6 +60,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const isOnline = useOnlineStatus();
 
   const [, startTransition] = useTransition();
   const catalog = getSeedPageCatalog();
@@ -335,7 +337,8 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
             phosphorGlow={phosphorGlow}
             onToggleScanlines={() => setShowScanlines((prev) => !prev)}
             onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
-            isOffline={pageData?.isFallback}
+            isOffline={!isOnline || pageData?.isFallback || pageData?.isSavedCopy}
+            isSavedCopy={pageData?.isSavedCopy}
           />
 
           {/* Subpage Carousel Navigation */}

@@ -17,6 +17,7 @@ export interface TerminalHeaderProps {
   onToggleScanlines: () => void;
   onTogglePhosphorGlow: () => void;
   isOffline?: boolean;
+  isSavedCopy?: boolean;
   className?: string;
 }
 
@@ -27,6 +28,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   onToggleScanlines,
   onTogglePhosphorGlow,
   isOffline = false,
+  isSavedCopy = false,
   className = "",
 }) => {
   const [clockTime, setClockTime] = useState<string>("");
@@ -88,6 +90,12 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         {magazine && (
           <span className="hidden font-semibold tracking-wide text-zinc-300 sm:inline">
             {`MAG ${magazine.number}: ${magazine.name.toUpperCase()}`}
+          </span>
+        )}
+
+        {isSavedCopy && (
+          <span className="hidden rounded border border-emerald-500 bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 sm:inline-block">
+            ★ LOCAL COPY
           </span>
         )}
       </div>

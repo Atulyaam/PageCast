@@ -1,14 +1,16 @@
 /**
- * PageCast Reader Client Data Access Helper (TASK-S4-01)
+ * PageCast Reader Client Data Access Helper (TASK-S4-01 / TASK-S4-OFF-06)
  *
- * Provides resilient published bulletin fetching with local seed fallback,
- * caching, and type-safe payload resolution for the reader terminal.
+ * Provides resilient published bulletin fetching with local IndexedDB saved page
+ * lookup, offline seed fallback, caching, and type-safe payload resolution.
  */
 
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import type { PageRow } from "@/server/database/schema-contracts";
 import { isValidPageNumber } from "@/domain/validation/page-number";
 import { getSeedPage } from "@/data/seed-pages";
+import { getSavedPage } from "@/lib/storage/saved-pages";
+import type { SavedPageRecord } from "@/lib/storage/dexie-db";
 
 export interface PublishedPageResponse {
   page: PageRow;
@@ -17,6 +19,7 @@ export interface PublishedPageResponse {
   subPageCount: number;
   publishedAt: string;
   isFallback?: boolean;
+  isSavedCopy?: boolean;
 }
 
 export interface FetchPageResult {
@@ -24,10 +27,11 @@ export interface FetchPageResult {
   data?: PublishedPageResponse;
   error?: string;
   notFound?: boolean;
+  isOfflineUnavailable?: boolean;
 }
 
 /**
- * Fetches a published page from the reader API with automatic offline seed fallback.
+ * Fetches a published page from the reader API with automatic local IndexedDB and offline seed fallback.
  */
 export async function fetchPublishedPage(
   pageNumber: number,
@@ -40,29 +44,31 @@ export async function fetchPublishedPage(
     };
   }
 
+  // Check if browser is explicitly offline
+  const isOffline =
+    typeof navigator !== "undefined" && typeof navigator.onLine === "boolean" && !navigator.onLine;
+
+  if (isOffline) {
+    return await resolveOfflinePage(pageNumber);
+  }
+
   try {
     const res = await fetchFn(`/api/v1/pages/${pageNumber}`, {
       headers: { Accept: "application/json" },
     });
 
     if (res.status === 404) {
-      // Check seed page fallback
-      const seed = getSeedPage(pageNumber);
-      if (seed) {
-        return {
-          success: true,
-          data: createSeedFallbackResponse(pageNumber, seed),
-        };
-      }
-      return {
-        success: false,
-        notFound: true,
-        error: `Page P${pageNumber} is not published.`,
-      };
+      // Check local saved copy or seed fallback
+      return await resolveOfflinePage(pageNumber);
     }
 
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
+      // On server error, attempt local fallback
+      const fallback = await resolveOfflinePage(pageNumber);
+      if (fallback.success) {
+        return fallback;
+      }
       return {
         success: false,
         error: errData.message || `HTTP ${res.status}: Failed to load page`,
@@ -81,21 +87,69 @@ export async function fetchPublishedPage(
       success: false,
       error: "Malformed response payload from reader API.",
     };
-  } catch (err: any) {
-    // If network fetch fails completely (offline), check seed page
-    const seed = getSeedPage(pageNumber);
-    if (seed) {
+  } catch {
+    // Network error (offline or unreachable server) -> resolve local
+    return await resolveOfflinePage(pageNumber);
+  }
+}
+
+/**
+ * Resolves a page from local IndexedDB storage, with seed page fallback.
+ */
+async function resolveOfflinePage(pageNumber: number): Promise<FetchPageResult> {
+  // 1. Check user-saved pages in IndexedDB
+  try {
+    const saved = await getSavedPage(pageNumber);
+    if (saved) {
       return {
         success: true,
-        data: createSeedFallbackResponse(pageNumber, seed),
+        data: createSavedPageResponse(saved),
       };
     }
+  } catch {
+    // Continue to seed fallback
+  }
 
+  // 2. Check hardcoded seed page broadcast
+  const seed = getSeedPage(pageNumber);
+  if (seed) {
     return {
-      success: false,
-      error: err?.message || "Network error fetching published page.",
+      success: true,
+      data: createSeedFallbackResponse(pageNumber, seed),
     };
   }
+
+  // 3. Page is genuinely unavailable offline (FR-076)
+  return {
+    success: false,
+    notFound: true,
+    isOfflineUnavailable: true,
+    error: `Page P${pageNumber} is not saved locally and cannot be loaded offline.`,
+  };
+}
+
+function createSavedPageResponse(saved: SavedPageRecord): PublishedPageResponse {
+  const page: PageRow = {
+    id: `saved-${saved.pageNumber}`,
+    page_number: saved.pageNumber,
+    slug: saved.slug,
+    language: saved.language,
+    status: "published",
+    current_revision: saved.version,
+    created_by: null,
+    created_at: saved.savedAt,
+    updated_at: saved.savedAt,
+  };
+
+  return {
+    page,
+    revision: saved.version,
+    pack: saved.pack,
+    subPageCount: saved.pack.pages.length,
+    publishedAt: saved.savedAt,
+    isFallback: false,
+    isSavedCopy: true,
+  };
 }
 
 function createSeedFallbackResponse(pageNumber: number, seed: any): PublishedPageResponse {
@@ -135,5 +189,6 @@ function createSeedFallbackResponse(pageNumber: number, seed: any): PublishedPag
     subPageCount: 1,
     publishedAt: page.updated_at,
     isFallback: true,
+    isSavedCopy: false,
   };
 }
