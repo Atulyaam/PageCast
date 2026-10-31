@@ -21,6 +21,7 @@ import { isValidPageNumber } from "@/domain/validation/page-number";
 import { fetchPublishedPage, type PublishedPageResponse } from "@/lib/reader/reader-client";
 import { getTeletextSynthesizer } from "@/lib/audio/teletext-synthesizer";
 import { useTeletextKeyboard } from "@/hooks/useTeletextKeyboard";
+import { savePageLocally, removeSavedPage, isPageSaved } from "@/lib/storage/saved-pages";
 
 import { TerminalHeader } from "./TerminalHeader";
 import { TerminalLoading } from "./TerminalLoading";
@@ -57,6 +58,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const [, startTransition] = useTransition();
   const catalog = getSeedPageCatalog();
@@ -143,10 +145,33 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
     loadPage();
 
+    isPageSaved(currentPageNumber)
+      .then((saved) => {
+        if (!isCancelled) setIsSaved(saved);
+      })
+      .catch(() => {
+        if (!isCancelled) setIsSaved(false);
+      });
+
     return () => {
       isCancelled = true;
     };
   }, [currentPageNumber]);
+
+  const handleToggleSave = useCallback(async () => {
+    if (!pageData?.pack) return;
+
+    if (isSaved) {
+      await removeSavedPage(currentPageNumber);
+      setIsSaved(false);
+    } else {
+      const res = await savePageLocally(pageData.pack);
+      if (res.success) {
+        setIsSaved(true);
+        getTeletextSynthesizer().playFastextTone("green");
+      }
+    }
+  }, [currentPageNumber, isSaved, pageData]);
 
   // Handle browser popstate
   useEffect(() => {
@@ -251,8 +276,27 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           )}
         </div>
 
-        {/* Action Buttons: Shortcuts & Share */}
+        {/* Action Buttons: Save, Shortcuts & Share */}
         <div className="flex items-center gap-2">
+          {/* Save / Remove Offline Page */}
+          <button
+            type="button"
+            onClick={handleToggleSave}
+            disabled={!pageData?.pack}
+            className={`flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all ${
+              isSaved
+                ? "border-teletext-green bg-teletext-green/20 text-teletext-green"
+                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
+            } ${!pageData?.pack ? "cursor-not-allowed opacity-50" : ""}`}
+            aria-label={
+              isSaved
+                ? "Remove saved offline bulletin"
+                : "Save bulletin locally for offline reading"
+            }
+          >
+            <span>{isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setIsExportOpen(true)}
