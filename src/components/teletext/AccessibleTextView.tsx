@@ -398,7 +398,9 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
           )}
 
           {publishedAt && (
-            <time dateTime={publishedAt}>Published: {new Date(publishedAt).toLocaleString()}</time>
+            <time dateTime={publishedAt} suppressHydrationWarning>
+              Published: {new Date(publishedAt).toLocaleString()}
+            </time>
           )}
         </footer>
       )}

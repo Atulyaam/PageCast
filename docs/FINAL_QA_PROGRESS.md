@@ -15,9 +15,9 @@
 | Phase | Description | Status | Commit Ref | Tests Added / Updated | Notes & Blockers |
 |---|---|---|---|---|---|
 | **Phase 1** | Repository & Baseline Audit | **VERIFIED** | `56b8dd1` | 439 passing (69 suites) | Verified clean baseline, zero secret leaks |
-| **Phase 2** | Critical Bug Fix: PWA Manifest Route | **VERIFIED** | Pending commit | 442 passing (69 suites) | Removed conflicting `public/manifest.webmanifest`, verified HTTP 200, +3 tests |
-| **Phase 3** | Browser Warnings & Hydration Audit | **IN PROGRESS** | — | — | Investigate eval() & extension hydration mismatch |
-| **Phase 4** | Typography & Readability Polish | **NOT STARTED** | — | — | Subtly increase font sizes; preserve 40x25 CRT grid |
+| **Phase 2** | Critical Bug Fix: PWA Manifest Route | **VERIFIED** | `6bde36d` | 442 passing (69 suites) | Removed conflicting `public/manifest.webmanifest`, verified HTTP 200, +3 tests |
+| **Phase 3** | Browser Warnings & Hydration Audit | **VERIFIED** | Pending commit | 442 passing (69 suites) | Replaced client-render storage read with `useSyncExternalStore`, added `suppressHydrationWarning` on root layout & `<time>` tags, verified zero application `eval()` |
+| **Phase 4** | Typography & Readability Polish | **IN PROGRESS** | — | — | Subtly increase font sizes; preserve 40x25 CRT grid |
 | **Phase 5** | Full Application Browser Testing | **NOT STARTED** | — | — | End-to-end user workflow verification |
 | **Phase 6** | Offline & PWA Deep Testing | **NOT STARTED** | — | — | ServiceWorker, IndexedDB, offline fallback |
 | **Phase 7** | Multi-Frame QR & Optical Transfer | **NOT STARTED** | — | — | Burst generation, frame cycling, CRC/SHA-256 |

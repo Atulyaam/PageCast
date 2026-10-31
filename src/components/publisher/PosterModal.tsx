@@ -158,7 +158,7 @@ export const PosterModal: React.FC<PosterModalProps> = ({
               <h1 className="mt-3 text-xl leading-snug font-black tracking-tight text-black sm:text-2xl">
                 {title}
               </h1>
-              <p className="mt-1 text-xs font-bold text-zinc-600">
+              <p className="mt-1 text-xs font-bold text-zinc-600" suppressHydrationWarning>
                 Issuing Date:{" "}
                 {new Date().toLocaleDateString("en-GB", {
                   day: "2-digit",

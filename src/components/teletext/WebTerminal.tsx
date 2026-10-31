@@ -14,7 +14,7 @@
  * - URL shallow synchronization and deep-linking support
  */
 
-import React, { useState, useEffect, useCallback, useTransition } from "react";
+import React, { useState, useEffect, useCallback, useTransition, useSyncExternalStore } from "react";
 import type { TeletextPage } from "@/domain/teletext/types";
 import { getSeedPage, getSeedPageCatalog, page100 } from "@/data/seed-pages";
 import { isValidPageNumber } from "@/domain/validation/page-number";
@@ -63,6 +63,31 @@ const EvidenceDrawer = dynamic(() => import("./EvidenceDrawer").then((mod) => mo
   ssr: false,
 });
 
+const DATA_SAVER_STORAGE_KEY = "pagecast_data_saver_mode";
+
+function subscribeDataSaver(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("storage", callback);
+  window.addEventListener("pagecast_data_saver_change", callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener("pagecast_data_saver_change", callback);
+  };
+}
+
+function getDataSaverSnapshot(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return localStorage.getItem(DATA_SAVER_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function getDataSaverServerSnapshot(): boolean {
+  return false;
+}
+
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;
   readonly initialSubPage?: number;
@@ -79,14 +104,11 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   const [showScanlines, setShowScanlines] = useState<boolean>(false);
   const [phosphorGlow, setPhosphorGlow] = useState<boolean>(true);
   const [viewMode, setViewMode] = useState<"crt" | "accessible">("crt");
-  const [isDataSaver, setIsDataSaver] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      return localStorage.getItem("pagecast_data_saver_mode") === "true";
-    } catch {
-      return false;
-    }
-  });
+  const isDataSaver = useSyncExternalStore(
+    subscribeDataSaver,
+    getDataSaverSnapshot,
+    getDataSaverServerSnapshot
+  );
   const [sessionBytes, setSessionBytes] = useState<number>(0);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -152,15 +174,16 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
   }, []);
 
   const handleToggleDataSaver = useCallback(() => {
-    setIsDataSaver((prev) => {
-      const next = !prev;
-      try {
-        localStorage.setItem("pagecast_data_saver_mode", String(next));
-      } catch {
-        // Local storage unavailable
-      }
-      return next;
-    });
+    const current = getDataSaverSnapshot();
+    const next = !current;
+    try {
+      localStorage.setItem(DATA_SAVER_STORAGE_KEY, String(next));
+    } catch {
+      // Local storage unavailable
+    }
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("pagecast_data_saver_change"));
+    }
   }, []);
 
   // Fetch page data on currentPageNumber change
