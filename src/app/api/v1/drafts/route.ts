@@ -5,6 +5,8 @@ import { convertDraftToPagePack } from "@/server/conversion/bulletin-to-pagepack
 import { BulletinDraftSchema, ExtractedSourceSchema } from "@/domain/source-provenance/schema";
 import { PagePackV1Schema } from "@/domain/page-pack/schema";
 import type { PagePackV1 } from "@/domain/page-pack/types";
+import { parseJsonWithLimit, DEFAULT_MAX_BODY_BYTES } from "@/server/security/request-limits";
+import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
 
 const CreateDraftApiSchema = z.object({
   pageNumber: z.number().int().min(100).max(899),
@@ -17,9 +19,24 @@ const CreateDraftApiSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. Enforce rate limiting
+  const rateLimitResult = await enforceRateLimit(
+    request,
+    "drafts:create",
+    RATE_LIMIT_PROFILES.PUBLISH
+  );
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   try {
-    const json = await request.json();
-    const parsed = CreateDraftApiSchema.safeParse(json);
+    // 2. Enforce request size limit and parse JSON safely
+    const parsedBody = await parseJsonWithLimit(request, DEFAULT_MAX_BODY_BYTES);
+    if (!parsedBody.success) {
+      return parsedBody.response;
+    }
+
+    const parsed = CreateDraftApiSchema.safeParse(parsedBody.data);
 
     if (!parsed.success) {
       return NextResponse.json(

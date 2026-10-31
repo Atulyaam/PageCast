@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { composeBulletin } from "@/server/ai/composer";
 import { ExtractedSourceSchema } from "@/domain/source-provenance/schema";
+import { parseJsonWithLimit, DEFAULT_MAX_BODY_BYTES } from "@/server/security/request-limits";
+import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
 
 const ComposeRequestSchema = z.object({
   source: ExtractedSourceSchema,
@@ -11,18 +13,24 @@ const ComposeRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. Enforce rate limiting on expensive AI endpoint
+  const rateLimitResult = await enforceRateLimit(
+    request,
+    "bulletins:compose",
+    RATE_LIMIT_PROFILES.AI_COMPOSE
+  );
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   try {
-    let body: unknown;
-    try {
-      body = await request.json();
-    } catch {
-      return NextResponse.json(
-        { success: false, error: "Invalid JSON request body", code: "INVALID_JSON" },
-        { status: 400 }
-      );
+    // 2. Enforce request size limit and parse JSON safely
+    const parsedBody = await parseJsonWithLimit(request, DEFAULT_MAX_BODY_BYTES);
+    if (!parsedBody.success) {
+      return parsedBody.response;
     }
 
-    const parseResult = ComposeRequestSchema.safeParse(body);
+    const parseResult = ComposeRequestSchema.safeParse(parsedBody.data);
     if (!parseResult.success) {
       return NextResponse.json(
         {

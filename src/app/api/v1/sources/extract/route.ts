@@ -3,6 +3,8 @@ import { z } from "zod";
 import { safeFetchArticle } from "@/server/security/safe-fetch";
 import { extractArticleFromHtml } from "@/server/ingestion/extractor";
 import { SecurityError } from "@/server/security/url-safety";
+import { parseJsonWithLimit, DEFAULT_MAX_BODY_BYTES } from "@/server/security/request-limits";
+import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
 
 const ExtractRequestSchema = z.object({
   url: z.string().url("A valid URL is required"),
@@ -10,18 +12,24 @@ const ExtractRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. Enforce rate limiting
+  const rateLimitResult = await enforceRateLimit(
+    request,
+    "sources:extract",
+    RATE_LIMIT_PROFILES.SOURCE_EXTRACT
+  );
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   try {
-    let body: unknown;
-    try {
-      body = await request.json();
-    } catch {
-      return NextResponse.json(
-        { success: false, error: "Invalid JSON request body", code: "INVALID_JSON" },
-        { status: 400 }
-      );
+    // 2. Enforce request size limit and parse JSON safely
+    const parsedBody = await parseJsonWithLimit(request, DEFAULT_MAX_BODY_BYTES);
+    if (!parsedBody.success) {
+      return parsedBody.response;
     }
 
-    const parseResult = ExtractRequestSchema.safeParse(body);
+    const parseResult = ExtractRequestSchema.safeParse(parsedBody.data);
     if (!parseResult.success) {
       return NextResponse.json(
         {
@@ -35,10 +43,10 @@ export async function POST(request: Request) {
 
     const { url, language } = parseResult.data;
 
-    // 1. Fetch HTML safely with complete SSRF and DNS rebinding protection
+    // 3. Fetch HTML safely with complete SSRF and DNS rebinding protection
     const fetchResult = await safeFetchArticle(url);
 
-    // 2. Extract article structure without executing any scripts
+    // 4. Extract article structure without executing any scripts
     const source = extractArticleFromHtml(fetchResult.text, fetchResult.finalUrl, {
       language,
     });
@@ -62,7 +70,7 @@ export async function POST(request: Request) {
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
       { success: false, error: `Failed to extract article: ${message}`, code: "EXTRACTION_FAILED" },
-      { status: 500 }
+      { status: 502 }
     );
   }
 }

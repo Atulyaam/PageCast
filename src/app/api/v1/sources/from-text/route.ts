@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { extractFromPastedText } from "@/server/ingestion/extractor";
+import { parseJsonWithLimit, MAX_SOURCE_TEXT_BODY_BYTES } from "@/server/security/request-limits";
+import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
 
 const FromTextRequestSchema = z.object({
   text: z.string().min(5, "Pasted text must be at least 5 characters long"),
@@ -11,18 +13,24 @@ const FromTextRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. Enforce rate limiting
+  const rateLimitResult = await enforceRateLimit(
+    request,
+    "sources:from-text",
+    RATE_LIMIT_PROFILES.SOURCE_EXTRACT
+  );
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   try {
-    let body: unknown;
-    try {
-      body = await request.json();
-    } catch {
-      return NextResponse.json(
-        { success: false, error: "Invalid JSON request body", code: "INVALID_JSON" },
-        { status: 400 }
-      );
+    // 2. Enforce request size limit and parse JSON safely
+    const parsedBody = await parseJsonWithLimit(request, MAX_SOURCE_TEXT_BODY_BYTES);
+    if (!parsedBody.success) {
+      return parsedBody.response;
     }
 
-    const parseResult = FromTextRequestSchema.safeParse(body);
+    const parseResult = FromTextRequestSchema.safeParse(parsedBody.data);
     if (!parseResult.success) {
       return NextResponse.json(
         {

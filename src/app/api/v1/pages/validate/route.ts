@@ -7,6 +7,8 @@ import { validateGrid } from "@/domain/validation/validate-grid";
 import { isValidPageNumber } from "@/domain/validation/page-number";
 import { convertDraftToPagePack } from "@/server/conversion/bulletin-to-pagepack";
 import type { PagePackV1 } from "@/domain/page-pack/types";
+import { parseJsonWithLimit, DEFAULT_MAX_BODY_BYTES } from "@/server/security/request-limits";
+import { enforceRateLimit, RATE_LIMIT_PROFILES } from "@/server/security/rate-limiter";
 
 const ValidateRequestSchema = z.object({
   pack: PagePackV1Schema.optional(),
@@ -16,9 +18,24 @@ const ValidateRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. Enforce rate limiting
+  const rateLimitResult = await enforceRateLimit(
+    request,
+    "pages:validate",
+    RATE_LIMIT_PROFILES.GENERAL
+  );
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response;
+  }
+
   try {
-    const json = await request.json();
-    const parsed = ValidateRequestSchema.safeParse(json);
+    // 2. Enforce request size limit (64 KiB allows checking candidate packs over budget)
+    const parsedBody = await parseJsonWithLimit(request, 64 * 1024);
+    if (!parsedBody.success) {
+      return parsedBody.response;
+    }
+
+    const parsed = ValidateRequestSchema.safeParse(parsedBody.data);
 
     if (!parsed.success) {
       return NextResponse.json(
