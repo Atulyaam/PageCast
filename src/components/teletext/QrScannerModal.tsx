@@ -17,6 +17,7 @@ import {
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import { savePageLocally } from "@/lib/storage/saved-pages";
 import { measurePagePack } from "@/domain/page-pack/codec";
+import { FocusTrap } from "@/components/common/FocusTrap";
 
 export interface QrScannerModalProps {
   isOpen: boolean;
@@ -204,7 +205,8 @@ function QrScannerModalContent({
       aria-labelledby="qr-scanner-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 font-mono backdrop-blur-xs"
     >
-      <div className="border-teletext-green bg-surface-terminal text-text-primary flex w-full max-w-lg flex-col gap-4 rounded border-2 p-6 shadow-2xl">
+      <FocusTrap onClose={onClose} className="w-full max-w-lg">
+        <div className="border-teletext-green bg-surface-terminal text-text-primary flex w-full flex-col gap-4 rounded border-2 p-6 shadow-2xl">
         {/* Header */}
         <div className="border-surface-border flex items-center justify-between border-b pb-3">
           <div className="flex items-center gap-2">
@@ -460,6 +462,7 @@ function QrScannerModalContent({
           <span>Zero Network Overhead</span>
         </div>
       </div>
+      </FocusTrap>
     </div>
   );
 }

@@ -8,6 +8,7 @@
  */
 
 import React from "react";
+import { FocusTrap } from "@/components/common/FocusTrap";
 
 export interface KeyboardShortcutsModalProps {
   isOpen: boolean;
@@ -44,7 +45,8 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
       aria-labelledby="shortcuts-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-xs"
     >
-      <div className="w-full max-w-lg border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_30px_rgba(0,255,102,0.3)]">
+      <FocusTrap onClose={onClose} className="w-full max-w-lg">
+        <div className="w-full border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_30px_rgba(0,255,102,0.3)]">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center gap-2">
@@ -105,6 +107,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
-  );
+    </FocusTrap>
+  </div>
+);
 };

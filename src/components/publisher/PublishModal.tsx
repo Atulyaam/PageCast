@@ -13,6 +13,7 @@ import { getMagazineDefinition } from "@/domain/teletext/magazine";
 import { GridValidationBanner } from "./GridValidationBanner";
 import { ByteBudgetMeter } from "./ByteBudgetMeter";
 import { isValidPageNumber } from "@/domain/validation/page-number";
+import { FocusTrap } from "@/components/common/FocusTrap";
 
 export interface PublishModalProps {
   isOpen: boolean;
@@ -97,7 +98,8 @@ export const PublishModal: React.FC<PublishModalProps> = ({
       aria-labelledby="publish-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-4 backdrop-blur-xs"
     >
-      <div className="my-8 w-full max-w-lg border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_30px_rgba(0,255,102,0.3)]">
+      <FocusTrap onClose={onClose} className="my-8 w-full max-w-lg">
+        <div className="w-full border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_30px_rgba(0,255,102,0.3)]">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center gap-2">
@@ -249,6 +251,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({
           </button>
         </div>
       </div>
+      </FocusTrap>
     </div>
   );
 };

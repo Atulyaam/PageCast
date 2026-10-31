@@ -13,6 +13,7 @@ import type { PagePackV1 } from "@/domain/page-pack/types";
 import { importPagePackFromJson } from "@/lib/export/pack-export";
 import { savePageLocally } from "@/lib/storage/saved-pages";
 import { measurePagePack } from "@/domain/page-pack/codec";
+import { FocusTrap } from "@/components/common/FocusTrap";
 
 export interface ImportDialogProps {
   isOpen: boolean;
@@ -143,7 +144,8 @@ function ImportDialogModal({
       aria-labelledby="import-dialog-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 font-mono backdrop-blur-xs"
     >
-      <div className="border-teletext-cyan bg-surface-terminal text-text-primary flex w-full max-w-lg flex-col gap-4 rounded border-2 p-6 shadow-2xl">
+      <FocusTrap onClose={onClose} className="w-full max-w-lg">
+        <div className="border-teletext-cyan bg-surface-terminal text-text-primary flex w-full flex-col gap-4 rounded border-2 p-6 shadow-2xl">
         {/* Header */}
         <div className="border-surface-border flex items-center justify-between border-b pb-3">
           <div className="flex items-center gap-2">
@@ -347,6 +349,7 @@ function ImportDialogModal({
           <span>Security: Client-side sandboxed validation</span>
         </div>
       </div>
+      </FocusTrap>
     </div>
   );
 }

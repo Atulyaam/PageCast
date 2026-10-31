@@ -14,6 +14,7 @@ import type { PagePackV1 } from "@/domain/page-pack/types";
 import { getBulletinShareUrl } from "@/server/export/qr-distribution";
 import { measurePagePack } from "@/domain/page-pack/codec";
 import { encodeMultiFramePack } from "@/lib/qr/multi-frame-codec";
+import { FocusTrap } from "@/components/common/FocusTrap";
 
 export interface ExportDialogProps {
   isOpen: boolean;
@@ -187,7 +188,8 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
       aria-labelledby="export-dialog-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 font-mono backdrop-blur-xs"
     >
-      <div className="w-full max-w-md border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_20px_rgba(0,255,102,0.25)]">
+      <FocusTrap onClose={onClose} className="w-full max-w-md">
+        <div className="w-full border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_20px_rgba(0,255,102,0.25)]">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center gap-2">
@@ -204,7 +206,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close dialog"
+            aria-label="Close export dialog"
             className="cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 hover:border-zinc-600 hover:text-white"
           >
             ✕
@@ -379,6 +381,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
           </button>
         </div>
       </div>
+      </FocusTrap>
     </div>
   );
 };
