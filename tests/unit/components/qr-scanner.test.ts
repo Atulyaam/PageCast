@@ -107,4 +107,3 @@ describe("QrScannerModal Component & Optical Ingestion (TASK-S4-OFF-10 / TR-009)
     }
   });
 });
-
