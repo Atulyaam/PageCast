@@ -13,12 +13,14 @@ import Link from "next/link";
 import { MAGAZINES } from "@/domain/teletext/magazine";
 import type { CatalogItem } from "@/server/database/repository";
 import type { GroupedMagazineCatalog } from "@/app/api/v1/catalog/route";
+import { saveCatalogueSnapshot, getCatalogueSnapshot } from "@/lib/storage/catalogue-snapshot";
 
 export default function BroadcastCataloguePage() {
   const [magazines, setMagazines] = useState<GroupedMagazineCatalog[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [languageFilter, setLanguageFilter] = useState<"all" | "en" | "hi">("all");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [snapshotDate, setSnapshotDate] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadCatalog() {
@@ -28,16 +30,41 @@ export default function BroadcastCataloguePage() {
           const json = await res.json();
           if (json.success && Array.isArray(json.magazines)) {
             setMagazines(json.magazines);
+            setIsLoading(false);
+            const allItems: CatalogItem[] = json.magazines.flatMap(
+              (m: GroupedMagazineCatalog) => m.bulletins || []
+            );
+            saveCatalogueSnapshot(allItems);
             return;
           }
         }
-      } catch (err) {
-        console.error("Failed to load catalog via API", err);
-      } finally {
-        setIsLoading(false);
+      } catch {
+        // Fallback to offline snapshot
       }
 
-      // Fallback: Populate magazines structure
+      try {
+        const snapshot = await getCatalogueSnapshot();
+        if (snapshot && snapshot.items.length > 0) {
+          const grouped: GroupedMagazineCatalog[] = MAGAZINES.map((mag) => ({
+            magazineNumber: mag.number,
+            name: mag.name,
+            description: mag.description,
+            pageRange: mag.pageRange,
+            defaultColor: mag.defaultColor,
+            bulletins: (snapshot.items as CatalogItem[]).filter(
+              (item) => item.magazineNumber === mag.number
+            ),
+          }));
+          setMagazines(grouped);
+          setSnapshotDate(new Date(snapshot.snapshotAt).toLocaleString());
+          setIsLoading(false);
+          return;
+        }
+      } catch {
+        // Continue to empty fallback
+      }
+
+      // Fallback: Populate empty magazines structure
       const fallbackGrouped: GroupedMagazineCatalog[] = MAGAZINES.map((mag) => ({
         magazineNumber: mag.number,
         name: mag.name,
@@ -47,6 +74,7 @@ export default function BroadcastCataloguePage() {
         bulletins: [],
       }));
       setMagazines(fallbackGrouped);
+      setIsLoading(false);
     }
 
     loadCatalog();
@@ -129,6 +157,22 @@ export default function BroadcastCataloguePage() {
             Browse published ultra-low bandwidth bulletins across all 8 standard Teletext magazines.
           </p>
         </div>
+
+        {/* Offline Snapshot Stale-State Notice */}
+        {snapshotDate && (
+          <div
+            role="status"
+            className="mb-6 flex items-center justify-between rounded border border-amber-500/50 bg-amber-950/20 px-3 py-2 font-mono text-xs text-amber-300"
+          >
+            <span>
+              ⚠️ OFFLINE CATALOGUE SNAPSHOT &bull; Stored {snapshotDate} &bull; Broadcast updates
+              paused
+            </span>
+            <span className="text-[10px] font-bold tracking-widest text-amber-400 uppercase">
+              OFFLINE CACHE
+            </span>
+          </div>
+        )}
 
         {/* Search & Filter Toolbar */}
         <div className="mb-8 flex flex-col justify-between gap-4 border border-zinc-800 bg-zinc-950 p-4 md:flex-row md:items-center">
