@@ -32,7 +32,7 @@
 | **Phase 3** | ENH-03 | Community Broadcast Kit & Printable Posters | **COMMITTED** | `2c13770` | 12 tests (`community-templates`, `poster-modal`, `source-import`), 421 tests total | 4 bilingual presets, printable A4 poster generator with @media print |
 | **Phase 4** | ENH-04 | PageCast Domain QA MCP Server | **COMMITTED** | `6f33964` | 9 tests (`domain-qa-server.test.ts`), 430 tests total | Stdio JSON-RPC 2.0 MCP server exposing 5 domain QA validation tools |
 | **Phase 5** | ENH-05 | Low-Bandwidth Data Saver Profile | **COMMITTED** | `cc49578` | 4 tests (`data-saver.test.ts`), 434 tests total | Unified profile: system font fallback, CRT glow/scanlines off, offline-first resolution, live session byte meter |
-| **Phase 6** | ENH-06 | Bulletin Freshness & Version History | **COMMITTED** | Pending commit | 5 tests (`freshness-versioning.test.ts`), 439 tests total | Revision badges, relative freshness, stale copy alert banner with live refresh, non-destructive expiry |
+| **Phase 6** | ENH-06 | Bulletin Freshness & Version History | **COMMITTED** | `bcde9df` | 5 tests (`freshness-versioning.test.ts`), 439 tests total | Revision badges, relative freshness, stale copy alert banner with live refresh, non-destructive expiry |
 | **Phase 7** | AUDIT-2 | Integration & Security Audit | **NOT STARTED** | — | — | End-to-end audit |
 | **Phase 8** | GATE | Automated Quality Gate (`pnpm quality:check`) | **NOT STARTED** | — | — | Full regression check |
 | **Phase 9** | DOCS | Hackathon Readiness & Documentation | **NOT STARTED** | — | — | README & runbook updates |
