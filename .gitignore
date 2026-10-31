@@ -26,11 +26,10 @@ lerna-debug.log*
 
 # Environment files and secrets (NEVER commit secrets!)
 .env
-.env*.local
-.env.development
-.env.test
-.env.production
+.env.*
 !.env.example
+.env.local
+.env.*.local
 
 # Vercel
 .vercel
@@ -41,6 +40,7 @@ lerna-debug.log*
 # Testing & Coverage
 /coverage
 /.nyc_output
+/.vitest
 
 # Cache & temporary files
 .eslintcache
@@ -57,4 +57,3 @@ Thumbs.db
 !.vscode/extensions.json
 *.sublime-project
 *.sublime-workspace
-
