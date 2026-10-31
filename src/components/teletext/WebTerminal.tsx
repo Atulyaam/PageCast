@@ -35,6 +35,7 @@ import { AudioControls } from "./AudioControls";
 import { AccessibleTextView } from "./AccessibleTextView";
 import { KeyboardShortcutsModal } from "./KeyboardShortcutsModal";
 import { ExportDialog } from "@/components/publisher/ExportDialog";
+import { ImportDialog } from "./ImportDialog";
 
 export interface WebTerminalProps {
   readonly initialPageNumber?: number;
@@ -59,6 +60,7 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+  const [isImportOpen, setIsImportOpen] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const isOnline = useOnlineStatus();
 
@@ -310,6 +312,15 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
           <button
             type="button"
+            onClick={() => setIsImportOpen(true)}
+            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            aria-label="Import PagePack JSON file"
+          >
+            IMPORT JSON
+          </button>
+
+          <button
+            type="button"
             onClick={() => setIsShortcutsOpen(true)}
             className="border-surface-border bg-surface-terminal text-text-muted hover:text-teletext-white flex items-center gap-1 rounded border px-2 py-1 text-xs transition-colors"
             aria-label="Open keyboard shortcuts help modal"
@@ -405,6 +416,16 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
         onClose={() => setIsExportOpen(false)}
         pageNumber={currentPageNumber}
         pack={pageData?.pack}
+      />
+
+      {/* PagePack Ingestion Dialog */}
+      <ImportDialog
+        isOpen={isImportOpen}
+        onClose={() => setIsImportOpen(false)}
+        onImportSuccess={(pack) => {
+          setIsImportOpen(false);
+          handleNavigate(pack.primaryPageNumber);
+        }}
       />
     </div>
   );

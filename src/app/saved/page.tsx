@@ -11,6 +11,7 @@ import React, { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import { getAllSavedPages, removeSavedPage } from "@/lib/storage/saved-pages";
 import type { SavedPageRecord } from "@/lib/storage/dexie-db";
+import { ImportDialog } from "@/components/teletext/ImportDialog";
 import { getMagazineDefinition } from "@/domain/teletext/magazine";
 
 export default function SavedPagesPage() {
@@ -18,7 +19,18 @@ export default function SavedPagesPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [actionMessage, setActionMessage] = useState<string>("");
+  const [isImportOpen, setIsImportOpen] = useState<boolean>(false);
   const [, startTransition] = useTransition();
+
+  const reloadPages = () => {
+    getAllSavedPages()
+      .then((pages) => {
+        setSavedPages(pages);
+      })
+      .catch(() => {
+        setSavedPages([]);
+      });
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -117,8 +129,16 @@ export default function SavedPagesPage() {
             </p>
           </div>
 
-          {/* Quick Search Filter */}
+          {/* Quick Search Filter & Import Button */}
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsImportOpen(true)}
+              className="border-teletext-yellow bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              aria-label="Import PagePack JSON file"
+            >
+              + IMPORT JSON
+            </button>
             <input
               type="text"
               value={searchQuery}
@@ -247,6 +267,16 @@ export default function SavedPagesPage() {
           <span className="text-teletext-green">100% CLIENT PERSISTED</span>
         </div>
       </footer>
+      {/* Import Dialog */}
+      <ImportDialog
+        isOpen={isImportOpen}
+        onClose={() => setIsImportOpen(false)}
+        onImportSuccess={() => {
+          reloadPages();
+          setActionMessage("PagePack imported and saved to offline vault successfully!");
+          setTimeout(() => setActionMessage(""), 4000);
+        }}
+      />
     </div>
   );
 }

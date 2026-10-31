@@ -2,10 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { ExportDialog } from "@/components/publisher/ExportDialog";
-import {
-  generateBulletinQrCode,
-  getBulletinShareUrl,
-} from "@/server/export/qr-distribution";
+import { generateBulletinQrCode, getBulletinShareUrl } from "@/server/export/qr-distribution";
 import { page100 } from "@/data/seed-pages";
 import type { PagePackV1 } from "@/domain/page-pack/types";
 
