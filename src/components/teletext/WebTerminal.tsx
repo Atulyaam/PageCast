@@ -23,6 +23,11 @@ import { getTeletextSynthesizer } from "@/lib/audio/teletext-synthesizer";
 import { useTeletextKeyboard } from "@/hooks/useTeletextKeyboard";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import { savePageLocally, removeSavedPage, isPageSaved } from "@/lib/storage/saved-pages";
+import {
+  formatRelativeFreshness,
+  isCopyStale,
+  isNoticeExpired,
+} from "@/domain/freshness/freshness";
 
 import { TerminalHeader } from "./TerminalHeader";
 import { TerminalLoading } from "./TerminalLoading";
@@ -226,6 +231,27 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
       }
     }
   }, [currentPageNumber, isSaved, pageData]);
+
+  const handleRefreshLive = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetchPublishedPage(currentPageNumber, fetch, false);
+      if (res.success && res.data) {
+        setPageData(res.data);
+        if (res.data.pack) {
+          await savePageLocally(res.data.pack);
+          setIsSaved(true);
+        }
+      }
+    } catch {
+      // Keep existing local state on network error
+    } finally {
+      setIsLoading(false);
+    }
+  }, [currentPageNumber]);
+
+  const isStaleCopy = isOnline && pageData?.isSavedCopy && isCopyStale(pageData.publishedAt);
+  const isExpired = isNoticeExpired((pageData?.pack?.metadata as any)?.validUntil);
 
   // Handle browser popstate
   useEffect(() => {
@@ -453,7 +479,41 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
             onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
             isOffline={!isOnline || pageData?.isFallback || pageData?.isSavedCopy}
             isSavedCopy={pageData?.isSavedCopy}
+            revision={pageData?.revision}
+            updatedAt={pageData?.publishedAt}
           />
+
+          {/* Stale Local Copy Warning Banner (ENH-06) */}
+          {isStaleCopy && (
+            <div className="flex w-full flex-wrap items-center justify-between gap-2 border-2 border-amber-500 bg-amber-950/80 p-2.5 font-mono text-xs text-amber-200">
+              <div className="flex items-center gap-2">
+                <span className="text-base">⚠️</span>
+                <div>
+                  <strong className="text-amber-400">STALE LOCAL COPY:</strong> Revision{" "}
+                  {pageData?.revision ?? 1} saved {formatRelativeFreshness(pageData?.publishedAt)}.
+                  Newer broadcast updates may be available.
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleRefreshLive}
+                className="cursor-pointer border border-amber-400 bg-amber-500 px-2.5 py-1 text-xs font-bold text-black hover:bg-amber-400"
+              >
+                REFRESH LIVE
+              </button>
+            </div>
+          )}
+
+          {/* Time-Sensitive Notice Expired Banner (ENH-06) */}
+          {isExpired && (
+            <div className="flex w-full items-center gap-2 border-2 border-red-500/80 bg-red-950/80 p-2.5 font-mono text-xs text-red-200">
+              <span className="text-base">⏳</span>
+              <div>
+                <strong className="text-red-400">NOTICE EXPIRED:</strong> This time-sensitive
+                advisory has passed its valid window. Content preserved for offline reference.
+              </div>
+            </div>
+          )}
 
           {/* Subpage Carousel Navigation */}
           {subPageCount > 1 && (

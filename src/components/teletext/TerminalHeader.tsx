@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from "react";
 import { getMagazineDefinition } from "@/domain/teletext/magazine";
+import { formatRelativeFreshness } from "@/domain/freshness/freshness";
 
 export interface TerminalHeaderProps {
   pageNumber: number;
@@ -18,6 +19,8 @@ export interface TerminalHeaderProps {
   onTogglePhosphorGlow: () => void;
   isOffline?: boolean;
   isSavedCopy?: boolean;
+  revision?: number;
+  updatedAt?: string;
   className?: string;
 }
 
@@ -29,6 +32,8 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   onTogglePhosphorGlow,
   isOffline = false,
   isSavedCopy = false,
+  revision,
+  updatedAt,
   className = "",
 }) => {
   const [clockTime, setClockTime] = useState<string>("");
@@ -96,6 +101,18 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         {isSavedCopy && (
           <span className="hidden rounded border border-emerald-500 bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 sm:inline-block">
             ★ LOCAL COPY
+          </span>
+        )}
+
+        {revision !== undefined && (
+          <span className="hidden rounded border border-cyan-800 bg-cyan-950/60 px-1.5 py-0.5 text-[10px] font-bold text-cyan-400 sm:inline-block">
+            Rev {revision}
+          </span>
+        )}
+
+        {updatedAt && (
+          <span className="hidden text-[10px] text-zinc-500 md:inline-block">
+            • {formatRelativeFreshness(updatedAt)}
           </span>
         )}
       </div>
