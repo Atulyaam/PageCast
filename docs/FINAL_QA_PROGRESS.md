@@ -26,9 +26,9 @@
 | **Phase 10**| Responsive & Accessibility Audit | **VERIFIED (Automated) / PENDING (Manual Screen-Reader)** | `723ad0f` | 33 passing (4 suites) | Verified axe-core rules, keyboard trapping, responsive 40x25 containment, ARIA roles; physical screen-reader check formalized as pending manual check |
 | **Phase 11**| Security & Production Configuration | **VERIFIED (Code/Mock) / PENDING (Live Remote Supabase)** | `723ad0f` | 67 passing (5 suites) | 0 secret leaks, SSRF loopback blocking, CSP headers, rate limiting, RLS schema; live remote DB migration formalized as pending user authorization |
 | **Phase 12**| Final Automated Regression Gate | **VERIFIED** | `1a85a3f` | 444 passing (69 suites) | 100% full quality gate pass (`pnpm quality:check`): env safety, formatting, linting, typecheck, 444 tests, 24 static pages built |
-| **Phase 13**| Manual Testing Checklist | **VERIFIED** | Pending commit | 12 test protocols | Generated `docs/FINAL_MANUAL_VALIDATION_CHECKLIST.md` with 12 detailed test cases, distinguishing automated pass from physical hardware checks |
-| **Phase 14**| Final Documentation & Release Report | **VERIFIED** | Pending commit | Runbook & Readiness | Authored `docs/FINAL_DEPLOYMENT_RUNBOOK.md` and `docs/RELEASE_READINESS_REPORT.md` (19 sections, 100% verified status) |
-| **Phase 15**| Git Change Management & Final Sign-Off | **IN PROGRESS** | — | — | Verify clean history, commit integrity |
+| **Phase 13**| Manual Testing Checklist | **VERIFIED** | `7f0a417` | 12 test protocols | Generated `docs/FINAL_MANUAL_VALIDATION_CHECKLIST.md` with 12 detailed test cases, distinguishing automated pass from physical hardware checks |
+| **Phase 14**| Final Documentation & Release Report | **VERIFIED** | `7f0a417` | Runbook & Readiness | Authored `docs/FINAL_DEPLOYMENT_RUNBOOK.md` and `docs/RELEASE_READINESS_REPORT.md` (19 sections, 100% verified status) |
+| **Phase 15**| Git Change Management & Final Sign-Off | **VERIFIED** | `7f0a417` | Final sign-off | Clean atomic commit history, zero secrets tracked, 100% test-verified release state |
 
 ---
 
