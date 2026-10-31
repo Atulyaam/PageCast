@@ -159,6 +159,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
         {/* QR Code Presentation */}
         <div className="mb-4 flex flex-col items-center justify-center border border-zinc-800 bg-black p-4">
           {qrDataUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={qrDataUrl}
               alt={`QR code for Teletext page ${pageNumber}`}
