@@ -76,3 +76,4 @@ Kiro served as the foundational pair programmer and architectural co-pilot throu
 - **LoRa & Packet Radio Broadcasting:** Transmitting 10 KiB PagePacks over unlicensed 868/915 MHz LoRa mesh networks and VHF ham radio.
 - **Acoustic Audio Modem:** Broadcasting bulletins over standard FM radio frequencies using audible audio frequency-shift keying (AFSK) demodulated by phone microphones.
 - **Solar-Powered Village Micro-Servers:** Raspberry Pi Zero W devices serving local PageCast offline broadcasts in disaster-prone rural regions.
+

@@ -102,3 +102,4 @@ describe("Low-Bandwidth Data Saver Profile (ENH-05)", () => {
     expect(result.data?.isFallback).toBe(true);
   });
 });
+

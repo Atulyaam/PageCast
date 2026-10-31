@@ -89,3 +89,4 @@ export const EFFICIENCY_BENCHMARKS: readonly BenchmarkCase[] = [
     pageCount: 1,
   },
 ];
+

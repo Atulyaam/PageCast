@@ -73,3 +73,4 @@ The PageCast codebase demonstrates rigorous defense-in-depth principles:
 - Cryptographic sentence hashes provide auditable claim provenance.
 - Clean separation of client and server boundaries prevents credential exposure.
 - Zero known high or critical vulnerabilities exist in the repository.
+

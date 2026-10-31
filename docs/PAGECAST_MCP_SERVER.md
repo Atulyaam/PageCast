@@ -229,3 +229,4 @@ The MCP server is fully covered by automated unit tests in `tests/unit/mcp/domai
 - Tool discovery (`tools/list`)
 - Execution of all 5 domain QA tools (`tools/call`)
 - Robust error handling for malformed JSON and unknown methods
+

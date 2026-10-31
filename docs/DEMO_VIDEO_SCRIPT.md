@@ -103,3 +103,4 @@
 
 **Audio / Voiceover:**
 > *"Built autonomously with **Kiro**—from architecture steering files and pre-commit budget hooks to a custom Model Context Protocol QA server. PageCast brings resilient, low-bandwidth communication back to the modern world. Open source, zero tracking, and ready for deployment."*
+

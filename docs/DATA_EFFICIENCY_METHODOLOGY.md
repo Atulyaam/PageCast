@@ -72,3 +72,4 @@ $$C_{\text{pages}} = \left\lfloor \frac{\text{StorageQuota}_{\text{bytes}}}{B_{\
 
 1. **Protocol Overhead:** Formulas model application-layer payload transfer times. They do not account for TCP slow-start congestion windows or TLS handshake round-trips, which disproportionately penalize multi-request web originals (80+ requests) compared to PageCast (1 request).
 2. **Local Caching:** Once saved offline in IndexedDB, subsequent PagePack access latency is **0 ms network transfer time**, drawing exclusively from local disk.
+
