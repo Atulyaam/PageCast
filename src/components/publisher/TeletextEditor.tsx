@@ -8,7 +8,8 @@ import { ColorPalettePicker } from "./ColorPalettePicker";
 import { TeletextGrid } from "@/components/teletext/TeletextGrid";
 
 export interface TeletextEditorProps {
-  initialPage: TeletextPage;
+  initialPage?: TeletextPage;
+  page?: TeletextPage;
   onChange?: (updatedPage: TeletextPage) => void;
   readOnly?: boolean;
   className?: string;
@@ -16,14 +17,16 @@ export interface TeletextEditorProps {
 
 export const TeletextEditor: React.FC<TeletextEditorProps> = ({
   initialPage,
+  page,
   onChange,
   readOnly = false,
   className = "",
 }) => {
-  const language = initialPage.language || "en";
+  const targetPage = (page || initialPage)!;
+  const language = targetPage.language || "en";
   const [rows, setRows] = useState<TeletextRow[]>(() => {
-    return initialPage.rows && initialPage.rows.length === TELETEXT_ROWS
-      ? [...initialPage.rows]
+    return targetPage.rows && targetPage.rows.length === TELETEXT_ROWS
+      ? [...targetPage.rows]
       : Array.from({ length: TELETEXT_ROWS }, () => ({
           spans: [{ text: " ".repeat(TELETEXT_COLS), color: "white" as TeletextColor }],
         }));
@@ -61,7 +64,7 @@ export const TeletextEditor: React.FC<TeletextEditorProps> = ({
 
     if (onChange) {
       onChange({
-        ...initialPage,
+        ...targetPage,
         rows: newRows,
       });
     }
@@ -90,7 +93,7 @@ export const TeletextEditor: React.FC<TeletextEditorProps> = ({
 
     if (onChange) {
       onChange({
-        ...initialPage,
+        ...targetPage,
         rows: newRows,
       });
     }
@@ -105,7 +108,7 @@ export const TeletextEditor: React.FC<TeletextEditorProps> = ({
 
     if (onChange) {
       onChange({
-        ...initialPage,
+        ...targetPage,
         rows: previous,
       });
     }
@@ -205,13 +208,13 @@ export const TeletextEditor: React.FC<TeletextEditorProps> = ({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between font-mono text-xs text-[#888888]">
           <span>40×25 CRT Canvas Preview (Click any row to edit)</span>
-          <span className="text-teletext-green">Active Page: P{initialPage.pageNumber}</span>
+          <span className="text-teletext-green">Active Page: P{targetPage.pageNumber}</span>
         </div>
 
         <div className="relative overflow-hidden rounded border border-[#333333] bg-black shadow-2xl">
           <TeletextGrid
             page={{
-              ...initialPage,
+              ...targetPage,
               rows,
             }}
             showScanlines={true}

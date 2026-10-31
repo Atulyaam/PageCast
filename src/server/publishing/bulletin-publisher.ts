@@ -69,7 +69,7 @@ export class BulletinPublisher {
       `page-${options.pageNumber}`;
 
     const pack: PagePackV1 = {
-      id: `pack-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      id: crypto.randomUUID(),
       version: 1,
       slug,
       title: options.title,

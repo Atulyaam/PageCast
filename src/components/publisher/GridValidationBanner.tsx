@@ -8,8 +8,8 @@ import { isValidPageNumber } from "@/domain/validation/page-number";
 import { measurePagePack } from "@/domain/page-pack/codec";
 
 export interface GridValidationBannerProps {
-  page: TeletextPage | null;
-  pack: PagePackV1 | null;
+  page?: TeletextPage | null;
+  pack?: PagePackV1 | null;
   className?: string;
 }
 
