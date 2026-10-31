@@ -33,8 +33,8 @@
 | **Phase 4** | ENH-04 | PageCast Domain QA MCP Server | **COMMITTED** | `6f33964` | 9 tests (`domain-qa-server.test.ts`), 430 tests total | Stdio JSON-RPC 2.0 MCP server exposing 5 domain QA validation tools |
 | **Phase 5** | ENH-05 | Low-Bandwidth Data Saver Profile | **COMMITTED** | `cc49578` | 4 tests (`data-saver.test.ts`), 434 tests total | Unified profile: system font fallback, CRT glow/scanlines off, offline-first resolution, live session byte meter |
 | **Phase 6** | ENH-06 | Bulletin Freshness & Version History | **COMMITTED** | `bcde9df` | 5 tests (`freshness-versioning.test.ts`), 439 tests total | Revision badges, relative freshness, stale copy alert banner with live refresh, non-destructive expiry |
-| **Phase 7** | AUDIT-2 | Integration & Security Audit | **NOT STARTED** | — | — | End-to-end audit |
-| **Phase 8** | GATE | Automated Quality Gate (`pnpm quality:check`) | **NOT STARTED** | — | — | Full regression check |
+| **Phase 7** | AUDIT-2 | Integration & Security Audit | **COMMITTED** | `44b5df8` | 50 security tests verified | Zero secret leaks, SSRF/CSP/rate-limit verified, SECURITY_AUDIT_REPORT.md |
+| **Phase 8** | GATE | Automated Quality Gate (`pnpm quality:check`) | **COMMITTED** | `Pending commit` | 439 tests (69 files), Next.js build | 100% full pass: env check, prettier, eslint, tsc, vitest, next build |
 | **Phase 9** | DOCS | Hackathon Readiness & Documentation | **NOT STARTED** | — | — | README & runbook updates |
 | **Phase 10**| PROTOCOL| Real-World User Validation Protocol | **NOT STARTED** | — | — | Testing protocol template |
 | **Phase 11**| DEMO | 3-Minute Video Demo Script & Presentation | **NOT STARTED** | — | — | Devpost & presentation text |
