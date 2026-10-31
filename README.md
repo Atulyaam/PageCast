@@ -182,3 +182,4 @@ The terminal is keyboard-first and operates like an authentic cathode-ray tube T
 ## 📄 License
 
 PageCast is licensed under the [MIT License](LICENSE).
+

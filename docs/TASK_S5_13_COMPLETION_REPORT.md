@@ -35,3 +35,4 @@ To guarantee automated regression protection and reproducible releases:
 |---|---|---|---|
 | **NFR-001** | Automated CI Quality Gate | Complete GitHub Actions workflow validating lint, types, tests, and build | Verified |
 | **NFR-004** | Secret Boundary CI Verification | Integrated `pnpm env:check` stage in CI pipeline | Verified |
+

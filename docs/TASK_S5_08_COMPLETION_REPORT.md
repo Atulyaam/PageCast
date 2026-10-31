@@ -44,3 +44,4 @@
 |---|---|---|---|
 | **UXR-016** | Accessibility Standards & Reduced Motion | `prefers-reduced-motion` scanline/glow disablement | Verified |
 | **UXR-017** | Responsive Mobile Viewports & Typography | 360px viewport grid scaling and Hindi Devanagari typography stack | Verified |
+

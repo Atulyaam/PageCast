@@ -80,3 +80,4 @@ $ vitest "tests/unit/performance/render-perf.test.ts"
       Tests  2 passed (2)
    Duration  1.63s
 ```
+

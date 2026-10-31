@@ -150,3 +150,4 @@ Verify the following response headers are active:
 - PageCast features an automated **fail-open in-memory repository fallback**:
   - If Supabase is unreachable or misconfigured, PageCast continues serving seeded broadcast pages (P100, P101, P102, P200, P400, P401) without crashing or throwing HTTP 500 errors to readers.
   - Rate limiter storage fails open gracefully to preserve terminal uptime.
+

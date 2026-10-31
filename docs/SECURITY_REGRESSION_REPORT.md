@@ -51,3 +51,4 @@ $ vitest "tests/security/security-regression.test.ts"
 ## 4. Conclusion
 
 All 13 security requirements are completely defended with regression tests integrated into the test runner. No regressions or bypass vectors were detected.
+

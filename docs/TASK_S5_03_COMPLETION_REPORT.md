@@ -69,3 +69,4 @@ To protect PageCast against clickjacking, cross-site scripting (XSS), MIME-type 
 | **SEC-006** | MIME Sniffing Defense | `X-Content-Type-Options: nosniff` | Verified |
 | **SEC-007** | Privacy & Permissions | `Referrer-Policy` & locked `Permissions-Policy` | Verified |
 | **SEC-012** | CSP Protection | Granular CSP with locked connect-src & object-src | Verified |
+

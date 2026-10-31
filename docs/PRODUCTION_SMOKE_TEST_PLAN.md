@@ -41,3 +41,4 @@ This smoke test plan defines the 15 end-to-end verification steps required to va
 *Note regarding physical optical transfer and mobile cameras:*
 - Automated unit/integration tests (`tests/unit/qr/multi-frame-codec.test.ts`, `tests/unit/components/qr-scanner.test.ts`) verify cryptographic reassembly algorithms and state machines.
 - **Physical air-gap optical transfers** (pointing a physical smartphone camera at a laptop screen displaying animated QR bursts) must be executed manually using two physical devices according to the protocol above before declaring complete physical verification.
+

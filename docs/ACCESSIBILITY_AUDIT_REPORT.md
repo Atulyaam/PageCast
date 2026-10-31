@@ -77,3 +77,4 @@ $ vitest "tests/unit/accessibility/axe-audit.test.ts"
       Tests  12 passed (12)
    Duration  1.32s
 ```
+

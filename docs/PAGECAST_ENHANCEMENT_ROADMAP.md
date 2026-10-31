@@ -230,3 +230,4 @@ For any enhancement to be considered **DONE**, it must satisfy all of the follow
 4. **Clean Quality Gate:** `pnpm quality:check` must exit with code 0 (`env:check`, `format:check`, `lint`, `typecheck`, `test:run`, `next build`).
 5. **No Production Leaks:** Zero server secrets or API keys exposed in client bundles.
 6. **Documentation Updated:** Changes traced in `docs/REQUIREMENTS_TRACEABILITY.md` with git commit references.
+

@@ -59,3 +59,4 @@ To provide an authentic, production-grade demonstration catalogue for Kiroween 2
 | ID | Description | Resolution | Status |
 |---|---|---|---|
 | **SUB-007** | Multilingual Demo Catalogue | 5 curated demonstration bulletins with genuine attribution and dual-script coverage | Verified |
+

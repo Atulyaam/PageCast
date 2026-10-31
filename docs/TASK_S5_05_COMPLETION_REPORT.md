@@ -53,3 +53,4 @@ To provide robust error containment without leaking internal stack traces or dat
 |---|---|---|---|
 | **NFR-007** | Graceful Degradation & Containment | Segment and global error boundaries prevent application crashes | Verified |
 | **UXR-012** | Actionable Error States | Fastext recovery links and retry buttons return users to broadcast index | Verified |
+

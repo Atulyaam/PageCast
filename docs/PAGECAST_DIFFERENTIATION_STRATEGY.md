@@ -256,3 +256,4 @@ To validate PageCast with 5 to 10 real users before the hackathon submission wit
 - Zero tracking cookies, analytics pixels, or personal data collection.
 - Explicit informed verbal consent; testing conducted on staging or local sandbox.
 - Findings directly feed into UI refinement prior to the final video recording.
+
