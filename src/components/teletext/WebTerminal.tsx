@@ -359,16 +359,16 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
       className={`mx-auto flex w-full max-w-4xl flex-col items-center gap-3 ${className}`.trim()}
     >
       {/* Top Utility & Mode Bar */}
-      <div className="border-surface-border bg-surface-panel flex w-full flex-wrap items-center justify-between gap-2 rounded border px-3 py-1.5 font-mono text-xs sm:text-sm">
-        <div className="flex items-center gap-2">
+      <div className="border-surface-border bg-surface-panel flex w-full flex-col justify-between gap-2 rounded border px-3 py-2 font-mono text-xs sm:flex-row sm:items-center sm:text-sm">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {/* View Mode Toggle */}
           <button
             type="button"
             onClick={() => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt"))}
-            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
+            className={`btn-tactile rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
               viewMode === "accessible"
-                ? "border-teletext-green bg-teletext-green text-teletext-black font-bold"
-                : "border-surface-border bg-surface-terminal text-text-primary hover:text-teletext-yellow"
+                ? "border-teletext-green bg-teletext-green text-teletext-black font-bold shadow-[0_0_8px_rgba(0,255,0,0.3)]"
+                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
             }`}
             aria-label={
               viewMode === "crt"
@@ -376,17 +376,20 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
                 : "Switch to CRT visual grid view"
             }
           >
-            {viewMode === "crt" ? "ACCESSIBLE TEXT MODE" : "CRT DISPLAY MODE"}
+            <span className="sm:hidden">{viewMode === "crt" ? "ACCESSIBLE" : "CRT MODE"}</span>
+            <span className="hidden sm:inline">
+              {viewMode === "crt" ? "ACCESSIBLE TEXT MODE" : "CRT DISPLAY MODE"}
+            </span>
           </button>
 
           {/* Data Saver Mode Toggle (ENH-05) */}
           <button
             type="button"
             onClick={handleToggleDataSaver}
-            className={`rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
+            className={`btn-tactile rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
               isDataSaver
-                ? "border-cyan-400 bg-cyan-950/70 font-bold text-cyan-300"
-                : "border-surface-border bg-surface-terminal text-text-primary hover:text-teletext-yellow"
+                ? "border-cyan-400 bg-cyan-950/70 font-bold text-cyan-300 shadow-[0_0_8px_rgba(0,255,255,0.25)]"
+                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
             }`}
             aria-label={
               isDataSaver
@@ -394,7 +397,10 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
                 : "Enable Low-Bandwidth Data Saver Mode"
             }
           >
-            {isDataSaver ? "⚡ DATA SAVER ON" : "DATA SAVER [D]"}
+            <span className="sm:hidden">{isDataSaver ? "⚡ SAVER ON" : "SAVER"}</span>
+            <span className="hidden sm:inline">
+              {isDataSaver ? "⚡ DATA SAVER ON" : "DATA SAVER [D]"}
+            </span>
           </button>
 
           {/* Buffer Dialing Indicator */}
@@ -406,15 +412,15 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
         </div>
 
         {/* Action Buttons: Save, Shortcuts & Share */}
-        <div className="flex items-center gap-2">
+        <div className="no-scrollbar flex flex-wrap items-center gap-1.5 overflow-x-auto sm:gap-2 sm:overflow-visible">
           {/* Save / Remove Offline Page */}
           <button
             type="button"
             onClick={handleToggleSave}
             disabled={!pageData?.pack}
-            className={`flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all sm:text-sm ${
+            className={`btn-tactile flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
               isSaved
-                ? "border-teletext-green bg-teletext-green/20 text-teletext-green"
+                ? "border-teletext-green bg-teletext-green/20 text-teletext-green shadow-[0_0_8px_rgba(0,255,0,0.2)]"
                 : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
             } ${!pageData?.pack ? "cursor-not-allowed opacity-50" : ""}`}
             aria-label={
@@ -423,22 +429,26 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
                 : "Save bulletin locally for offline reading"
             }
           >
-            <span>{isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}</span>
+            <span className="sm:hidden">{isSaved ? "★ SAVED" : "☆ SAVE"}</span>
+            <span className="hidden sm:inline">
+              {isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}
+            </span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsEvidenceOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors sm:text-sm"
+            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95 sm:text-sm"
             aria-label="Inspect source sentence evidence and attribution"
           >
-            EVIDENCE [E]
+            <span className="sm:hidden">EVID</span>
+            <span className="hidden sm:inline">EVIDENCE [E]</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsExportOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors sm:text-sm"
+            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95 sm:text-sm"
             aria-label="Share bulletin or export PagePack QR code"
           >
             SHARE / QR
@@ -447,25 +457,27 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
           <button
             type="button"
             onClick={() => setIsImportOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95"
             aria-label="Import PagePack JSON file"
           >
-            IMPORT JSON
+            <span className="sm:hidden">IMPORT</span>
+            <span className="hidden sm:inline">IMPORT JSON</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsScannerOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-green hover:text-teletext-green flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-colors"
+            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-green hover:text-teletext-green flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95"
             aria-label="Scan optical QR code or air-gap burst"
           >
-            SCAN QR
+            <span className="sm:hidden">SCAN</span>
+            <span className="hidden sm:inline">SCAN QR</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsShortcutsOpen(true)}
-            className="border-surface-border bg-surface-terminal text-text-muted hover:text-teletext-white flex items-center gap-1 rounded border px-2 py-1 text-xs transition-colors"
+            className="btn-tactile border-surface-border bg-surface-terminal text-text-muted hover:text-teletext-white flex items-center gap-1 rounded border px-2 py-1 text-xs transition-all active:scale-95"
             aria-label="Open keyboard shortcuts help modal"
           >
             KEYS (?)

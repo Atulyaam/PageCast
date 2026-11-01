@@ -16,12 +16,12 @@ export default async function TerminalPage({ searchParams }: TerminalPageProps) 
   return (
     <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
       {/* Top Bar */}
-      <header className="border-surface-border bg-surface-panel/80 sticky top-0 z-30 border-b px-4 py-2 backdrop-blur">
+      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-30 border-b px-3 py-2 backdrop-blur sm:px-4 sm:py-2.5">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
-              className="text-teletext-yellow font-mono text-lg font-bold tracking-tight transition-opacity hover:opacity-80"
+              className="text-teletext-yellow font-mono text-base font-bold tracking-tight transition-opacity hover:opacity-80 sm:text-lg"
             >
               PAGECAST
             </Link>
@@ -30,19 +30,22 @@ export default async function TerminalPage({ searchParams }: TerminalPageProps) 
             </span>
           </div>
 
-          <nav className="flex items-center gap-4 font-mono text-xs">
-            <Link href="/" className="text-text-muted hover:text-teletext-white transition-all">
+          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto font-mono text-xs sm:gap-4">
+            <Link
+              href="/"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
+            >
               EXIT TERMINAL
             </Link>
             <Link
               href="/catalogue"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
             >
               CATALOGUE
             </Link>
             <Link
               href="/saved"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
             >
               SAVED
             </Link>

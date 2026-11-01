@@ -224,7 +224,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setContrast("standard")}
               aria-pressed={contrast === "standard"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 contrast === "standard" ? "ring-teletext-yellow font-bold ring-2" : ""
               } ${currentTheme.button}`}
             >
@@ -234,7 +234,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setContrast("high-contrast-light")}
               aria-pressed={contrast === "high-contrast-light"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 contrast === "high-contrast-light"
                   ? "bg-white font-bold text-black ring-2 ring-black"
                   : ""
@@ -246,7 +246,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setContrast("high-contrast-dark")}
               aria-pressed={contrast === "high-contrast-dark"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 contrast === "high-contrast-dark"
                   ? "bg-black font-bold text-white ring-2 ring-white"
                   : ""
@@ -263,7 +263,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setFontSize("normal")}
               aria-pressed={fontSize === "normal"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 fontSize === "normal" ? "ring-teletext-yellow font-bold ring-2" : ""
               } ${currentTheme.button}`}
             >
@@ -273,7 +273,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setFontSize("large")}
               aria-pressed={fontSize === "large"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 fontSize === "large" ? "ring-teletext-yellow font-bold ring-2" : ""
               } ${currentTheme.button}`}
             >
@@ -283,7 +283,7 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
               type="button"
               onClick={() => setFontSize("xlarge")}
               aria-pressed={fontSize === "xlarge"}
-              className={`focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-colors focus-visible:ring-2 ${
+              className={`btn-tactile focus-visible:ring-teletext-yellow rounded border px-2 py-1 text-xs transition-all focus-visible:ring-2 active:scale-95 ${
                 fontSize === "xlarge" ? "ring-teletext-yellow font-bold ring-2" : ""
               } ${currentTheme.button}`}
             >

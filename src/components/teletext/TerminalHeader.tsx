@@ -79,12 +79,19 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
     >
       {/* Broadcast Stream Status & Magazine Tag */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1.5 font-bold">
-          <span
-            className={`inline-block h-2.5 w-2.5 rounded-full ${
-              isOffline ? "animate-pulse bg-amber-500" : "animate-pulse bg-emerald-400"
-            }`}
-          />
+        <div className="flex items-center gap-2 font-bold">
+          <span className="relative flex h-2.5 w-2.5">
+            <span
+              className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                isOffline ? "animate-ping bg-amber-400" : "animate-ping bg-emerald-400"
+              }`}
+            />
+            <span
+              className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
+                isOffline ? "bg-amber-500" : "bg-emerald-400"
+              }`}
+            />
+          </span>
           <span className={isOffline ? "text-amber-400" : "text-emerald-400"}>
             {isOffline ? "CACHED / OFFLINE" : "LIVE BROADCAST"}
           </span>
@@ -130,9 +137,9 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onToggleScanlines}
             aria-pressed={showScanlines}
-            className={`cursor-pointer border px-2 py-0.5 text-xs font-bold transition-colors ${
+            className={`btn-tactile cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               showScanlines
-                ? "border-yellow-400 bg-yellow-400 text-black"
+                ? "border-yellow-400 bg-yellow-400 text-black shadow-[0_0_8px_rgba(255,255,0,0.35)]"
                 : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
             }`}
           >
@@ -143,9 +150,9 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onTogglePhosphorGlow}
             aria-pressed={phosphorGlow}
-            className={`cursor-pointer border px-2 py-0.5 text-xs font-bold transition-colors ${
+            className={`btn-tactile cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               phosphorGlow
-                ? "border-cyan-400 bg-cyan-400 text-black"
+                ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.35)]"
                 : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
             }`}
           >

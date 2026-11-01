@@ -85,6 +85,42 @@ body {
   text-shadow: 0 0 2px currentColor;
 }
 
+/* CRT Monitor Bezel & Glass Reflection */
+.crt-bezel {
+  box-shadow:
+    0 0 0 1px rgba(39, 39, 42, 0.8),
+    0 12px 36px -12px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.crt-glass-glare {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.01) 40%,
+    rgba(0, 0, 0, 0) 60%
+  );
+}
+
+/* Tactile Hardware Press Animation */
+.btn-tactile {
+  transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-tactile:active {
+  transform: scale(0.96) translateY(1px);
+}
+
+/* Smooth Touch Scroll Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Accessible Reduced-Motion Support */
 @media (prefers-reduced-motion: reduce) {
   *,

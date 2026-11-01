@@ -77,7 +77,7 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="rounded border border-zinc-700 bg-zinc-800 px-2.5 py-1 text-xs font-bold text-zinc-300 transition-colors hover:border-red-400 hover:text-red-400"
+              className="btn-tactile rounded border border-zinc-700 bg-zinc-800 px-2.5 py-1 text-xs font-bold text-zinc-300 transition-all hover:border-red-400 hover:text-red-400 active:scale-95"
               aria-label="Close evidence explorer"
             >
               ESC [X]
@@ -220,9 +220,9 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
                           key={ref.pointId}
                           type="button"
                           onClick={() => setSelectedPointId(ref.pointId)}
-                          className={`rounded border px-2 py-1 text-[11px] font-bold transition-all ${
+                          className={`btn-tactile rounded border px-2 py-1 text-[11px] font-bold transition-all active:scale-95 ${
                             isSelected
-                              ? "border-cyan-400 bg-cyan-400/20 text-cyan-300"
+                              ? "border-cyan-400 bg-cyan-400/20 text-cyan-300 shadow-[0_0_8px_rgba(0,255,255,0.25)]"
                               : "border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
                           }`}
                         >

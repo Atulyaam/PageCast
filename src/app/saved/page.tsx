@@ -80,12 +80,12 @@ export default function SavedPagesPage() {
   return (
     <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
       {/* Top Navigation Header */}
-      <header className="border-surface-border bg-surface-panel/80 sticky top-0 z-30 border-b px-4 py-3 backdrop-blur">
+      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-30 border-b px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
-              className="text-teletext-yellow font-mono text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
+              className="text-teletext-yellow font-mono text-lg font-bold tracking-tight transition-opacity hover:opacity-80 sm:text-xl"
             >
               PAGECAST
             </Link>
@@ -94,23 +94,29 @@ export default function SavedPagesPage() {
             </span>
           </div>
 
-          <nav className="flex items-center gap-4 font-mono text-xs">
-            <Link href="/" className="text-text-muted hover:text-teletext-white transition-all">
+          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto font-mono text-xs sm:gap-4">
+            <Link
+              href="/"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
+            >
               READER
             </Link>
             <Link
               href="/terminal"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
             >
               TERMINAL
             </Link>
             <Link
               href="/catalogue"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
             >
               CATALOGUE
             </Link>
-            <Link href="/saved" className="text-teletext-green font-bold underline transition-all">
+            <Link
+              href="/saved"
+              className="btn-tactile text-teletext-green rounded px-2 py-1 font-bold underline transition-all"
+            >
               SAVED
             </Link>
           </nav>
@@ -132,11 +138,11 @@ export default function SavedPagesPage() {
           </div>
 
           {/* Quick Search Filter & Import Button */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className="border-teletext-yellow bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="btn-tactile border-teletext-yellow bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95"
               aria-label="Import PagePack JSON file"
             >
               + IMPORT JSON
@@ -144,7 +150,7 @@ export default function SavedPagesPage() {
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="border-teletext-green bg-teletext-green/10 text-teletext-green hover:bg-teletext-green hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="btn-tactile border-teletext-green bg-teletext-green/10 text-teletext-green hover:bg-teletext-green hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95"
               aria-label="Scan optical QR code or air-gap burst"
             >
               SCAN QR

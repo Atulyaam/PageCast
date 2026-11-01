@@ -209,7 +209,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close export dialog"
-              className="cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 hover:border-zinc-600 hover:text-white"
+              className="btn-tactile cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 transition-all hover:border-zinc-600 hover:text-white active:scale-95"
             >
               ✕
             </button>
@@ -220,7 +220,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab("url")}
-              className={`cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-colors ${
+              className={`btn-tactile cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-all active:scale-95 ${
                 activeTab === "url"
                   ? "border-emerald-400 bg-emerald-950/30 text-emerald-400"
                   : "border-transparent text-zinc-400 hover:text-zinc-200"
@@ -231,7 +231,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab("burst")}
-              className={`cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-colors ${
+              className={`btn-tactile cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-all active:scale-95 ${
                 activeTab === "burst"
                   ? "border-emerald-400 bg-emerald-950/30 text-emerald-400"
                   : "border-transparent text-zinc-400 hover:text-zinc-200"
@@ -242,7 +242,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab("raw")}
-              className={`cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-colors ${
+              className={`btn-tactile cursor-pointer border-b-2 px-3 py-1.5 font-bold transition-all active:scale-95 ${
                 activeTab === "raw"
                   ? "border-emerald-400 bg-emerald-950/30 text-emerald-400"
                   : "border-transparent text-zinc-400 hover:text-zinc-200"
@@ -353,9 +353,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className={`cursor-pointer border px-3 py-1.5 text-xs font-bold whitespace-nowrap ${
+                className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold whitespace-nowrap transition-all active:scale-95 ${
                   copied
-                    ? "border-emerald-500 bg-emerald-500 text-black"
+                    ? "border-emerald-500 bg-emerald-500 text-black shadow-[0_0_8px_rgba(16,185,129,0.3)]"
                     : "border-zinc-700 bg-zinc-900 text-emerald-400 hover:border-emerald-400"
                 }`}
               >
@@ -378,7 +378,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
               <button
                 type="button"
                 onClick={() => setIsPosterOpen(true)}
-                className="cursor-pointer border border-emerald-500/60 bg-emerald-950/40 px-3 py-1.5 text-xs font-bold tracking-wider text-emerald-400 uppercase transition-colors hover:bg-emerald-500 hover:text-black"
+                className="btn-tactile cursor-pointer border border-emerald-500/60 bg-emerald-950/40 px-3 py-1.5 text-xs font-bold tracking-wider text-emerald-400 uppercase transition-all hover:bg-emerald-500 hover:text-black active:scale-95"
               >
                 🖨️ Poster
               </button>
@@ -386,7 +386,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
                 type="button"
                 onClick={handleDownloadJson}
                 disabled={!pack}
-                className="cursor-pointer bg-emerald-600 px-3 py-1.5 text-xs font-bold tracking-wider text-black uppercase hover:bg-emerald-500 disabled:opacity-50"
+                className="btn-tactile cursor-pointer bg-emerald-600 px-3 py-1.5 text-xs font-bold tracking-wider text-black uppercase transition-all hover:bg-emerald-500 active:scale-95 disabled:opacity-50"
               >
                 Download .JSON
               </button>

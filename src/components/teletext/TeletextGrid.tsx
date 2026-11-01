@@ -20,7 +20,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
 }) => {
   return (
     <div
-      className={`bg-surface-terminal border-surface-border rounded-terminal relative flex flex-col border p-2 shadow-2xl sm:p-4 ${className}`.trim()}
+      className={`bg-surface-terminal border-surface-border rounded-terminal crt-bezel relative flex flex-col border p-2 shadow-2xl transition-all sm:p-4 ${className}`.trim()}
     >
       {/* Semantic Screen-Reader Transcription */}
       <AccessibleAlternative page={page} />
@@ -35,11 +35,17 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
           phosphorGlow ? "crt-glow" : ""
         }`}
       >
+        {/* Subtle Retro CRT Glass Glare Effect */}
+        <div
+          aria-hidden="true"
+          className="crt-glass-glare pointer-events-none absolute inset-0 z-20"
+        />
+
         {/* Optional CRT Scanline Overlay */}
         {showScanlines && (
           <div
             aria-hidden="true"
-            className="crt-scanlines pointer-events-none absolute inset-0 z-10 opacity-40"
+            className="crt-scanlines pointer-events-none absolute inset-0 z-10 opacity-40 transition-opacity duration-300"
           />
         )}
 

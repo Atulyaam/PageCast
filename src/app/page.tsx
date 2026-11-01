@@ -5,47 +5,52 @@ export default function Home() {
   return (
     <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
       {/* Top Header */}
-      <header className="border-surface-border bg-surface-panel/80 sticky top-0 z-30 border-b px-4 py-3 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-teletext-yellow font-mono text-xl font-bold tracking-tight">
-              PAGECAST
-            </span>
-            <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-xs">
-              TELETEXT 2026
-            </span>
+      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-30 border-b px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
+        <div className="mx-auto flex max-w-5xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-teletext-yellow font-mono text-lg font-bold tracking-tight sm:text-xl">
+                PAGECAST
+              </span>
+              <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-[11px] sm:text-xs">
+                TELETEXT 2026
+              </span>
+            </div>
           </div>
 
-          <nav className="flex items-center gap-4 font-mono text-xs sm:text-sm">
-            <Link href="/" className="text-teletext-yellow transition-all hover:underline">
+          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto py-0.5 font-mono text-xs sm:gap-3 sm:text-sm">
+            <Link
+              href="/"
+              className="btn-tactile text-teletext-yellow rounded px-2 py-1 font-bold transition-all hover:bg-zinc-800/60"
+            >
               READER
             </Link>
             <Link
               href="/terminal"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
             >
               TERMINAL
             </Link>
             <Link
               href="/catalogue"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
             >
               CATALOGUE
             </Link>
             <Link
               href="/saved"
-              className="text-text-muted hover:text-teletext-white transition-all"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
             >
               SAVED
             </Link>
             <Link
               href="/publisher/ingest"
-              className="border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 rounded border px-2 py-0.5 transition-all"
+              className="btn-tactile border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 shrink-0 rounded border px-2.5 py-1 font-semibold transition-all"
             >
               PUBLISHER STUDIO
             </Link>
-            <span className="text-surface-border-subtle hidden sm:inline">|</span>
-            <span className="text-text-muted hidden sm:inline">KIROWEEN 2026</span>
+            <span className="text-surface-border-subtle hidden lg:inline">|</span>
+            <span className="text-text-muted hidden lg:inline">KIROWEEN 2026</span>
           </nav>
         </div>
       </header>

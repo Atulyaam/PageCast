@@ -120,22 +120,22 @@ export default function BroadcastCataloguePage() {
             </Link>
           </div>
 
-          <nav className="flex items-center gap-3 text-xs sm:text-sm">
+          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto text-xs sm:gap-3 sm:text-sm">
             <Link
               href="/"
-              className="border border-transparent px-2.5 py-1 text-zinc-400 hover:border-zinc-800 hover:text-white"
+              className="btn-tactile border border-transparent px-2.5 py-1 text-zinc-400 transition-all hover:border-zinc-800 hover:text-white active:scale-95"
             >
               📺 Terminal (P100)
             </Link>
             <Link
               href="/saved"
-              className="border border-transparent px-2.5 py-1 text-zinc-400 hover:border-zinc-800 hover:text-white"
+              className="btn-tactile border border-transparent px-2.5 py-1 text-zinc-400 transition-all hover:border-zinc-800 hover:text-white active:scale-95"
             >
               💾 Saved
             </Link>
             <Link
               href="/publisher"
-              className="border border-zinc-700 bg-zinc-900 px-2.5 py-1 font-bold text-emerald-400 hover:border-emerald-500"
+              className="btn-tactile border border-zinc-700 bg-zinc-900 px-2.5 py-1 font-bold text-emerald-400 transition-all hover:border-emerald-500 active:scale-95"
             >
               Publisher Studio
             </Link>
@@ -203,9 +203,9 @@ export default function BroadcastCataloguePage() {
               <button
                 type="button"
                 onClick={() => setLanguageFilter("all")}
-                className={`cursor-pointer border px-3 py-1.5 text-xs font-bold transition-colors ${
+                className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "all"
-                    ? "border-cyan-400 bg-cyan-400 text-black"
+                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
                     : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
                 }`}
               >
@@ -214,9 +214,9 @@ export default function BroadcastCataloguePage() {
               <button
                 type="button"
                 onClick={() => setLanguageFilter("en")}
-                className={`cursor-pointer border px-3 py-1.5 text-xs font-bold transition-colors ${
+                className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "en"
-                    ? "border-cyan-400 bg-cyan-400 text-black"
+                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
                     : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
                 }`}
               >
@@ -225,9 +225,9 @@ export default function BroadcastCataloguePage() {
               <button
                 type="button"
                 onClick={() => setLanguageFilter("hi")}
-                className={`cursor-pointer border px-3 py-1.5 text-xs font-bold transition-colors ${
+                className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "hi"
-                    ? "border-cyan-400 bg-cyan-400 text-black"
+                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
                     : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
                 }`}
               >

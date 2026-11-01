@@ -66,7 +66,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close keyboard shortcuts"
-              className="cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 hover:border-zinc-600 hover:text-white"
+              className="btn-tactile cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 transition-all hover:border-zinc-600 hover:text-white active:scale-95"
             >
               ✕
             </button>
@@ -105,7 +105,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="cursor-pointer bg-emerald-500 px-4 py-1.5 text-xs font-bold tracking-wider text-black uppercase hover:bg-emerald-400"
+              className="btn-tactile cursor-pointer bg-emerald-500 px-4 py-1.5 text-xs font-bold tracking-wider text-black uppercase transition-all hover:bg-emerald-400 active:scale-95"
             >
               Got it
             </button>

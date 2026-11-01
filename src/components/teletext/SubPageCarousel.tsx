@@ -126,9 +126,9 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
               key={i}
               type="button"
               onClick={() => handleSelect(i)}
-              className={`h-5 w-5 rounded text-[11px] font-bold transition-colors ${
+              className={`btn-tactile h-5 w-5 rounded text-[11px] font-bold transition-all active:scale-90 ${
                 i === currentSubIndex
-                  ? "bg-cyan-400 font-extrabold text-black shadow"
+                  ? "bg-cyan-400 font-extrabold text-black shadow-[0_0_6px_rgba(0,255,255,0.4)]"
                   : "border border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-white"
               }`}
               aria-label={`Jump to subpage ${i + 1}`}
@@ -162,7 +162,7 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={handlePrev}
-          className="border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
+          className="btn-tactile border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-all hover:border-zinc-700 hover:text-white active:scale-95"
           aria-label="Previous subpage"
         >
           &larr; PREV
@@ -172,10 +172,10 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={togglePause}
-          className={`border px-2 py-1 text-xs font-bold transition-colors ${
+          className={`btn-tactile border px-2 py-1 text-xs font-bold transition-all active:scale-95 ${
             isAutoRotating
               ? "border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:text-white"
-              : "border-yellow-500 bg-yellow-500/20 text-yellow-300"
+              : "border-yellow-500 bg-yellow-500/20 text-yellow-300 shadow-[0_0_8px_rgba(234,179,8,0.25)]"
           }`}
           aria-label={isAutoRotating ? "Pause auto-rotation" : "Resume auto-rotation"}
         >
@@ -186,7 +186,7 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={handleNext}
-          className="border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
+          className="btn-tactile border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-all hover:border-zinc-700 hover:text-white active:scale-95"
           aria-label="Next subpage"
         >
           NEXT &rarr;

@@ -87,9 +87,9 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
           type="button"
           onClick={handleToggleSoundFx}
           aria-pressed={!isSynthMuted}
-          className={`cursor-pointer border px-2.5 py-1 text-xs font-bold transition-colors ${
+          className={`btn-tactile cursor-pointer border px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
             !isSynthMuted
-              ? "border-emerald-500 bg-emerald-500 text-black"
+              ? "border-emerald-500 bg-emerald-500 text-black shadow-[0_0_8px_rgba(16,185,129,0.35)]"
               : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
           }`}
         >
@@ -114,9 +114,9 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
                     : "Pause speech narration"
                   : "Read bulletin aloud using speech synthesizer"
               }
-              className={`cursor-pointer border px-3 py-1 text-xs font-bold transition-colors ${
+              className={`btn-tactile cursor-pointer border px-3 py-1 text-xs font-bold transition-all active:scale-95 ${
                 speechState.isSpeaking && !speechState.isPaused
-                  ? "animate-pulse border-yellow-400 bg-yellow-400 text-black"
+                  ? "animate-pulse border-yellow-400 bg-yellow-400 text-black shadow-[0_0_8px_rgba(250,204,21,0.4)]"
                   : speechState.isPaused
                     ? "border-amber-500 bg-amber-500 text-black"
                     : "border-zinc-700 bg-zinc-900 text-yellow-400 hover:border-yellow-400"
@@ -134,7 +134,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
                 type="button"
                 onClick={handleStopSpeech}
                 aria-label="Stop speech narration"
-                className="cursor-pointer border border-zinc-800 bg-black px-2.5 py-1 text-xs font-bold text-red-400 hover:border-red-500"
+                className="btn-tactile cursor-pointer border border-zinc-800 bg-black px-2.5 py-1 text-xs font-bold text-red-400 transition-all hover:border-red-500 active:scale-95"
               >
                 ⏹ STOP
               </button>
