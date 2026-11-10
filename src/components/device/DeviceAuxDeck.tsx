@@ -96,14 +96,14 @@ export const DeviceAuxDeck: React.FC<DeviceAuxDeckProps> = ({
           whileTap={{ scale: 0.96 }}
           disabled={isSaveDisabled}
           onClick={onToggleSave}
-          className={`btn-keycap-light flex cursor-pointer items-center gap-1 px-2.5 py-1 text-xs font-bold transition-all ${
+          className={`btn-keycap-light flex cursor-pointer items-center gap-1.5 px-2.5 py-1 text-xs font-bold transition-all ${
             isSaveDisabled ? "cursor-not-allowed opacity-50" : ""
           } ${isSaved ? "!border-[#226f43] !bg-[#2f8c56] !text-white shadow-xs" : ""}`}
           aria-label="Save bulletin locally for offline reading"
         >
           <Bookmark className="h-3.5 w-3.5" />
-          <span className="sm:hidden">{isSaved ? "★ SAVED" : "☆ SAVE"}</span>
-          <span className="hidden sm:inline">{isSaved ? "★ SAVED VAULT" : "☆ SAVE OFFLINE"}</span>
+          <span className="sm:hidden">{isSaved ? "SAVED" : "SAVE"}</span>
+          <span className="hidden sm:inline">{isSaved ? "SAVED VAULT" : "SAVE OFFLINE"}</span>
         </motion.button>
 
         <motion.button

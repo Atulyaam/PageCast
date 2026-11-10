@@ -69,7 +69,7 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
       )}
 
       {/* 40x25 Screen Content / Loading / 404 */}
-      <div className="w-full bg-[#0a0f0c] p-2 sm:p-3">
+      <div className="w-full bg-[#080d0a] p-2 sm:p-2.5">
         {isLoading ? (
           <TerminalLoading pageNumber={pageNumber} />
         ) : isNotFound ? (
@@ -86,6 +86,7 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
             showScanlines={showScanlines}
             phosphorGlow={phosphorGlow}
             useSystemFont={isDataSaver}
+            className="!rounded-none !border-0 !bg-transparent !p-0 !shadow-none"
           />
         )}
       </div>

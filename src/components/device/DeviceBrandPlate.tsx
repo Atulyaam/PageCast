@@ -29,28 +29,33 @@ export const DeviceBrandPlate: React.FC<DeviceBrandPlateProps> = ({
       {/* Brand & Model Identity */}
       <div className="flex items-center gap-3">
         <Link href="/" className="group flex items-center gap-2">
-          <span className="text-base font-black tracking-tight text-[#f6dfa9] transition-opacity group-hover:opacity-90 sm:text-lg">
+          <span className="text-base font-black tracking-wider text-[#f6dfa9] transition-opacity group-hover:opacity-90 sm:text-lg">
             PAGECAST
           </span>
-          <span className="rounded border border-[#424a44] bg-[#161a18] px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#879b83]">
+          <span className="rounded-xs border border-[#424a44] bg-[#121614] px-2 py-0.5 text-[10px] font-extrabold tracking-widest text-[#b8d1a2] shadow-inner">
             PT-4025
           </span>
         </Link>
 
+        {/* Silkscreen Hardware Type */}
+        <span className="hidden border-l border-[#3a443c] pl-2.5 text-[9px] font-bold tracking-widest text-[#71826f] uppercase xl:inline">
+          Personal Information Terminal
+        </span>
+
         {/* Hardware Status Indicators */}
         <div className="hidden items-center gap-2 sm:flex">
-          <div className="flex items-center gap-1.5 rounded border border-[#2a322c] bg-[#121614] px-2 py-0.5 text-[10px] text-[#879b83]">
+          <div className="flex items-center gap-1.5 rounded-xs border border-[#2a322c] bg-[#101412] px-2 py-0.5 text-[10px] text-[#829a76]">
             <span
               className={`h-2 w-2 rounded-full ${
-                carrierLocked ? "bg-[#22c55e] shadow-[0_0_6px_#22c55e]" : "bg-[#ef4444]"
+                carrierLocked ? "bg-[#54b77a] shadow-[0_0_6px_#54b77a]" : "bg-[#ef4444]"
               }`}
             />
             <span className="font-bold tracking-wider">CARRIER LOCK</span>
           </div>
-          <div className="flex items-center gap-1.5 rounded border border-[#2a322c] bg-[#121614] px-2 py-0.5 text-[10px] text-[#879b83]">
+          <div className="flex items-center gap-1.5 rounded-xs border border-[#2a322c] bg-[#101412] px-2 py-0.5 text-[10px] text-[#829a76]">
             <span
               className={`h-2 w-2 rounded-full ${
-                isLive ? "animate-pulse bg-[#c69b5b] shadow-[0_0_6px_#c69b5b]" : "bg-zinc-600"
+                isLive ? "animate-pulse bg-[#d1a15d] shadow-[0_0_6px_#d1a15d]" : "bg-zinc-600"
               }`}
             />
             <span className="font-bold tracking-wider">DATA RX</span>

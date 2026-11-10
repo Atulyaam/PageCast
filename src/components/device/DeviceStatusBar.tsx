@@ -38,7 +38,7 @@ export const DeviceStatusBar: React.FC<DeviceStatusBarProps> = ({
     <div
       role="region"
       aria-label="Teletext Broadcast Status Bar"
-      className="flex w-full flex-wrap items-center justify-between border-b border-[#232e27] bg-[#121915] px-3.5 py-2 font-mono text-xs text-[#879b83] shadow-inner select-none"
+      className="flex w-full flex-wrap items-center justify-between border-b border-[#1c241e] bg-[#101713] px-3.5 py-2 font-mono text-xs text-[#829a76] shadow-inner select-none"
     >
       {/* Broadcast Stream Signal Status */}
       <div className="flex items-center gap-3">
@@ -46,33 +46,33 @@ export const DeviceStatusBar: React.FC<DeviceStatusBarProps> = ({
           <span className="relative flex h-2.5 w-2.5">
             <span
               className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${
-                isOffline ? "bg-[#c69b5b]" : "bg-[#22c55e]"
+                isOffline ? "bg-[#d1a15d]" : "bg-[#54b77a]"
               }`}
             />
             <span
               className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
                 isOffline
-                  ? "bg-[#c69b5b] shadow-[0_0_6px_#c69b5b]"
-                  : "bg-[#22c55e] shadow-[0_0_6px_#22c55e]"
+                  ? "bg-[#d1a15d] shadow-[0_0_6px_#d1a15d]"
+                  : "bg-[#54b77a] shadow-[0_0_6px_#54b77a]"
               }`}
             />
           </span>
-          <span className="tracking-wide text-[#b7c9a8]">
+          <span className="tracking-wide text-[#b8d1a2]">
             {isOffline ? "LOCAL VAULT CACHE" : "LIVE BROADCAST"}
           </span>
         </div>
 
-        <span className="hidden text-[#2d3830] sm:inline">|</span>
+        <span className="hidden text-[#242e26] sm:inline">|</span>
 
         {/* Magazine Category Identification */}
-        <span className="hidden font-semibold tracking-wide text-[#879b83] sm:inline">
+        <span className="hidden font-semibold tracking-wide text-[#829a76] sm:inline">
           {`MAG ${magazine.number}: ${magazine.name.toUpperCase()}`}
         </span>
       </div>
 
       {/* Clock & Hardware Toggles */}
       <div className="flex items-center gap-3">
-        <div className="hidden font-mono text-xs font-bold tracking-widest text-[#b7c9a8] sm:inline">
+        <div className="hidden font-mono text-xs font-bold tracking-widest text-[#b8d1a2] sm:inline">
           {clockString}
         </div>
 
@@ -84,7 +84,7 @@ export const DeviceStatusBar: React.FC<DeviceStatusBarProps> = ({
             className={`flex cursor-pointer items-center gap-1 rounded border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               showScanlines
                 ? "border-[#76c7cd] bg-[#268790] text-white shadow-[0_0_8px_rgba(38,135,144,0.5)]"
-                : "border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
+                : "border-[#253029] bg-[#080d0a] text-[#829a76] hover:border-[#3a4a3f] hover:text-[#b8d1a2]"
             }`}
           >
             <Tv className="h-3 w-3" />
@@ -98,7 +98,7 @@ export const DeviceStatusBar: React.FC<DeviceStatusBarProps> = ({
             className={`flex cursor-pointer items-center gap-1 rounded border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               phosphorGlow
                 ? "border-[#76c7cd] bg-[#268790] text-white shadow-[0_0_8px_rgba(38,135,144,0.5)]"
-                : "border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
+                : "border-[#253029] bg-[#080d0a] text-[#829a76] hover:border-[#3a4a3f] hover:text-[#b8d1a2]"
             }`}
           >
             <Zap className="h-3 w-3" />

@@ -11,21 +11,22 @@
   --color-teletext-red: #ef4444;
   --color-teletext-blue: #2563eb;
 
-  /* Premium Industrial Hardware Palette */
-  --color-device-desk: #d4d2c8;
-  --color-device-desk-border: #b8b5a9;
-  --color-chassis: #a4a298;
-  --color-chassis-highlight: #c9c7bd;
-  --color-chassis-shadow: #6e6c64;
-  --color-chassis-border: #585750;
-  --color-screen-recess: #151a17;
+  /* Premium Industrial Hardware Palette (PT-4025 Specification) */
+  --color-device-desk: #d6d4ca;
+  --color-device-desk-border: #b5b3a7;
+  --color-chassis: #a6a49a;
+  --color-chassis-highlight: #c8c6bc;
+  --color-chassis-shadow: #77766f;
+  --color-chassis-border: #56554e;
+  --color-screen-recess: #101713;
   --color-screen-surface: #0a0f0c;
-  --color-screen-glass: #101713;
-  --color-phosphor-primary: #b7c9a8;
-  --color-phosphor-secondary: #879b83;
-  --color-phosphor-amber: #c69b5b;
-  --color-text-hardware: #282c27;
-  --color-text-hardware-muted: #575c53;
+  --color-screen-glass: #080d0a;
+  --color-phosphor-primary: #b8d1a2;
+  --color-phosphor-secondary: #829a76;
+  --color-phosphor-amber: #d1a15d;
+  --color-carrier-led: #54b77a;
+  --color-text-hardware: #292c29;
+  --color-text-hardware-muted: #585d54;
 
   /* Backward-compatible semantic surface mappings */
   --color-surface-ground: #d9d7cf;
@@ -98,36 +99,53 @@ body {
   line-height: 1.35;
 }
 
-/* Physical Terminal Casing & Chassis Material */
+/* Physical Terminal Casing & Chassis Material (PT-4025 Industrial Spec) */
 .chassis-body,
 .device-enclosure {
-  background: linear-gradient(180deg, #c5c3b9 0%, #aaa89d 8%, #9e9c91 92%, #86847a 100%);
-  border: 1px solid #585750;
+  background: linear-gradient(
+    180deg,
+    #c8c6bc 0%,
+    #adaaa0 6%,
+    #a6a49a 50%,
+    #99978d 92%,
+    #77766f 100%
+  );
+  border: 1px solid #56554e;
+  border-top: 2px solid #dedcd3;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 -3px 0 #6e6c64 inset,
-    0 32px 70px -15px rgba(25, 28, 24, 0.5),
-    0 10px 24px rgba(0, 0, 0, 0.2);
-  border-radius: 18px;
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 -3px 0 #77766f inset,
+    0 35px 80px -15px rgba(10, 15, 12, 0.65),
+    0 14px 28px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
 }
 
 /* Professional Recessed CRT Display Housing */
 .screen-bay,
 .device-bezel-outer {
-  background: #141916;
-  border: 3px solid #1d231f;
+  background: #101713;
+  border: 4px solid #1a211c;
   box-shadow:
-    inset 0 10px 25px rgba(0, 0, 0, 0.96),
-    inset 0 0 0 1px #090e0b,
-    0 1px 0 rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
+    inset 0 12px 28px rgba(0, 0, 0, 0.98),
+    inset 0 0 0 1px #060a08,
+    0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
 }
 
-/* CRT Screen Glass Canvas */
+/* CRT Screen Glass Canvas (Curved Glass Illusion & Phosphor Vignette) */
 .screen-crt-glass,
 .device-crt-screen {
-  background: radial-gradient(ellipse at 50% 45%, #18231c 0%, #0d1410 75%, #060a08 100%);
-  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.85);
+  background: radial-gradient(
+    ellipse 115% 105% at 50% 50%,
+    #101713 0%,
+    #0d130f 65%,
+    #080d0a 88%,
+    #040705 100%
+  );
+  box-shadow:
+    inset 0 0 38px rgba(0, 0, 0, 0.92),
+    inset 0 2px 4px rgba(255, 255, 255, 0.05),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.95);
   border-radius: 6px;
 }
 
@@ -135,22 +153,22 @@ body {
 .device-brand-plate {
   background: linear-gradient(
     90deg,
-    #252a27 0%,
-    #343a36 25%,
-    #252a27 50%,
-    #383f3a 75%,
-    #222623 100%
+    #222624 0%,
+    #303733 15%,
+    #252b27 30%,
+    #323a35 60%,
+    #222624 100%
   );
-  border: 1px solid #424a44;
+  border: 1px solid #3c453f;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 2px 5px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.4);
   border-radius: 4px;
 }
 
 /* Subtle Retro CRT Scanlines & Glare */
 .crt-scanlines {
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+  background: linear-gradient(rgba(16, 23, 19, 0) 50%, rgba(0, 0, 0, 0.32) 50%);
   background-size: 100% 4px;
 }
 
@@ -161,62 +179,62 @@ body {
 .crt-glass-glare {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 35%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.015) 30%,
     rgba(0, 0, 0, 0) 55%
   );
 }
 
 /* Physical Tactile Keycaps (Dark Charcoal Hardware Keys) */
 .btn-keycap {
-  background: linear-gradient(180deg, #3d453f 0%, #2a312c 55%, #1e2420 100%);
+  background: linear-gradient(180deg, #38403a 0%, #292d2b 55%, #1b201d 100%);
   color: var(--color-phosphor-primary);
-  border: 1px solid #161c18;
+  border: 1px solid #141815;
   box-shadow:
-    0 3px 0 #111613,
-    0 4px 6px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  border-radius: 4px;
+    0 3.5px 0 #101411,
+    0 5px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
   transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-keycap:hover {
-  background: linear-gradient(180deg, #47504a 0%, #323b34 55%, #242c26 100%);
-  color: #d1dfc5;
+  background: linear-gradient(180deg, #424c45 0%, #303733 55%, #222824 100%);
+  color: #d8ead0;
 }
 
 .btn-keycap:active {
   transform: translateY(2px);
   box-shadow:
-    0 1px 0 #111613,
-    0 1px 2px rgba(0, 0, 0, 0.45),
+    0 1.5px 0 #101411,
+    0 2px 3px rgba(0, 0, 0, 0.5),
     inset 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 /* Light / Chassis-Matched Keycaps & Push Buttons */
 .btn-keycap-light {
-  background: linear-gradient(180deg, #d8d6cc 0%, #c4c2b7 55%, #aba99e 100%);
-  color: #2b302a;
-  border: 1px solid #74766d;
+  background: linear-gradient(180deg, #dedcd3 0%, #cac7bc 55%, #b2afa4 100%);
+  color: #292c29;
+  border: 1px solid #77766f;
   box-shadow:
-    0 2px 0 #61635a,
-    0 3px 5px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-radius: 4px;
+    0 3px 0 #65645d,
+    0 4px 6px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  border-radius: 5px;
   transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-keycap-light:hover {
-  background: linear-gradient(180deg, #e2e0d7 0%, #ceccbf 55%, #b5b3a8 100%);
-  color: #1a1e19;
+  background: linear-gradient(180deg, #e8e6dc 0%, #d4d1c6 55%, #bdbab0 100%);
+  color: #1a1c1a;
 }
 
 .btn-keycap-light:active {
-  transform: translateY(1px);
+  transform: translateY(1.5px);
   box-shadow:
-    0 1px 0 #61635a,
+    0 1.5px 0 #65645d,
     0 1px 2px rgba(0, 0, 0, 0.25),
-    inset 0 1px 2px rgba(0, 0, 0, 0.25);
+    inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Molded Fastext Rocker Switches */

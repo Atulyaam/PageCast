@@ -29,8 +29,14 @@ export const DeviceControlDeck: React.FC<DeviceControlDeckProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col gap-3 rounded-xl border border-[#585750] bg-[#8f8d83] p-3.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.22)] select-none sm:p-4 ${className}`.trim()}
+      className={`flex flex-col gap-3.5 rounded-xl border border-[#585750] bg-[#96948a] p-3.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.22)] select-none sm:p-4.5 ${className}`.trim()}
     >
+      {/* Deck Header Silkscreen */}
+      <div className="flex items-center justify-between border-b border-[#77756c] pb-1.5 font-mono text-[9px] font-extrabold tracking-widest text-[#292c29] uppercase">
+        <span>COMMAND DECK</span>
+        <span>PT-4025 TUNER</span>
+      </div>
+
       {/* Upper Navigation & Stepper Section */}
       <DeviceNavigationControls
         bufferDisplay={bufferDisplay}
@@ -44,8 +50,8 @@ export const DeviceControlDeck: React.FC<DeviceControlDeckProps> = ({
         onToggleSpeech={onToggleSpeech}
       />
 
-      {/* Numeric Keycap Deck */}
-      <div className="border-t border-[#74766d] pt-3">
+      {/* Sunken Keycap Well */}
+      <div className="rounded-lg border border-[#6b6960] bg-[#7d7b72] p-2 shadow-inner">
         <DeviceNumericKeypad onDigit={onDigit} onClear={onClear} onIndex={onIndex} />
       </div>
 

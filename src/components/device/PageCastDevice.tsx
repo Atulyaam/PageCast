@@ -8,6 +8,7 @@ import React, {
   useSyncExternalStore,
 } from "react";
 import dynamic from "next/dynamic";
+import { Zap, AlertTriangle, Clock } from "lucide-react";
 import type { TeletextPage } from "@/domain/teletext/types";
 import { getSeedPage, getSeedPageCatalog, page100 } from "@/data/seed-pages";
 import { isValidPageNumber } from "@/domain/validation/page-number";
@@ -428,7 +429,7 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
 
   return (
     <div
-      className={`mx-auto flex w-full max-w-5xl flex-col items-center select-none ${className}`.trim()}
+      className={`mx-auto flex w-full max-w-6xl flex-col items-center select-none ${className}`.trim()}
     >
       <DeviceChassis
         isLive={isOnline && !pageData?.isFallback && !pageData?.isSavedCopy}
@@ -438,12 +439,13 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
         {isDataSaver && (
           <div className="mb-3 flex w-full items-center justify-between rounded border border-[#1b676e] bg-[#0c262a] px-3 py-1 font-mono text-xs text-[#76c7cd]">
             <span className="flex items-center gap-1.5 font-bold">
-              <span>⚡ LOW-BANDWIDTH DATA SAVER ACTIVE</span>
+              <Zap className="h-3.5 w-3.5 text-cyan-400" />
+              <span>LOW-BANDWIDTH DATA SAVER ACTIVE</span>
               <span className="hidden font-normal text-[#4e8d93] sm:inline">
                 • Raw Monospace Font • Scanlines Disabled • Cache-First Mode
               </span>
             </span>
-            <span className="font-bold text-[#b7c9a8]">
+            <span className="font-bold text-[#b8d1a2]">
               RX: {(sessionBytes / 1024).toFixed(1)} KiB
             </span>
           </div>
@@ -453,16 +455,16 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
         {isStaleCopy && (
           <div className="mb-3 flex w-full flex-wrap items-center justify-between gap-2 rounded border border-[#846114] bg-[#2d2208] p-2 font-mono text-xs text-[#f6dfa9]">
             <div className="flex items-center gap-2">
-              <span>⚠️</span>
+              <AlertTriangle className="h-4 w-4 shrink-0 text-[#d1a15d]" />
               <div>
-                <strong className="text-[#c69b5b]">STALE LOCAL COPY:</strong> Revision{" "}
+                <strong className="text-[#d1a15d]">STALE LOCAL COPY:</strong> Revision{" "}
                 {pageData?.revision ?? 1} saved {formatRelativeFreshness(pageData?.publishedAt)}.
               </div>
             </div>
             <button
               type="button"
               onClick={handleRefreshLive}
-              className="cursor-pointer rounded bg-[#c69b5b] px-2.5 py-0.5 text-xs font-bold text-[#0d1410] hover:bg-[#d6ab6b]"
+              className="cursor-pointer rounded bg-[#d1a15d] px-2.5 py-0.5 text-xs font-bold text-[#0d1410] hover:bg-[#e0b475]"
             >
               REFRESH LIVE
             </button>
@@ -471,7 +473,7 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
 
         {isExpired && (
           <div className="mb-3 flex w-full items-center gap-2 rounded border border-[#801d14] bg-[#2a0e0b] p-2 font-mono text-xs text-[#ff9e94]">
-            <span>⏳</span>
+            <Clock className="h-4 w-4 shrink-0 text-[#ef4444]" />
             <div>
               <strong className="text-[#ef4444]">NOTICE EXPIRED:</strong> Content preserved for
               offline reference.

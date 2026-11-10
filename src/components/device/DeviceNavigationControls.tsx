@@ -48,7 +48,7 @@ export const DeviceNavigationControls: React.FC<DeviceNavigationControlsProps> =
         <div
           aria-live="polite"
           aria-atomic="true"
-          className="led-window flex min-w-[76px] items-center justify-center px-4 py-1.5 font-mono text-base font-bold tracking-widest text-[#b7c9a8] shadow-[inset_0_2px_8px_rgba(0,0,0,0.9),0_1px_0_rgba(255,255,255,0.3)]"
+          className="led-window flex min-w-[80px] items-center justify-center border-[#1c221e] bg-[#070b08] px-4 py-1.5 font-mono text-base font-extrabold tracking-widest text-[#d1a15d] shadow-[inset_0_2px_8px_rgba(0,0,0,0.95),0_1px_0_rgba(255,255,255,0.25)]"
         >
           {bufferDisplay}
         </div>
