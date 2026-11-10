@@ -55,18 +55,18 @@ export default function DataEfficiencyLabPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black font-mono text-zinc-200">
+    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
       {/* Header */}
-      <header className="border-b border-zinc-800 bg-zinc-950 px-4 py-3">
+      <header className="border-surface-border bg-surface-panel/85 border-b px-4 py-2.5 backdrop-blur">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <Link
               href="/terminal"
-              className="rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs font-bold text-yellow-400 transition-colors hover:border-yellow-400"
+              className="border-surface-border bg-surface-panel btn-tactile rounded border px-2.5 py-1 text-xs font-bold text-yellow-400 transition-colors hover:border-yellow-400"
             >
               ← TERMINAL
             </Link>
-            <h1 className="text-sm font-bold tracking-wider text-cyan-400 uppercase">
+            <h1 className="text-teletext-cyan text-sm font-bold tracking-wider uppercase">
               PAGECAST DATA EFFICIENCY LAB
             </h1>
           </div>

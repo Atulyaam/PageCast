@@ -105,17 +105,17 @@ export default function BroadcastCataloguePage() {
   );
 
   return (
-    <div className="min-h-screen bg-black font-mono text-zinc-100">
-      {/* Top Header */}
-      <header className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-950 px-4 py-3 backdrop-blur-xs sm:px-6">
+    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
+      {/* Top Header — aligned with main app header style */}
+      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-20 border-b px-4 py-2.5 backdrop-blur sm:px-6">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/" className="group flex items-center gap-2">
-              <span className="bg-emerald-500 px-2 py-0.5 text-xs font-black tracking-widest text-black uppercase">
+              <span className="text-teletext-yellow font-mono text-lg font-bold tracking-tight transition-opacity group-hover:opacity-80 sm:text-xl">
                 PAGECAST
               </span>
-              <span className="text-sm font-bold tracking-wide text-zinc-100 transition-colors group-hover:text-emerald-400">
-                BROADCAST CATALOGUE
+              <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-[11px] sm:text-xs">
+                CATALOGUE
               </span>
             </Link>
           </div>
@@ -123,21 +123,33 @@ export default function BroadcastCataloguePage() {
           <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto text-xs sm:gap-3 sm:text-sm">
             <Link
               href="/"
-              className="btn-tactile border border-transparent px-2.5 py-1 text-zinc-400 transition-all hover:border-zinc-800 hover:text-white active:scale-95"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
             >
-              📺 Terminal (P100)
+              READER
+            </Link>
+            <Link
+              href="/terminal"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
+            >
+              TERMINAL
+            </Link>
+            <Link
+              href="/catalogue"
+              className="btn-tactile text-teletext-cyan rounded px-2 py-1 font-bold underline transition-all"
+            >
+              CATALOGUE
             </Link>
             <Link
               href="/saved"
-              className="btn-tactile border border-transparent px-2.5 py-1 text-zinc-400 transition-all hover:border-zinc-800 hover:text-white active:scale-95"
+              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
             >
-              💾 Saved
+              SAVED
             </Link>
             <Link
-              href="/publisher"
-              className="btn-tactile border border-zinc-700 bg-zinc-900 px-2.5 py-1 font-bold text-emerald-400 transition-all hover:border-emerald-500 active:scale-95"
+              href="/publisher/ingest"
+              className="btn-tactile border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 shrink-0 rounded border px-2.5 py-1 font-semibold transition-all"
             >
-              Publisher Studio
+              PUBLISHER STUDIO
             </Link>
           </nav>
         </div>
@@ -146,14 +158,16 @@ export default function BroadcastCataloguePage() {
       {/* Main Catalogue Area */}
       <main className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
         {/* Title & Introduction */}
-        <div className="mb-6 border-b border-zinc-800 pb-6">
+        <div className="border-surface-border mb-6 border-b pb-6">
           <div className="flex items-center gap-2">
-            <span className="bg-cyan-400 px-1.5 py-0.5 text-xs font-black text-black">INDEX</span>
-            <h1 className="text-xl font-bold tracking-wider text-cyan-400 uppercase sm:text-2xl">
+            <span className="bg-teletext-cyan px-1.5 py-0.5 text-xs font-black text-black">
+              INDEX
+            </span>
+            <h1 className="text-teletext-cyan text-xl font-bold tracking-wider uppercase sm:text-2xl">
               Teletext Broadcast Directory
             </h1>
           </div>
-          <p className="mt-1 text-xs text-zinc-400 sm:text-sm">
+          <p className="text-text-muted mt-1 text-xs sm:text-sm">
             Browse published ultra-low bandwidth bulletins across all 8 standard Teletext magazines.
           </p>
         </div>
@@ -175,12 +189,12 @@ export default function BroadcastCataloguePage() {
         )}
 
         {/* Search & Filter Toolbar */}
-        <div className="mb-8 flex flex-col justify-between gap-4 border border-zinc-800 bg-zinc-950 p-4 md:flex-row md:items-center">
+        <div className="border-surface-border bg-surface-panel mb-8 flex flex-col justify-between gap-4 border p-4 md:flex-row md:items-center">
           {/* Keyword Search */}
           <div className="flex-1">
             <label
               htmlFor="catalogue-search"
-              className="mb-1 block text-xs tracking-widest text-zinc-400 uppercase"
+              className="text-text-muted mb-1 block text-xs tracking-widest uppercase"
             >
               Search Bulletins (Page or Title)
             </label>
@@ -190,13 +204,13 @@ export default function BroadcastCataloguePage() {
               placeholder="e.g. 101, cyclone, technology..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-zinc-700 bg-black px-3 py-1.5 text-sm text-zinc-200 focus:border-cyan-400 focus:outline-hidden"
+              className="border-surface-border bg-surface-terminal text-teletext-white focus:border-teletext-cyan w-full border px-3 py-1.5 text-sm focus:outline-hidden"
             />
           </div>
 
           {/* Language Selector */}
           <div>
-            <label className="mb-1 block text-xs tracking-widest text-zinc-400 uppercase">
+            <label className="text-text-muted mb-1 block text-xs tracking-widest uppercase">
               Language Filter
             </label>
             <div className="flex items-center gap-1">
@@ -205,8 +219,8 @@ export default function BroadcastCataloguePage() {
                 onClick={() => setLanguageFilter("all")}
                 className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "all"
-                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
-                    : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
+                    ? "border-teletext-cyan bg-teletext-cyan text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
+                    : "border-surface-border bg-surface-terminal text-text-muted hover:border-zinc-600"
                 }`}
               >
                 All
@@ -216,8 +230,8 @@ export default function BroadcastCataloguePage() {
                 onClick={() => setLanguageFilter("en")}
                 className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "en"
-                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
-                    : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
+                    ? "border-teletext-cyan bg-teletext-cyan text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
+                    : "border-surface-border bg-surface-terminal text-text-muted hover:border-zinc-600"
                 }`}
               >
                 English
@@ -227,8 +241,8 @@ export default function BroadcastCataloguePage() {
                 onClick={() => setLanguageFilter("hi")}
                 className={`btn-tactile cursor-pointer border px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
                   languageFilter === "hi"
-                    ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
-                    : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700"
+                    ? "border-teletext-cyan bg-teletext-cyan text-black shadow-[0_0_8px_rgba(0,255,255,0.3)]"
+                    : "border-surface-border bg-surface-terminal text-text-muted hover:border-zinc-600"
                 }`}
               >
                 Hindi (हिन्दी)
@@ -239,12 +253,14 @@ export default function BroadcastCataloguePage() {
 
         {/* Quick Jump Bar to Magazines */}
         <div className="mb-8 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="mr-2 text-[10px] tracking-widest text-zinc-500 uppercase">Jump to:</span>
+          <span className="text-text-muted mr-2 text-[10px] tracking-widest uppercase">
+            Jump to:
+          </span>
           {magazines.map((mag) => (
             <a
               key={mag.magazineNumber}
               href={`#mag-${mag.magazineNumber}`}
-              className="border border-zinc-800 bg-zinc-950 px-2 py-1 text-[11px] text-zinc-400 transition-colors hover:border-cyan-500 hover:text-white"
+              className="border-surface-border bg-surface-panel text-text-muted hover:border-teletext-cyan hover:text-teletext-white border px-2 py-1 text-[11px] transition-colors"
             >
               Mag {mag.magazineNumber}
             </a>
@@ -253,11 +269,11 @@ export default function BroadcastCataloguePage() {
 
         {/* Magazine Broadcast Sections */}
         {isLoading ? (
-          <div className="border border-zinc-900 bg-zinc-950 p-12 text-center text-xs text-zinc-500">
+          <div className="border-surface-border bg-surface-panel border p-12 text-center text-xs text-zinc-500">
             Tuning broadcast raster... Loading catalogue...
           </div>
         ) : totalMatching === 0 ? (
-          <div className="border border-zinc-900 bg-zinc-950 p-12 text-center text-xs text-zinc-500">
+          <div className="border-surface-border bg-surface-panel border p-12 text-center text-xs text-zinc-500">
             No bulletins found matching your filter criteria.
           </div>
         ) : (
@@ -269,26 +285,26 @@ export default function BroadcastCataloguePage() {
                 <section
                   key={mag.magazineNumber}
                   id={`mag-${mag.magazineNumber}`}
-                  className="border border-zinc-800 bg-zinc-950 p-4 sm:p-6"
+                  className="border-surface-border bg-surface-panel border p-4 sm:p-6"
                 >
                   {/* Magazine Header */}
-                  <div className="mb-4 flex flex-col justify-between gap-2 border-b border-zinc-800 pb-3 sm:flex-row sm:items-center">
+                  <div className="border-surface-border mb-4 flex flex-col justify-between gap-2 border-b pb-3 sm:flex-row sm:items-center">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="bg-yellow-400 px-1.5 py-0.5 text-xs font-black text-black">
+                        <span className="bg-teletext-yellow px-1.5 py-0.5 text-xs font-black text-black">
                           MAG {mag.magazineNumber}
                         </span>
-                        <h2 className="text-sm font-bold tracking-wider text-yellow-400 uppercase sm:text-base">
+                        <h2 className="text-teletext-yellow text-sm font-bold tracking-wider uppercase sm:text-base">
                           {mag.name}
                         </h2>
-                        <span className="text-xs text-zinc-600">
+                        <span className="text-text-muted text-xs">
                           (P{mag.pageRange[0]}–P{mag.pageRange[1]})
                         </span>
                       </div>
-                      <p className="mt-1 text-xs text-zinc-400">{mag.description}</p>
+                      <p className="text-text-muted mt-1 text-xs">{mag.description}</p>
                     </div>
 
-                    <span className="font-mono text-xs text-zinc-500">
+                    <span className="text-text-muted font-mono text-xs">
                       {matchingBulletins.length}{" "}
                       {matchingBulletins.length === 1 ? "Bulletin" : "Bulletins"}
                     </span>
@@ -296,13 +312,13 @@ export default function BroadcastCataloguePage() {
 
                   {/* Bulletins Table / List */}
                   {matchingBulletins.length === 0 ? (
-                    <div className="border border-zinc-900 bg-black p-4 text-center text-xs text-zinc-600">
+                    <div className="border-surface-border bg-surface-terminal border p-4 text-center text-xs text-zinc-600">
                       No bulletins currently transmitting in Magazine {mag.magazineNumber}.
                     </div>
                   ) : (
-                    <div className="overflow-x-auto border border-zinc-800 bg-black">
+                    <div className="border-surface-border bg-surface-terminal overflow-x-auto border">
                       <table className="w-full text-left text-xs">
-                        <thead className="border-b border-zinc-800 bg-zinc-900 text-[10px] tracking-wider text-zinc-400 uppercase">
+                        <thead className="border-surface-border bg-surface-panel text-text-muted border-b text-[10px] tracking-wider uppercase">
                           <tr>
                             <th className="w-20 px-4 py-2.5">Page</th>
                             <th className="px-4 py-2.5">Title</th>
@@ -317,20 +333,20 @@ export default function BroadcastCataloguePage() {
                               key={bulletin.pageNumber}
                               className="transition-colors hover:bg-zinc-900/40"
                             >
-                              <td className="px-4 py-2.5 font-bold whitespace-nowrap text-yellow-400">
+                              <td className="text-teletext-yellow px-4 py-2.5 font-bold whitespace-nowrap">
                                 P{bulletin.pageNumber}
                               </td>
-                              <td className="max-w-sm truncate px-4 py-2.5 font-medium text-zinc-200">
+                              <td className="text-teletext-white max-w-sm truncate px-4 py-2.5 font-medium">
                                 {bulletin.title}
                               </td>
-                              <td className="px-4 py-2.5 text-zinc-400 uppercase">
+                              <td className="text-text-muted px-4 py-2.5 uppercase">
                                 {bulletin.language}
                               </td>
-                              <td className="px-4 py-2.5 text-zinc-500">r{bulletin.revision}</td>
+                              <td className="text-text-muted px-4 py-2.5">r{bulletin.revision}</td>
                               <td className="px-4 py-2.5 text-right">
                                 <Link
                                   href={`/?page=${bulletin.pageNumber}`}
-                                  className="inline-block bg-yellow-400 px-3 py-1 text-xs font-bold tracking-wider text-black uppercase transition-colors hover:bg-yellow-300"
+                                  className="bg-teletext-yellow hover:bg-teletext-yellow/80 inline-block px-3 py-1 text-xs font-bold tracking-wider text-black uppercase transition-colors"
                                 >
                                   Tune In →
                                 </Link>
@@ -349,7 +365,7 @@ export default function BroadcastCataloguePage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-12 border-t border-zinc-800 px-4 py-6 text-center font-mono text-xs text-zinc-500">
+      <footer className="border-surface-border text-text-muted mt-12 border-t px-4 py-6 text-center font-mono text-xs">
         <p>PAGECAST &bull; AI-Powered Low-Bandwidth Teletext &bull; Kiroween 2026</p>
       </footer>
     </div>

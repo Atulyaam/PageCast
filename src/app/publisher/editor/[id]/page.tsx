@@ -155,11 +155,11 @@ export default function PublisherEditorPage() {
   const activePage = pack.pages[currentSubIndex] || pack.pages[0];
 
   return (
-    <div className="min-h-screen bg-black font-mono text-zinc-100">
+    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
       <PublisherHeader activeTitle={`Editing P${pack.primaryPageNumber}`} />
 
       {/* Editor Sub-Header Toolbar */}
-      <div className="border-b border-zinc-800 bg-zinc-950 px-4 py-3 sm:px-6">
+      <div className="border-surface-border bg-surface-panel border-b px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Link

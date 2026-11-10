@@ -92,7 +92,7 @@ export default function PublisherDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black font-mono text-zinc-100">
+    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
       <PublisherHeader activeTitle="Publisher Dashboard" />
 
       <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
