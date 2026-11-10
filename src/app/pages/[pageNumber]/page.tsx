@@ -21,7 +21,7 @@ export default async function PageRoute({ params }: PageProps) {
     <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
       {/* Top Header */}
       <header className="border-surface-border bg-surface-panel/80 sticky top-0 z-30 border-b px-4 py-3 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className="mx-auto flex max-w-6xl items-center justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/"
@@ -61,13 +61,13 @@ export default async function PageRoute({ params }: PageProps) {
       </header>
 
       {/* Main Terminal */}
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center p-4 sm:p-6">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center p-4 sm:p-6">
         <WebTerminal initialPageNumber={num} />
       </main>
 
       {/* Footer */}
       <footer className="border-surface-border text-text-muted border-t px-4 py-4 text-center font-mono text-xs">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className="mx-auto flex max-w-6xl items-center justify-between">
           <span>PAGECAST &bull; Teletext Page {num}</span>
           <Link href="/" className="text-teletext-yellow hover:underline">
             Back to Index (P100)

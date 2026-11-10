@@ -81,6 +81,27 @@ function getDataSaverServerSnapshot(): boolean {
   return false;
 }
 
+function subscribeTts(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  return getBulletinSpeechReader().subscribe(callback);
+}
+
+function getTtsSupportedSnapshot(): boolean {
+  return getBulletinSpeechReader().isSupported;
+}
+
+function getServerTtsSupportedSnapshot(): boolean {
+  return false;
+}
+
+function getTtsSpeakingSnapshot(): boolean {
+  return getBulletinSpeechReader().isSpeaking;
+}
+
+function getServerTtsSpeakingSnapshot(): boolean {
+  return false;
+}
+
 export interface PageCastDeviceProps {
   readonly initialPageNumber?: number;
   readonly initialSubPage?: number;
@@ -117,26 +138,23 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const isOnline = useOnlineStatus();
 
-  // Audio synthesizer & speech state
-  const [isMuted, setIsMuted] = useState<boolean>(() => {
-    if (typeof window === "undefined") return true;
-    return getTeletextSynthesizer().muted;
-  });
-  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
-  const [ttsSupported] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return getBulletinSpeechReader().isSupported;
-  });
+  // Audio synthesizer & speech state (hydration-safe external store subscriptions)
+  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const ttsSupported = useSyncExternalStore(
+    subscribeTts,
+    getTtsSupportedSnapshot,
+    getServerTtsSupportedSnapshot
+  );
+  const isSpeaking = useSyncExternalStore(
+    subscribeTts,
+    getTtsSpeakingSnapshot,
+    getServerTtsSpeakingSnapshot
+  );
 
-  // Subscribe to speech reader state changes
+  // Stop speech synthesis on component unmount
   useEffect(() => {
-    const reader = getBulletinSpeechReader();
-    const unsub = reader.subscribe((state) => {
-      setIsSpeaking(state.isSpeaking);
-    });
     return () => {
-      unsub();
-      reader.stop();
+      getBulletinSpeechReader().stop();
     };
   }, []);
 
@@ -188,9 +206,7 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
 
     if (isSpeaking) {
       reader.stop();
-      setIsSpeaking(false);
     } else {
-      setIsSpeaking(true);
       reader.speak(activePage);
     }
   }, [activePage, isSpeaking]);

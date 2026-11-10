@@ -17,7 +17,7 @@ export default async function TerminalPage({ searchParams }: TerminalPageProps) 
     <div className="flex min-h-screen flex-col font-sans">
       {/* Top Instrumentation Rail */}
       <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className="mx-auto flex max-w-6xl items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
@@ -54,7 +54,7 @@ export default async function TerminalPage({ searchParams }: TerminalPageProps) 
       </header>
 
       {/* Main Full-Screen Terminal */}
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center p-2 sm:p-6 lg:p-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center p-2 sm:p-6 lg:p-8">
         <WebTerminal initialPageNumber={initialPage} />
       </main>
     </div>

@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import nextConfig, { securityHeaders, cspHeader } from "@/../next.config";
+import nextConfig, {
+  securityHeaders,
+  cspHeader,
+  productionCspHeader,
+  buildCspHeader,
+} from "@/../next.config";
 
 describe("Production Security Headers & CSP (TASK-S5-03 / SEC-010)", () => {
   it("defines comprehensive security headers for all routes (/:path*)", async () => {
@@ -25,6 +30,23 @@ describe("Production Security Headers & CSP (TASK-S5-03 / SEC-010)", () => {
     expect(csp?.value).toContain("img-src 'self' data: blob:");
     expect(csp?.value).toContain("media-src 'self' blob:");
     expect(csp?.value).toContain("https://*.supabase.co");
+  });
+
+  it("strictly excludes 'unsafe-eval' from production CSP policy", () => {
+    expect(productionCspHeader).not.toContain("'unsafe-eval'");
+    const prodCsp = buildCspHeader(false);
+    expect(prodCsp).not.toContain("'unsafe-eval'");
+    expect(prodCsp).toContain("script-src 'self' 'unsafe-inline';");
+  });
+
+  it("permits 'unsafe-eval' strictly in development mode for Turbopack HMR debugging", () => {
+    const devCsp = buildCspHeader(true);
+    expect(devCsp).toContain("'unsafe-eval'");
+    expect(devCsp).toContain("script-src 'self' 'unsafe-inline' 'unsafe-eval';");
+    // Verify other critical security directives remain strictly intact
+    expect(devCsp).toContain("default-src 'self'");
+    expect(devCsp).toContain("frame-ancestors 'none'");
+    expect(devCsp).toContain("object-src 'none'");
   });
 
   it("configures HSTS (Strict-Transport-Security)", () => {
