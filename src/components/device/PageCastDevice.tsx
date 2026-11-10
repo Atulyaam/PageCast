@@ -106,12 +106,17 @@ export interface PageCastDeviceProps {
   readonly initialPageNumber?: number;
   readonly initialSubPage?: number;
   readonly className?: string;
+  readonly mode?:
+    "reader" | "terminal" | "catalogue" | "saved" | "publisher" | "ingest" | "editor" | "lab";
+  readonly children?: React.ReactNode;
 }
 
 export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
   initialPageNumber = 100,
   initialSubPage = 1,
   className = "",
+  mode = "reader",
+  children,
 }) => {
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(initialPageNumber);
   const [currentSubIndex, setCurrentSubIndex] = useState<number>(Math.max(0, initialSubPage - 1));
@@ -451,6 +456,14 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
         isLive={isOnline && !pageData?.isFallback && !pageData?.isSavedCopy}
         carrierLocked={isOnline}
       >
+        {mode === "terminal" && (
+          <div className="mb-2 flex items-center justify-between px-1 font-mono text-[10px]">
+            <span className="rounded-xs border border-[#3b453e] bg-[#161a17] px-2 py-0.5 font-bold tracking-widest text-[#22c55e] uppercase">
+              DEDICATED TERMINAL
+            </span>
+            <span className="text-[#71826f]">FULLSCREEN 625-LINE DIRECT RECEIVER</span>
+          </div>
+        )}
         {/* Data Saver Active Notification */}
         {isDataSaver && (
           <div className="mb-3 flex w-full items-center justify-between rounded border border-[#1b676e] bg-[#0c262a] px-3 py-1 font-mono text-xs text-[#76c7cd]">
@@ -498,10 +511,30 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
         )}
 
         {/* Console Workspace: Screen Bay (Left) & Control Deck (Right) */}
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:items-start">
+        <div className="grid min-h-0 grid-cols-1 gap-4 lg:h-[720px] lg:max-h-[calc(100vh-11rem)] lg:grid-cols-12">
           {/* Main Left Bay: Recessed Screen Housing (lg:col-span-8) */}
-          <div className="flex flex-col gap-2.5 lg:col-span-8">
-            {viewMode === "accessible" ? (
+          <div className="flex h-full min-h-0 flex-col gap-2.5 lg:col-span-8">
+            {children ? (
+              <DeviceScreenBay
+                pageNumber={currentPageNumber}
+                activePage={activePage}
+                currentSubIndex={currentSubIndex}
+                subPageCount={subPageCount}
+                isLoading={isLoading}
+                isNotFound={isNotFound}
+                isOffline={!isOnline || pageData?.isFallback || pageData?.isSavedCopy}
+                showScanlines={showScanlines}
+                phosphorGlow={phosphorGlow}
+                isDataSaver={isDataSaver}
+                onToggleScanlines={() => setShowScanlines((prev) => !prev)}
+                onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
+                onNavigate={handleNavigate}
+                onSubPageChange={handleSubPageChange}
+                className="min-h-0 flex-1"
+              >
+                {children}
+              </DeviceScreenBay>
+            ) : viewMode === "accessible" ? (
               <AccessibleTextView
                 page={activePage}
                 sourceUrl={pageData?.pack?.metadata?.sourceName}
@@ -525,12 +558,13 @@ export const PageCastDevice: React.FC<PageCastDeviceProps> = ({
                 onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
                 onNavigate={handleNavigate}
                 onSubPageChange={handleSubPageChange}
+                className="min-h-0 flex-1"
               />
             )}
           </div>
 
           {/* Right Bay: Hardware Control Deck (lg:col-span-4) */}
-          <div className="flex flex-col gap-3 lg:col-span-4">
+          <div className="flex min-h-0 flex-col gap-3 lg:col-span-4">
             <DeviceControlDeck
               bufferDisplay={bufferDisplay}
               isMuted={isMuted}

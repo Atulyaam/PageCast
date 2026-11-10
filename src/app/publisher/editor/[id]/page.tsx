@@ -6,12 +6,13 @@
  *
  * Integrates interactive grid canvas, real-time byte counters,
  * pre-flight validation gates, and multi-page publishing workflows.
+ * Now rendered inside the unified PT-4025 device shell.
  */
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { PublisherHeader } from "@/components/publisher/PublisherHeader";
+import { PageCastDeviceShell } from "@/components/device/PageCastDeviceShell";
 import { TeletextEditor } from "@/components/publisher/TeletextEditor";
 import { ByteBudgetMeter } from "@/components/publisher/ByteBudgetMeter";
 import { GridValidationBanner } from "@/components/publisher/GridValidationBanner";
@@ -126,63 +127,57 @@ export default function PublisherEditorPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black font-mono text-zinc-100">
-        <PublisherHeader activeTitle="Editor Loading" />
-        <div className="flex h-96 items-center justify-center text-xs text-zinc-500">
+      <PageCastDeviceShell mode="editor">
+        <div className="flex h-64 items-center justify-center font-mono text-xs text-[#879b83]">
           Loading Teletext editor workspace...
         </div>
-      </div>
+      </PageCastDeviceShell>
     );
   }
 
   if (!pack) {
     return (
-      <div className="min-h-screen bg-black font-mono text-zinc-100">
-        <PublisherHeader activeTitle="Draft Missing" />
-        <div className="mx-auto max-w-md p-8 text-center">
-          <p className="mb-4 text-sm text-red-400">Draft not found or could not be loaded.</p>
+      <PageCastDeviceShell mode="editor">
+        <div className="mx-auto max-w-md p-8 text-center font-mono text-[#b8d1a2]">
+          <p className="mb-4 text-sm text-[#f87171]">Draft not found or could not be loaded.</p>
           <Link
             href="/publisher"
-            className="border border-zinc-700 px-4 py-2 text-xs font-bold text-emerald-400 hover:border-emerald-500"
+            className="rounded-xs border border-[#253328] bg-[#0d140f] px-4 py-2 text-xs font-bold text-[#54b77a] hover:border-[#54b77a]"
           >
             ← Return to Dashboard
           </Link>
         </div>
-      </div>
+      </PageCastDeviceShell>
     );
   }
 
   const activePage = pack.pages[currentSubIndex] || pack.pages[0];
 
   return (
-    <div className="flex min-h-screen flex-col font-mono">
-      <PublisherHeader activeTitle={`Editing P${pack.primaryPageNumber}`} />
-
-      {/* Editor Sub-Header Toolbar */}
-      <div className="border-b border-[#777970] bg-[#a2a197] px-4 py-2.5 sm:px-6">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <PageCastDeviceShell mode="editor">
+      <div className="space-y-4 font-mono text-[#b8d1a2]">
+        {/* Editor In-Screen Header & Toolbar */}
+        <div className="flex flex-col gap-3 border-b border-[#253328] pb-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/publisher"
-              className="btn-keycap-light px-2.5 py-1 text-xs font-bold transition-all"
+              className="rounded-xs border border-[#253328] bg-[#0d140f] px-2.5 py-1 text-xs font-bold text-[#b8d1a2] transition-colors hover:border-[#54b77a] hover:text-[#54b77a]"
             >
               ← Back
             </Link>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 text-xs font-black text-[#0d1410]">
-                  P{pack.primaryPageNumber}
-                </span>
-                <h1 className="max-w-md truncate text-sm font-bold text-[#2f342d]">{pack.title}</h1>
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 text-xs font-black text-[#0d1410]">
+                P{pack.primaryPageNumber}
+              </span>
+              <h1 className="max-w-md truncate text-sm font-bold text-[#f6dfa9]">{pack.title}</h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {saveMessage && (
               <span
                 className={`px-2 py-1 text-xs font-bold ${
-                  saveMessage.includes("success") ? "text-[#226f43]" : "text-[#9e2b20]"
+                  saveMessage.includes("success") ? "text-[#54b77a]" : "text-[#f87171]"
                 }`}
               >
                 {saveMessage}
@@ -192,99 +187,101 @@ export default function PublisherEditorPage() {
             <button
               onClick={handleSaveDraft}
               disabled={isSaving}
-              className="btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors"
+              className="cursor-pointer rounded-xs border border-[#253328] bg-[#0d140f] px-3 py-1.5 text-xs font-bold tracking-wider text-[#b8d1a2] uppercase transition-colors hover:border-[#54b77a] hover:text-[#54b77a]"
             >
               {isSaving ? "Saving..." : "Save Draft"}
             </button>
 
             <button
               onClick={() => setShowExportModal(true)}
-              className="btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors"
+              className="cursor-pointer rounded-xs border border-[#253328] bg-[#0d140f] px-3 py-1.5 text-xs font-bold tracking-wider text-[#f6dfa9] uppercase transition-colors hover:border-[#c69b5b]"
             >
               Export
             </button>
 
             <button
               onClick={() => setShowPublishModal(true)}
-              className="btn-keycap-light cursor-pointer !border-[#114225] !bg-[#2f8c56] px-4 py-1.5 text-xs font-black tracking-wider !text-white uppercase transition-colors"
+              className="cursor-pointer rounded-xs border border-[#236b40] bg-[#143320] px-4 py-1.5 text-xs font-black tracking-wider text-[#22c55e] uppercase transition-colors hover:bg-[#1a4028]"
             >
               Publish Live...
             </button>
           </div>
         </div>
-      </div>
 
-      <main className="mx-auto grid max-w-7xl grid-cols-1 gap-6 p-4 sm:p-6 lg:grid-cols-12">
-        {/* Main Canvas Column */}
-        <div className="space-y-4 lg:col-span-8">
-          {/* Subpage Tabs */}
-          {pack.pages.length > 1 && (
-            <div className="flex items-center gap-2 border-b border-[#777970] pb-2">
-              <span className="text-xs font-bold tracking-wider text-[#4b5249] uppercase">
-                Sub-pages:
-              </span>
-              {pack.pages.map((_, idx) => (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+          {/* Main Canvas Column */}
+          <div className="space-y-4 lg:col-span-8">
+            {/* Subpage Tabs */}
+            {pack.pages.length > 1 && (
+              <div className="flex flex-wrap items-center gap-2 border-b border-[#253328] pb-2">
+                <span className="text-xs font-bold tracking-wider text-[#879b83] uppercase">
+                  Sub-pages:
+                </span>
+                {pack.pages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSubIndex(idx)}
+                    className={`cursor-pointer rounded-xs border px-2.5 py-1 text-xs font-bold ${
+                      currentSubIndex === idx
+                        ? "border-[#c69b5b] bg-[#c69b5b] text-[#0d1410]"
+                        : "border-[#253328] bg-[#0d140f] text-[#b8d1a2] hover:border-[#54b77a]"
+                    }`}
+                  >
+                    {pack.primaryPageNumber}/{idx + 1}
+                  </button>
+                ))}
                 <button
-                  key={idx}
-                  onClick={() => setCurrentSubIndex(idx)}
-                  className={`btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold ${
-                    currentSubIndex === idx ? "!border-[#c69b5b] !bg-[#c69b5b] !text-[#0d1410]" : ""
-                  }`}
+                  onClick={handleAddSubPage}
+                  className="cursor-pointer rounded-xs border border-dashed border-[#253328] bg-[#0d140f] px-2 py-1 text-xs font-bold text-[#879b83] hover:border-[#54b77a] hover:text-[#54b77a]"
                 >
-                  {pack.primaryPageNumber}/{idx + 1}
+                  + Add Subpage
                 </button>
-              ))}
+              </div>
+            )}
+
+            {/* 40x25 Teletext Grid Interactive Editor */}
+            <div className="rounded border border-[#253328] bg-[#0d140f] p-3 sm:p-4">
+              <TeletextEditor page={activePage} onChange={handlePageChange} />
+            </div>
+          </div>
+
+          {/* Sidebar Diagnostics Column */}
+          <div className="space-y-4 lg:col-span-4">
+            {/* Real-time Byte Budget Meter */}
+            <div className="rounded border border-[#253328] bg-[#0d140f] p-3 sm:p-4">
+              <h2 className="mb-2 text-xs font-bold tracking-wider text-[#f6dfa9] uppercase">
+                Live Byte Budget
+              </h2>
+              <ByteBudgetMeter pack={pack} />
+            </div>
+
+            {/* Real-time Grid Validation Banner */}
+            <div className="rounded border border-[#253328] bg-[#0d140f] p-3 sm:p-4">
+              <h2 className="mb-2 text-xs font-bold tracking-wider text-[#f6dfa9] uppercase">
+                Compliance Checklist
+              </h2>
+              <GridValidationBanner pack={pack} />
+            </div>
+
+            {/* Quick Subpage Actions */}
+            <div className="rounded border border-[#253328] bg-[#0d140f] p-3 sm:p-4">
+              <h2 className="mb-2 text-xs font-bold tracking-wider text-[#f6dfa9] uppercase">
+                Multi-Page Tools
+              </h2>
+              <p className="mb-3 text-[11px] text-[#879b83]">
+                Total Sub-pages: <strong>{pack.pages.length}</strong>. Each subpage is transmitted
+                sequentially in the Teletext carousel.
+              </p>
               <button
                 onClick={handleAddSubPage}
-                className="btn-keycap-light cursor-pointer !border-dashed px-2 py-1 text-xs font-bold"
+                className="w-full cursor-pointer rounded-xs border border-[#253328] bg-[#080d0a] py-2 text-xs font-bold tracking-wider text-[#b8d1a2] uppercase transition-colors hover:border-[#54b77a] hover:text-[#54b77a]"
               >
-                + Add Subpage
+                + Append Subpage ({pack.primaryPageNumber}/{pack.pages.length + 1})
               </button>
             </div>
-          )}
-
-          {/* 40x25 Teletext Grid Interactive Editor */}
-          <div className="chassis-body p-3 sm:p-5">
-            <TeletextEditor page={activePage} onChange={handlePageChange} />
           </div>
         </div>
-
-        {/* Sidebar Diagnostics Column */}
-        <div className="space-y-6 lg:col-span-4">
-          {/* Real-time Byte Budget Meter */}
-          <div className="chassis-body p-4">
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
-              Live Byte Budget
-            </h2>
-            <ByteBudgetMeter pack={pack} />
-          </div>
-
-          {/* Real-time Grid Validation Banner */}
-          <div className="chassis-body p-4">
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
-              Compliance Checklist
-            </h2>
-            <GridValidationBanner pack={pack} />
-          </div>
-
-          {/* Quick Subpage Actions */}
-          <div className="chassis-body p-4">
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
-              Multi-Page Tools
-            </h2>
-            <p className="mb-3 text-[11px] text-[#5e645a]">
-              Total Sub-pages: <strong>{pack.pages.length}</strong>. Each subpage is transmitted
-              sequentially in the Teletext carousel.
-            </p>
-            <button
-              onClick={handleAddSubPage}
-              className="btn-keycap-light w-full cursor-pointer py-2 text-xs font-bold tracking-wider uppercase"
-            >
-              + Append Subpage ({pack.primaryPageNumber}/{pack.pages.length + 1})
-            </button>
-          </div>
-        </div>
-      </main>
+      </div>
 
       {/* Publish Modal Gate */}
       {showPublishModal && (
@@ -308,6 +305,6 @@ export default function PublisherEditorPage() {
           pack={pack}
         />
       )}
-    </div>
+    </PageCastDeviceShell>
   );
 }

@@ -18,7 +18,7 @@ export const DeviceChassis: React.FC<DeviceChassisProps> = ({
 }) => {
   return (
     <div
-      className={`device-enclosure relative flex w-full flex-col p-3.5 transition-all sm:p-6 lg:p-7 ${className}`.trim()}
+      className={`device-enclosure device-chassis relative flex w-full flex-col p-3.5 transition-all sm:p-6 lg:p-7 ${className}`.trim()}
     >
       {/* Top Brand Plate Header */}
       <div className="mb-3.5 overflow-hidden rounded-md border border-[#4a504b] shadow-xs">

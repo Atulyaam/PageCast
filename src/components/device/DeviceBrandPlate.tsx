@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Tv, Terminal, Radio, HardDrive, Sliders, Zap } from "lucide-react";
+import { Tv, Terminal, Radio, HardDrive, Sliders, Cpu } from "lucide-react";
 
 export interface DeviceBrandPlateProps {
   readonly isLive?: boolean;
@@ -14,14 +14,15 @@ export const DeviceBrandPlate: React.FC<DeviceBrandPlateProps> = ({
   isLive = true,
   carrierLocked = true,
 }) => {
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
 
   const navItems = [
     { label: "READER", href: "/", icon: Tv },
     { label: "TERMINAL", href: "/terminal", icon: Terminal },
     { label: "CATALOGUE", href: "/catalogue", icon: Radio },
     { label: "SAVED", href: "/saved", icon: HardDrive },
-    { label: "PUBLISHER STUDIO", href: "/publisher/ingest", icon: Sliders },
+    { label: "PUBLISHER", href: "/publisher", icon: Sliders },
+    { label: "LAB", href: "/lab", icon: Cpu },
   ];
 
   return (
@@ -64,15 +65,18 @@ export const DeviceBrandPlate: React.FC<DeviceBrandPlateProps> = ({
       </div>
 
       {/* Function Station Selector (Rackmount Navigation) */}
-      <nav aria-label="Device function selector" className="flex items-center gap-1.5">
+      <nav aria-label="Device function selector" className="flex items-center gap-1 sm:gap-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
+          const isActive =
+            item.href === "/"
+              ? pathname === "/" || pathname?.startsWith("/pages/")
+              : pathname === item.href || pathname?.startsWith(item.href + "/");
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
+              className={`flex items-center gap-1 rounded px-2 py-1 text-xs font-bold transition-all active:scale-95 sm:gap-1.5 sm:px-2.5 ${
                 isActive
                   ? "border border-[#556358] bg-[#2e3731] text-[#f6dfa9] shadow-inner"
                   : "border border-transparent text-[#879b83] hover:border-[#38423b] hover:text-[#b7c9a8]"

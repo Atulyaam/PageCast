@@ -2,14 +2,17 @@
 
 /**
  * PageCast Saved Pages Library Screen (TASK-S4-OFF-05 / UXR-004)
+ * /saved
  *
  * Dedicated screen for managing the local offline collection of Teletext bulletins
  * stored in IndexedDB via Dexie.js.
+ * Rendered inside the PT-4025 CRT display with internal scrolling.
  */
 
 import React, { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
-import { Download, Scan, Search, HardDrive, Trash2, BookOpen, Layers } from "lucide-react";
+import { Download, Scan, Search, Trash2, BookOpen } from "lucide-react";
+import { PageCastDeviceShell } from "@/components/device/PageCastDeviceShell";
 import { getAllSavedPages, removeSavedPage } from "@/lib/storage/saved-pages";
 import type { SavedPageRecord } from "@/lib/storage/dexie-db";
 import { ImportDialog } from "@/components/teletext/ImportDialog";
@@ -79,95 +82,61 @@ export default function SavedPagesPage() {
   });
 
   return (
-    <div className="flex min-h-screen flex-col font-sans">
-      {/* Top Precision Instrumentation Rail */}
-      <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <Link
-              href="/"
-              className="font-mono text-base font-black tracking-tight text-[#f6dfa9] transition-opacity hover:opacity-80 sm:text-lg"
-            >
-              PAGECAST
-            </Link>
-            <span className="rounded-xs border border-[#236b40] bg-[#143320] px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-[#22c55e] uppercase">
-              OFFLINE VAULT
+    <PageCastDeviceShell mode="saved">
+      <div className="space-y-4">
+        {/* Top Header & Vault Status Badge */}
+        <div className="border-b border-[#253328] pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="rounded-xs border border-[#236b40] bg-[#143320] px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#22c55e] uppercase">
+                OFFLINE VAULT
+              </span>
+              <h1 className="text-sm font-bold tracking-wider text-[#f6dfa9] uppercase sm:text-base">
+                SAVED OFFLINE BULLETINS
+              </h1>
+            </div>
+            <span className="text-[10px] text-[#829a76]">
+              {savedPages.length} CARTRIDGE{savedPages.length === 1 ? "" : "S"} CACHED
             </span>
           </div>
-
-          <nav className="no-scrollbar flex items-center gap-1.5 overflow-x-auto font-mono text-xs sm:gap-2">
-            <Link
-              href="/"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              READER
-            </Link>
-            <Link
-              href="/terminal"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              TERMINAL
-            </Link>
-            <Link
-              href="/catalogue"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              CATALOGUE
-            </Link>
-            <Link
-              href="/saved"
-              className="rounded-xs border border-[#3d4b40] bg-[#2b352e] px-2.5 py-1 font-bold text-[#22c55e] shadow-inner transition-all"
-            >
-              SAVED
-            </Link>
-          </nav>
+          <p className="mt-1 text-xs text-[#829a76]">
+            IndexedDB persistent local storage &bull; Zero network dependency &bull; Air-gap safe
+          </p>
         </div>
-      </header>
 
-      {/* Main Container */}
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col p-4 sm:p-6">
-        {/* Title & Stats */}
-        <div className="mb-6 flex flex-col justify-between gap-3 border-b border-[#777970] pb-4 sm:flex-row sm:items-center">
-          <div>
-            <h1 className="font-mono text-xl font-bold tracking-tight text-[#2f342d] sm:text-2xl">
-              SAVED OFFLINE BULLETINS
-            </h1>
-            <p className="mt-1 font-mono text-xs text-[#5e645a]">
-              IndexedDB persistent local storage &bull; {savedPages.length} cartridge
-              {savedPages.length === 1 ? "" : "s"} cached
-            </p>
-          </div>
-
-          {/* Quick Search Filter & Import Button */}
+        {/* Action Toolbar & Search */}
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xs border border-[#232e27] bg-[#101713] p-2.5">
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className="btn-keycap-light inline-flex cursor-pointer items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded border border-[#232e27] bg-[#0a0f0c] px-2.5 py-1 text-xs font-bold text-[#54b77a] transition-all hover:border-[#54b77a] hover:bg-[#1a3823]"
               aria-label="Import PagePack JSON file"
             >
-              <Download className="h-3.5 w-3.5 text-[#22c55e]" />
+              <Download className="h-3 w-3" />
               <span>+ IMPORT JSON</span>
             </button>
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="btn-keycap-light inline-flex cursor-pointer items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded border border-[#232e27] bg-[#0a0f0c] px-2.5 py-1 text-xs font-bold text-[#d1a15d] transition-all hover:border-[#d1a15d] hover:bg-[#382c16]"
               aria-label="Scan optical QR code or air-gap burst"
             >
-              <Scan className="h-3.5 w-3.5 text-[#c69b5b]" />
+              <Scan className="h-3 w-3" />
               <span>SCAN QR</span>
             </button>
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Filter by page or title..."
-                className="led-window px-3 py-1.5 font-mono text-xs text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
-                aria-label="Filter saved bulletins"
-              />
-            </div>
+          </div>
+
+          <div className="relative min-w-[200px] flex-1 sm:max-w-xs">
+            <Search className="absolute top-2 left-2.5 h-3 w-3 text-[#54b77a]" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Filter by page or title..."
+              className="w-full rounded border border-[#232e27] bg-[#0a0f0c] py-1.5 pr-2.5 pl-7 text-xs text-[#b8d1a2] placeholder:text-[#3d4f40] focus:border-[#54b77a] focus:outline-none"
+              aria-label="Filter saved bulletins"
+            />
           </div>
         </div>
 
@@ -175,7 +144,7 @@ export default function SavedPagesPage() {
         {actionMessage && (
           <div
             role="status"
-            className="mb-4 rounded-xs border border-[#236b40] bg-[#143320] px-3 py-2 font-mono text-xs text-[#b7c9a8]"
+            className="rounded-xs border border-[#236b40] bg-[#143320] px-3 py-1.5 text-xs text-[#b8d1a2]"
           >
             {actionMessage}
           </div>
@@ -183,93 +152,84 @@ export default function SavedPagesPage() {
 
         {/* Content States */}
         {loading ? (
-          <div className="flex flex-1 flex-col items-center justify-center py-16 text-center font-mono">
-            <div className="mb-3 h-8 w-8 animate-spin rounded-full border-2 border-[#236b40] border-t-transparent" />
-            <p className="text-xs tracking-wider text-[#5e645a]">
-              SCANNING LOCAL INDEXEDDB STORAGE...
-            </p>
+          <div className="flex flex-col items-center justify-center p-12 text-center">
+            <div className="mb-2 h-6 w-6 animate-spin rounded-full border-2 border-[#54b77a] border-t-transparent" />
+            <p className="text-xs text-[#829a76]">SCANNING LOCAL INDEXEDDB STORAGE...</p>
           </div>
         ) : filteredPages.length === 0 ? (
-          <div className="chassis-body p-8 text-center font-mono">
-            <p className="mb-2 text-sm font-bold text-[#c69b5b]">
+          <div className="rounded border border-[#232e27] bg-[#101713] p-8 text-center">
+            <p className="mb-1 text-xs font-bold text-[#d1a15d]">
               {searchQuery
                 ? "NO SAVED BULLETINS MATCH YOUR FILTER"
                 : "NO OFFLINE BULLETINS SAVED YET"}
             </p>
-            <p className="mx-auto mb-6 max-w-md text-xs text-[#5e645a]">
-              When viewing any bulletin in the Reader or Terminal, click the &ldquo;☆ SAVE
-              OFFLINE&rdquo; button to keep a permanent offline copy on this device.
+            <p className="mx-auto mb-4 max-w-sm text-[11px] text-[#6d826c]">
+              When viewing any bulletin in the Reader or Terminal, click &ldquo;SAVE OFFLINE&rdquo;
+              to keep a permanent local cartridge copy.
             </p>
             <Link
               href="/catalogue"
-              className="btn-keycap-light inline-block px-4 py-2 text-xs font-bold uppercase transition-colors"
+              className="inline-block rounded border border-[#232e27] bg-[#0a0f0c] px-3 py-1.5 text-xs font-bold text-[#54b77a] hover:border-[#54b77a] hover:bg-[#1a3823]"
             >
               EXPLORE BROADCAST CATALOGUE
             </Link>
           </div>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {filteredPages.map((saved) => {
               const mag = getMagazineDefinition(saved.magazineNumber);
               const formattedDate = new Date(saved.savedAt).toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
               });
 
               return (
                 <div
                   key={saved.pageNumber}
-                  className="chassis-body flex flex-col justify-between p-4 shadow-md transition-all"
+                  className="flex flex-col justify-between rounded border border-[#232e27] bg-[#101713] p-3 transition-colors hover:border-[#384a3c]"
                 >
                   <div>
                     {/* Top Badges */}
-                    <div className="mb-2 flex items-center justify-between gap-2 font-mono text-[11px]">
-                      <span className="rounded-xs bg-[#c69b5b] px-2 py-0.5 font-bold text-[#0d1410]">
+                    <div className="mb-1.5 flex items-center justify-between gap-1 text-[10px]">
+                      <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 font-bold text-[#0d1410]">
                         P{saved.pageNumber}
                       </span>
-                      <span className="text-[10px] font-bold tracking-wider text-[#3d4b40] uppercase">
+                      <span className="text-[#6d826c]">
                         Mag {mag.number}: {mag.name}
                       </span>
                     </div>
 
-                    {/* Bulletin Title */}
-                    <h2 className="mb-2 line-clamp-2 font-mono text-sm font-bold text-[#2f342d]">
+                    {/* Title */}
+                    <h2 className="mb-1 line-clamp-2 text-xs font-bold text-[#f6dfa9]">
                       {saved.title}
                     </h2>
 
-                    {/* Metadata Details */}
-                    <div className="mb-4 space-y-0.5 font-mono text-[11px] text-[#5e645a]">
+                    {/* Meta */}
+                    <div className="mb-3 space-y-0.5 text-[10px] text-[#6d826c]">
                       <div>Saved: {formattedDate}</div>
                       <div>
                         Size: {(saved.byteLength / 1024).toFixed(1)} KiB &bull;{" "}
                         {saved.pack.pages.length} frame
                         {saved.pack.pages.length === 1 ? "" : "s"}
                       </div>
-                      {saved.sourceUrl && (
-                        <div className="truncate">
-                          Source: {saved.sourceDomain || saved.sourceUrl}
-                        </div>
-                      )}
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex items-center justify-between gap-2 border-t border-[#777970] pt-3 font-mono text-xs">
+                  {/* Actions */}
+                  <div className="flex items-center justify-between gap-2 border-t border-[#1c261f] pt-2 text-xs">
                     <Link
                       href={`/terminal?page=${saved.pageNumber}`}
-                      className="btn-keycap-light inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold uppercase"
+                      className="inline-flex items-center gap-1 rounded border border-[#232e27] bg-[#0a0f0c] px-2 py-1 text-[10px] font-bold text-[#54b77a] hover:border-[#54b77a] hover:bg-[#1a3823]"
                     >
-                      <BookOpen className="h-3 w-3 text-[#22c55e]" />
-                      <span>READ OFFLINE</span>
+                      <BookOpen className="h-3 w-3" />
+                      <span>READ</span>
                     </Link>
 
                     <button
                       type="button"
                       onClick={() => handleRemove(saved.pageNumber)}
-                      className="inline-flex cursor-pointer items-center gap-1 rounded-xs px-2 py-1 text-[11px] font-semibold text-[#801d14] transition-colors hover:text-[#b93529]"
+                      className="inline-flex cursor-pointer items-center gap-1 text-[10px] text-[#ef4444] hover:underline"
                       aria-label={`Remove saved page ${saved.pageNumber}`}
                     >
                       <Trash2 className="h-3 w-3" />
@@ -281,15 +241,8 @@ export default function SavedPagesPage() {
             })}
           </div>
         )}
-      </main>
+      </div>
 
-      {/* Footer */}
-      <footer className="border-t border-[#bfbcb2] px-4 py-4 text-center font-mono text-xs text-[#5e645a]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <span>PAGECAST &bull; Offline PWA Storage</span>
-          <span className="font-bold text-[#2e5a38]">100% CLIENT PERSISTED</span>
-        </div>
-      </footer>
       {/* Import Dialog */}
       <ImportDialog
         isOpen={isImportOpen}
@@ -311,6 +264,6 @@ export default function SavedPagesPage() {
           setTimeout(() => setActionMessage(""), 4000);
         }}
       />
-    </div>
+    </PageCastDeviceShell>
   );
 }

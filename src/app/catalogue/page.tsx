@@ -6,19 +6,13 @@
  *
  * Displays all 8 Teletext magazines with published bulletin discovery,
  * real-time keyword search, language filtering, and direct terminal tuning.
+ * Rendered inside the PT-4025 CRT display with internal scrolling.
  */
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  Search,
-  SlidersHorizontal,
-  Radio,
-  Tv,
-  ArrowUpRight,
-  AlertTriangle,
-  Cpu,
-} from "lucide-react";
+import { Search, SlidersHorizontal, Radio, ArrowUpRight, AlertTriangle } from "lucide-react";
+import { PageCastDeviceShell } from "@/components/device/PageCastDeviceShell";
 import { MAGAZINES } from "@/domain/teletext/magazine";
 import type { CatalogItem } from "@/server/database/repository";
 import type { GroupedMagazineCatalog } from "@/app/api/v1/catalog/route";
@@ -89,14 +83,11 @@ export default function BroadcastCataloguePage() {
     loadCatalog();
   }, []);
 
-  // Filter bulletins within each magazine
   const filterBulletins = (bulletins: CatalogItem[]): CatalogItem[] => {
     return bulletins.filter((b) => {
-      // Language match
       if (languageFilter !== "all" && b.language !== languageFilter) {
         return false;
       }
-      // Query match
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
         const matchesTitle = b.title.toLowerCase().includes(q);
@@ -114,69 +105,24 @@ export default function BroadcastCataloguePage() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col font-mono">
-      {/* Top Precision Instrumentation Rail */}
-      <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <Link href="/" className="group flex items-center gap-2">
-              <span className="text-base font-black tracking-tight text-[#f6dfa9] transition-opacity group-hover:opacity-80 sm:text-lg">
-                PAGECAST
+    <PageCastDeviceShell mode="catalogue">
+      <div className="space-y-4">
+        {/* CRT Directory Title & Technical Header */}
+        <div className="border-b border-[#253328] pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="rounded-xs bg-[#135359] px-2 py-0.5 text-[10px] font-extrabold tracking-widest text-[#76c7cd] uppercase">
+                DIRECTORY
               </span>
-              <span className="rounded-xs border border-[#3b453e] bg-[#161a17] px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#76c7cd] uppercase">
-                DIRECTORY CONSOLE
-              </span>
-            </Link>
-          </div>
-
-          <nav className="no-scrollbar flex items-center gap-1.5 overflow-x-auto text-xs sm:gap-2">
-            <Link
-              href="/"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              READER
-            </Link>
-            <Link
-              href="/terminal"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              TERMINAL
-            </Link>
-            <Link
-              href="/catalogue"
-              className="rounded-xs border border-[#3d4b40] bg-[#2b352e] px-2.5 py-1 font-bold text-[#76c7cd] shadow-inner transition-all"
-            >
-              CATALOGUE
-            </Link>
-            <Link
-              href="/saved"
-              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
-            >
-              SAVED
-            </Link>
-            <Link
-              href="/publisher/ingest"
-              className="rounded-xs border border-[#74581a] bg-[#3a2e12] px-2.5 py-1 font-bold text-[#f6dfa9] transition-all hover:bg-[#4a3b16]"
-            >
-              PUBLISHER STUDIO
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      {/* Main Catalogue Area */}
-      <main className="mx-auto max-w-5xl p-3 sm:p-6 lg:p-8">
-        {/* Title & Introduction */}
-        <div className="mb-6 border-b border-[#777970] pb-4">
-          <div className="flex items-center gap-2">
-            <span className="rounded-xs bg-[#135359] px-2 py-0.5 text-[10px] font-extrabold tracking-widest text-[#76c7cd] uppercase">
-              INDEX
+              <h1 className="text-sm font-bold tracking-wider text-[#f6dfa9] uppercase sm:text-base">
+                Broadcast Frequency Directory
+              </h1>
+            </div>
+            <span className="font-mono text-[10px] text-[#829a76]">
+              {totalMatching} ACTIVE CHANNELS
             </span>
-            <h1 className="text-lg font-bold tracking-wider text-[#2f342d] uppercase sm:text-xl">
-              Teletext Broadcast Frequency Directory
-            </h1>
           </div>
-          <p className="mt-1 text-xs text-[#5e645a] sm:text-sm">
+          <p className="mt-1 text-xs text-[#829a76]">
             Browse active broadcast bulletins across all 8 standard Teletext frequency magazines.
           </p>
         </div>
@@ -185,116 +131,92 @@ export default function BroadcastCataloguePage() {
         {snapshotDate && (
           <div
             role="status"
-            className="mb-6 flex items-center justify-between rounded-xs border border-[#846114] bg-[#2d2208] px-3.5 py-2.5 text-xs text-[#f6dfa9] shadow-sm"
+            className="flex items-center justify-between rounded-xs border border-[#846114] bg-[#2d2208]/90 px-3 py-2 text-xs text-[#f6dfa9]"
           >
             <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 shrink-0 text-[#eab308]" />
-              <span>
-                OFFLINE CATALOGUE SNAPSHOT &bull; Stored {snapshotDate} &bull; Broadcast updates
-                paused
-              </span>
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-[#eab308]" />
+              <span>OFFLINE SNAPSHOT: Stored {snapshotDate}</span>
             </div>
-            <span className="rounded-xs bg-[#846114]/40 px-1.5 py-0.5 text-[10px] font-bold tracking-widest text-[#c69b5b] uppercase">
-              OFFLINE CACHE
+            <span className="rounded-xs bg-[#846114]/50 px-1.5 py-0.5 text-[9px] font-bold text-[#c69b5b] uppercase">
+              LOCAL CACHE
             </span>
           </div>
         )}
 
-        {/* Search & Filter Chassis Toolbar */}
-        <div className="chassis-body mb-8 flex flex-col justify-between gap-4 p-4.5 md:flex-row md:items-center">
+        {/* Search & Filter CRT Bar */}
+        <div className="flex flex-col gap-3 rounded-xs border border-[#232e27] bg-[#101713] p-3 md:flex-row md:items-center md:justify-between">
           {/* Keyword Search */}
           <div className="flex-1">
             <label
               htmlFor="catalogue-search"
-              className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase"
+              className="mb-1 flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-[#829a76] uppercase"
             >
-              <Search className="h-3 w-3 text-[#777970]" />
+              <Search className="h-3 w-3 text-[#54b77a]" />
               Search Bulletins (Page or Title)
             </label>
-            <div className="relative">
-              <input
-                id="catalogue-search"
-                type="text"
-                placeholder="e.g. 101, cyclone, technology..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="led-window w-full px-3 py-2 text-sm text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
-              />
-            </div>
+            <input
+              id="catalogue-search"
+              type="text"
+              placeholder="e.g. 101, cyclone, technology..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded border border-[#232e27] bg-[#0a0f0c] px-2.5 py-1.5 text-xs text-[#b8d1a2] placeholder:text-[#3d4f40] focus:border-[#54b77a] focus:outline-none"
+            />
           </div>
 
           {/* Language Selector */}
           <div>
-            <label className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
-              <SlidersHorizontal className="h-3 w-3 text-[#777970]" />
-              Language Filter
+            <label className="mb-1 flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-[#829a76] uppercase">
+              <SlidersHorizontal className="h-3 w-3 text-[#54b77a]" />
+              Language
             </label>
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setLanguageFilter("all")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
-                  languageFilter === "all"
-                    ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
-                    : ""
-                }`}
-              >
-                All
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguageFilter("en")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
-                  languageFilter === "en"
-                    ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
-                    : ""
-                }`}
-              >
-                English
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguageFilter("hi")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
-                  languageFilter === "hi"
-                    ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
-                    : ""
-                }`}
-              >
-                Hindi (हिन्दी)
-              </button>
+            <div className="flex items-center gap-1">
+              {(["all", "en", "hi"] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  onClick={() => setLanguageFilter(lang)}
+                  className={`cursor-pointer rounded px-2.5 py-1 text-[11px] font-bold uppercase transition-all ${
+                    languageFilter === lang
+                      ? "border border-[#54b77a] bg-[#1a3823] text-[#54b77a] shadow-[0_0_6px_rgba(84,183,122,0.3)]"
+                      : "border border-[#232e27] bg-[#0a0f0c] text-[#6d826c] hover:text-[#b8d1a2]"
+                  }`}
+                >
+                  {lang === "all" ? "All" : lang === "en" ? "EN" : "हिन्दी"}
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Quick Jump Bar to Magazines */}
-        <div className="mb-8 flex flex-wrap items-center gap-1.5 text-xs">
-          <div className="mr-2 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#5e645a] uppercase">
-            <Radio className="h-3 w-3 text-[#c69b5b]" />
-            Jump to:
-          </div>
+        <div className="flex flex-wrap items-center gap-1 text-xs">
+          <span className="mr-1 flex items-center gap-1 text-[10px] font-bold tracking-widest text-[#6d826c] uppercase">
+            <Radio className="h-3 w-3 text-[#d1a15d]" />
+            MAG:
+          </span>
           {magazines.map((mag) => (
             <a
               key={mag.magazineNumber}
               href={`#mag-${mag.magazineNumber}`}
-              className="btn-keycap-light border border-[#777970] px-2 py-0.5 text-[11px] font-semibold text-[#2f342d] transition-colors hover:border-[#1b676e] hover:text-black"
+              className="rounded border border-[#232e27] bg-[#101713] px-2 py-0.5 text-[10px] font-bold text-[#829a76] hover:border-[#54b77a] hover:text-[#b8d1a2]"
             >
-              Mag {mag.magazineNumber}
+              M{mag.magazineNumber}
             </a>
           ))}
         </div>
 
         {/* Magazine Broadcast Sections */}
         {isLoading ? (
-          <div className="chassis-body p-12 text-center text-xs text-[#5e645a]">
+          <div className="rounded border border-[#232e27] bg-[#101713] p-8 text-center text-xs text-[#829a76]">
             Tuning broadcast raster... Loading catalogue...
           </div>
         ) : totalMatching === 0 ? (
-          <div className="chassis-body p-12 text-center text-xs text-[#5e645a]">
+          <div className="rounded border border-[#232e27] bg-[#101713] p-8 text-center text-xs text-[#829a76]">
             No bulletins found matching your filter criteria.
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4">
             {magazines.map((mag) => {
               const matchingBulletins = filterBulletins(mag.bulletins);
 
@@ -302,71 +224,69 @@ export default function BroadcastCataloguePage() {
                 <section
                   key={mag.magazineNumber}
                   id={`mag-${mag.magazineNumber}`}
-                  className="chassis-body p-4 sm:p-5"
+                  className="rounded border border-[#232e27] bg-[#101713] p-3"
                 >
                   {/* Magazine Header */}
-                  <div className="mb-3 flex flex-col justify-between gap-2 border-b border-[#777970] pb-2.5 sm:flex-row sm:items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 text-[10px] font-black text-[#0d1410]">
-                          MAG {mag.magazineNumber}
-                        </span>
-                        <h2 className="text-sm font-bold tracking-wider text-[#2f342d] uppercase sm:text-base">
-                          {mag.name}
-                        </h2>
-                        <span className="text-xs text-[#5e645a]">
-                          (P{mag.pageRange[0]}–P{mag.pageRange[1]})
-                        </span>
-                      </div>
-                      <p className="mt-1 text-xs text-[#5e645a]">{mag.description}</p>
+                  <div className="mb-2.5 flex flex-wrap items-center justify-between gap-1 border-b border-[#1c261f] pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 text-[9px] font-black text-[#0d1410]">
+                        MAG {mag.magazineNumber}
+                      </span>
+                      <h2 className="text-xs font-bold tracking-wider text-[#f6dfa9] uppercase sm:text-sm">
+                        {mag.name}
+                      </h2>
+                      <span className="text-[10px] text-[#6d826c]">
+                        (P{mag.pageRange[0]}–P{mag.pageRange[1]})
+                      </span>
                     </div>
 
-                    <span className="font-mono text-xs text-[#4b5249]">
-                      {matchingBulletins.length}{" "}
-                      {matchingBulletins.length === 1 ? "Bulletin" : "Bulletins"}
+                    <span className="text-[10px] text-[#6d826c]">
+                      {matchingBulletins.length} {matchingBulletins.length === 1 ? "page" : "pages"}
                     </span>
                   </div>
 
-                  {/* Bulletins Table / List */}
+                  {/* Bulletins Table */}
                   {matchingBulletins.length === 0 ? (
-                    <div className="screen-bay p-4 text-center text-xs text-[#60715d]">
+                    <div className="p-3 text-center text-[11px] text-[#586957]">
                       No bulletins currently transmitting in Magazine {mag.magazineNumber}.
                     </div>
                   ) : (
-                    <div className="screen-bay overflow-x-auto">
+                    <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
-                        <thead className="border-b border-[#232e27] bg-[#121915] text-[10px] tracking-wider text-[#879b83] uppercase">
+                        <thead className="border-b border-[#1c261f] text-[9px] tracking-wider text-[#6d826c] uppercase">
                           <tr>
-                            <th className="w-20 px-4 py-2.5">Page</th>
-                            <th className="px-4 py-2.5">Title</th>
-                            <th className="w-20 px-4 py-2.5">Lang</th>
-                            <th className="w-20 px-4 py-2.5">Revision</th>
-                            <th className="w-32 px-4 py-2.5 text-right">Action</th>
+                            <th className="w-16 px-2.5 py-1.5">Page</th>
+                            <th className="px-2.5 py-1.5">Title</th>
+                            <th className="w-16 px-2.5 py-1.5">Lang</th>
+                            <th className="w-16 px-2.5 py-1.5">Rev</th>
+                            <th className="w-24 px-2.5 py-1.5 text-right">Action</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-[#1b241e] bg-[#0d1410]">
+                        <tbody className="divide-y divide-[#18211a]">
                           {matchingBulletins.map((bulletin) => (
                             <tr
                               key={bulletin.pageNumber}
-                              className="transition-colors hover:bg-[#16201a]"
+                              className="transition-colors hover:bg-[#151f18]"
                             >
-                              <td className="px-4 py-2.5 font-bold whitespace-nowrap text-[#c69b5b]">
+                              <td className="px-2.5 py-2 font-bold whitespace-nowrap text-[#d1a15d]">
                                 P{bulletin.pageNumber}
                               </td>
-                              <td className="max-w-sm truncate px-4 py-2.5 font-medium text-[#b7c9a8]">
+                              <td className="max-w-xs truncate px-2.5 py-2 text-[#b8d1a2]">
                                 {bulletin.title}
                               </td>
-                              <td className="px-4 py-2.5 text-[#879b83] uppercase">
+                              <td className="px-2.5 py-2 text-[10px] text-[#829a76] uppercase">
                                 {bulletin.language}
                               </td>
-                              <td className="px-4 py-2.5 text-[#6b7c68]">r{bulletin.revision}</td>
-                              <td className="px-4 py-2.5 text-right">
+                              <td className="px-2.5 py-2 text-[10px] text-[#6d826c]">
+                                r{bulletin.revision}
+                              </td>
+                              <td className="px-2.5 py-2 text-right">
                                 <Link
                                   href={`/?page=${bulletin.pageNumber}`}
-                                  className="btn-keycap-light inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold tracking-wider uppercase transition-colors"
+                                  className="inline-flex items-center gap-1 rounded border border-[#232e27] bg-[#0a0f0c] px-2 py-1 text-[10px] font-bold text-[#54b77a] hover:border-[#54b77a] hover:bg-[#1a3823]"
                                 >
-                                  <span>Tune In</span>
-                                  <ArrowUpRight className="h-3 w-3 text-[#22c55e]" />
+                                  <span>TUNE</span>
+                                  <ArrowUpRight className="h-3 w-3" />
                                 </Link>
                               </td>
                             </tr>
@@ -380,12 +300,7 @@ export default function BroadcastCataloguePage() {
             })}
           </div>
         )}
-      </main>
-
-      {/* Footer */}
-      <footer className="mt-12 border-t border-[#bfbcb2] px-4 py-6 text-center font-mono text-xs text-[#5e645a]">
-        <p>PAGECAST &bull; AI-Powered Physical Teletext Terminal &bull; Kiroween 2026</p>
-      </footer>
-    </div>
+      </div>
+    </PageCastDeviceShell>
   );
 }

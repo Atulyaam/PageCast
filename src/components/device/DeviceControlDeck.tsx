@@ -29,7 +29,7 @@ export const DeviceControlDeck: React.FC<DeviceControlDeckProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col gap-3.5 rounded-xl border border-[#585750] bg-[#96948a] p-3.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.22)] select-none sm:p-4.5 ${className}`.trim()}
+      className={`device-control-deck flex flex-col gap-3.5 rounded-xl border border-[#585750] bg-[#96948a] p-3.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.22)] select-none sm:p-4.5 ${className}`.trim()}
     >
       {/* Deck Header Silkscreen */}
       <div className="flex items-center justify-between border-b border-[#77756c] pb-1.5 font-mono text-[9px] font-extrabold tracking-widest text-[#292c29] uppercase">

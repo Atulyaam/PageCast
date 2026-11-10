@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { PageCastDeviceShell } from "@/components/device/PageCastDeviceShell";
 
 export const metadata: Metadata = {
   title: "About PageCast — Resurrecting Broadcast Teletext for 2026",
@@ -9,43 +10,44 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-black p-4 font-mono text-white selection:bg-yellow-400 selection:text-black sm:p-8">
-      <div className="mx-auto max-w-4xl space-y-8">
+    <PageCastDeviceShell mode="reader">
+      <div className="space-y-6 font-mono text-[#b8d1a2]">
         {/* Navigation Bar */}
-        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-yellow-400 pb-4">
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#253328] pb-3">
           <div className="flex items-center gap-3">
-            <span className="bg-yellow-400 px-2 py-0.5 text-xs font-black text-black">
+            <span className="bg-[#f6dfa9] px-2 py-0.5 text-xs font-black text-[#080d0a]">
               PAGECAST
             </span>
-            <span className="text-sm tracking-widest text-neutral-400">P199 • SYSTEM ABOUT</span>
+            <span className="text-xs tracking-widest text-[#879b83]">P199 • SYSTEM ABOUT</span>
           </div>
-          <div className="flex items-center gap-4 text-xs font-bold">
-            <Link href="/pages/100" className="text-yellow-400 hover:underline">
+          <div className="flex items-center gap-3 text-xs font-bold">
+            <Link href="/pages/100" className="text-[#f6dfa9] hover:underline">
               [P100 INDEX]
             </Link>
-            <Link href="/publisher" className="text-cyan-400 hover:underline">
+            <Link href="/publisher" className="text-[#38bdf8] hover:underline">
               [STUDIO]
             </Link>
-            <Link href="/" className="text-white hover:underline">
+            <Link href="/" className="text-[#e5e7eb] hover:underline">
               [HOME]
             </Link>
           </div>
         </header>
 
         {/* Hero Section */}
-        <section className="border-2 border-yellow-400/80 bg-neutral-950 p-6 shadow-[0_0_20px_rgba(255,255,0,0.15)]">
-          <h1 className="mb-4 text-2xl font-black tracking-wider text-yellow-400 uppercase sm:text-3xl">
+        <section className="rounded border border-[#c69b5b] bg-[#0d140f] p-4 sm:p-5">
+          <h1 className="mb-3 text-lg font-black tracking-wider text-[#f6dfa9] uppercase sm:text-xl">
             Resurrecting Broadcast Teletext for the Modern Era
           </h1>
-          <p className="text-sm leading-relaxed text-neutral-300 sm:text-base">
+          <p className="text-xs leading-relaxed text-[#b8d1a2] sm:text-sm">
             In 1974, the BBC launched <strong>Ceefax</strong>, the world&apos;s first teletext
             information service. Transmitted invisibly within the vertical blanking interval of
             television signals, it delivered news, weather, and crisis updates instantly using
             almost zero bandwidth.
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-neutral-300 sm:text-base">
+          <p className="mt-2 text-xs leading-relaxed text-[#879b83] sm:text-sm">
             <strong>PageCast</strong> resurrects this forgotten medium for the{" "}
-            <strong>Kiroween 2026 Hackathon</strong> (Resurrection Category). Combining retro 40x25
+            <strong className="text-[#f6dfa9]">Kiroween 2026 Hackathon</strong> (
+            <span className="text-[#54b77a]">Resurrection Category</span>). Combining retro 40x25
             grid aesthetics with state-of-the-art AI summarization, cryptographic sentence
             provenance, and optical air-gap packet transfer, PageCast proves that low-bandwidth
             technology is the future of resilient communication.
@@ -53,65 +55,65 @@ export default function AboutPage() {
         </section>
 
         {/* Architecture & Technical Innovations */}
-        <section className="grid grid-cols-1 gap-6 text-sm md:grid-cols-2">
-          <div className="space-y-3 border border-neutral-800 bg-neutral-950 p-5">
-            <h2 className="text-base font-bold tracking-wider text-green-400 uppercase">
+        <section className="grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
+          <div className="space-y-2 rounded border border-[#253328] bg-[#0d140f] p-4">
+            <h2 className="text-sm font-bold tracking-wider text-[#54b77a] uppercase">
               ★ 10 KiB Payload Ceiling
             </h2>
-            <p className="text-xs leading-relaxed text-neutral-400">
+            <p className="leading-relaxed text-[#879b83]">
               Every broadcast PagePack is strictly capped at 10,240 bytes. Unlike the bloated modern
               web, PageCast transmits full multi-page editions over 2G networks, dial-up, or
               high-density animated QR bursts in seconds.
             </p>
           </div>
 
-          <div className="space-y-3 border border-neutral-800 bg-neutral-950 p-5">
-            <h2 className="text-base font-bold tracking-wider text-cyan-400 uppercase">
+          <div className="space-y-2 rounded border border-[#253328] bg-[#0d140f] p-4">
+            <h2 className="text-sm font-bold tracking-wider text-[#38bdf8] uppercase">
               ★ Factual Sentence Provenance
             </h2>
-            <p className="text-xs leading-relaxed text-neutral-400">
-              AI hallucinations have zero place in crisis communications. Every synthesized bullet
-              point explicitly cites source sentence IDs (e.g. <code>[s1, s3]</code>), giving
-              readers verifiable attribution back to original journalism.
+            <p className="leading-relaxed text-[#879b83]">
+              Hallucinations have no place in emergency broadcasts. Every sentence generated by the
+              AI summarizer contains cryptographic links back to exact sentence indices in the
+              original source article.
             </p>
           </div>
 
-          <div className="space-y-3 border border-neutral-800 bg-neutral-950 p-5">
-            <h2 className="text-base font-bold tracking-wider text-yellow-400 uppercase">
+          <div className="space-y-2 rounded border border-[#253328] bg-[#0d140f] p-4">
+            <h2 className="text-sm font-bold tracking-wider text-[#f6dfa9] uppercase">
               ★ Dual-Script Multilingual Support
             </h2>
-            <p className="text-xs leading-relaxed text-neutral-400">
-              Information equity requires native language support. PageCast provides first-class
-              English and Hindi (Devanagari) rendering, aligning complex conjuncts and matras within
-              the mathematical 40-column raster.
+            <p className="leading-relaxed text-[#879b83]">
+              Built with first-class English and Hindi (Devanagari) rendering. Complex conjuncts,
+              matras, and viramas are laid out within standard 40×25 Teletext constraints using
+              monospace Devanagari typography.
             </p>
           </div>
 
-          <div className="space-y-3 border border-neutral-800 bg-neutral-950 p-5">
-            <h2 className="text-base font-bold tracking-wider text-red-400 uppercase">
-              ★ Optical Air-Gap &amp; Offline Vault
+          <div className="space-y-2 rounded border border-[#253328] bg-[#0d140f] p-4">
+            <h2 className="text-sm font-bold tracking-wider text-[#a78bfa] uppercase">
+              ★ Optical Air-Gap Transfer
             </h2>
-            <p className="text-xs leading-relaxed text-neutral-400">
-              When terrestrial networks fail, PageCast keeps broadcasting. Receive bulletins across
-              air-gaps via camera QR scanning and store them in an encrypted, offline-first
-              IndexedDB vault.
+            <p className="leading-relaxed text-[#879b83]">
+              When the internet goes down completely, PageCast transfers editions screen-to-camera
+              using high-speed animated QR code bursts (UR / Fountain codes). No cables, radios, or
+              pairing required.
             </p>
           </div>
         </section>
 
-        {/* Footer Links */}
-        <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-neutral-800 pt-6 text-xs text-neutral-500">
-          <div>PAGECAST SYSTEM • KIROWEEN 2026 • RESURRECTION CATEGORY</div>
+        {/* Footer Navigation */}
+        <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-[#253328] pt-4 text-xs text-[#879b83]">
+          <div>PageCast PT-4025 • Designed for Kiroween 2026 Hackathon</div>
           <div className="flex gap-4">
-            <Link href="/privacy" className="underline hover:text-yellow-400">
-              Privacy Policy
+            <Link href="/privacy" className="text-[#879b83] hover:text-[#b8d1a2]">
+              Privacy
             </Link>
-            <Link href="/content-policy" className="underline hover:text-yellow-400">
+            <Link href="/content-policy" className="text-[#879b83] hover:text-[#b8d1a2]">
               Content Policy
             </Link>
           </div>
         </footer>
       </div>
-    </div>
+    </PageCastDeviceShell>
   );
 }

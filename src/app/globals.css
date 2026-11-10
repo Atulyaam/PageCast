@@ -373,6 +373,30 @@ body {
   scrollbar-width: none;
 }
 
+/* Custom CRT Screen Internal Scrollbar (Section 9 Invariant) */
+.device-screen-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #253328 #080d0a;
+}
+
+.device-screen-viewport::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.device-screen-viewport::-webkit-scrollbar-track {
+  background: #080d0a;
+}
+
+.device-screen-viewport::-webkit-scrollbar-thumb {
+  background: #253328;
+  border-radius: 3px;
+}
+
+.device-screen-viewport::-webkit-scrollbar-thumb:hover {
+  background: #54b77a;
+}
+
 /* Accessible Reduced-Motion Support */
 @media (prefers-reduced-motion: reduce) {
   *,

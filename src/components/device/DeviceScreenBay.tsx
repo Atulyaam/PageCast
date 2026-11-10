@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import type { TeletextPage } from "@/domain/teletext/types";
 import { DeviceStatusBar } from "./DeviceStatusBar";
 import { DeviceFastextControls } from "./DeviceFastextControls";
@@ -25,6 +25,7 @@ export interface DeviceScreenBayProps {
   readonly onNavigate: (pageNumber: number) => void;
   readonly onSubPageChange: (index: number) => void;
   readonly className?: string;
+  readonly children?: React.ReactNode;
 }
 
 export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
@@ -43,10 +44,20 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
   onNavigate,
   onSubPageChange,
   className = "",
+  children,
 }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Reset internal scroll when route/page/subpage changes (Section 9 invariant)
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [children, pageNumber, currentSubIndex]);
+
   return (
     <div
-      className={`device-bezel-outer flex flex-col overflow-hidden shadow-2xl ${className}`.trim()}
+      className={`device-bezel-outer flex h-full min-h-0 flex-col overflow-hidden shadow-2xl ${className}`.trim()}
     >
       {/* Integrated CRT Bezel Status Bar */}
       <DeviceStatusBar
@@ -58,8 +69,8 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
         isOffline={isOffline}
       />
 
-      {/* Subpage Carousel Navigation (When multiple frames exist) */}
-      {subPageCount > 1 && (
+      {/* Subpage Carousel Navigation (When multiple frames exist and in Teletext mode) */}
+      {!children && subPageCount > 1 && (
         <SubPageCarousel
           pageNumber={pageNumber}
           currentSubIndex={currentSubIndex}
@@ -68,18 +79,26 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
         />
       )}
 
-      {/* 40x25 Screen Content / Loading / 404 */}
-      <div className="w-full bg-[#080d0a] p-2 sm:p-2.5">
-        {isLoading ? (
+      {/* CRT Screen Display Viewport with Internal Scrolling Only (Section 9) */}
+      <div
+        ref={scrollContainerRef}
+        className={`device-screen-viewport relative min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto bg-[#080d0a] p-2 focus:outline-none sm:p-2.5 ${
+          showScanlines ? "crt-scanlines" : ""
+        } ${phosphorGlow ? "crt-glow" : ""}`}
+        tabIndex={0}
+        role="region"
+        aria-label="PT-4025 CRT Display Screen"
+      >
+        {children ? (
+          <div className="min-h-full w-full font-mono text-[#b8d1a2]">{children}</div>
+        ) : isLoading ? (
           <TerminalLoading pageNumber={pageNumber} />
         ) : isNotFound ? (
-          <>
-            <TerminalNotFound
-              pageNumber={pageNumber}
-              showScanlines={showScanlines}
-              phosphorGlow={phosphorGlow}
-            />
-          </>
+          <TerminalNotFound
+            pageNumber={pageNumber}
+            showScanlines={showScanlines}
+            phosphorGlow={phosphorGlow}
+          />
         ) : (
           <TeletextGrid
             page={activePage}
@@ -91,8 +110,11 @@ export const DeviceScreenBay: React.FC<DeviceScreenBayProps> = ({
         )}
       </div>
 
-      {/* Integrated Lower Bezel Fastext Rockers */}
-      <DeviceFastextControls fastext={activePage.fastext} onNavigate={onNavigate} />
+      {/* Integrated Lower Bezel Fastext Rockers (Fixed hardware presence) */}
+      <DeviceFastextControls
+        fastext={activePage.fastext ?? { red: 100, green: 101, yellow: 102, cyan: 103 }}
+        onNavigate={onNavigate}
+      />
     </div>
   );
 };
