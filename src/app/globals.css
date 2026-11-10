@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Classic Teletext 8-Color Palette */
+  /* Classic Teletext 8-Color Content Palette (Preserved for 40x25 Cells) */
   --color-teletext-black: #0a0a0c;
   --color-teletext-white: #f8fafc;
   --color-teletext-yellow: #facc15;
@@ -11,13 +11,29 @@
   --color-teletext-red: #ef4444;
   --color-teletext-blue: #2563eb;
 
-  /* Modern Neutral & Surface Tokens (Studio & Publisher UI) */
-  --color-surface-ground: #030712;
-  --color-surface-terminal: #0b0f19;
-  --color-surface-panel: #111827;
-  --color-surface-border: #1f2937;
-  --color-surface-border-subtle: #374151;
-  --color-text-muted: #9ca3af;
+  /* Premium Industrial Hardware Palette */
+  --color-device-desk: #d9d7cf;
+  --color-device-desk-border: #bfbcb2;
+  --color-chassis: #aaa99f;
+  --color-chassis-highlight: #c7c5ba;
+  --color-chassis-shadow: #777970;
+  --color-chassis-border: #656d63;
+  --color-screen-recess: #18211d;
+  --color-screen-surface: #0d1410;
+  --color-screen-glass: #141c17;
+  --color-phosphor-primary: #b7c9a8;
+  --color-phosphor-secondary: #879b83;
+  --color-phosphor-amber: #c69b5b;
+  --color-text-hardware: #2f342d;
+  --color-text-hardware-muted: #5e645a;
+
+  /* Backward-compatible semantic surface mappings */
+  --color-surface-ground: #d9d7cf;
+  --color-surface-terminal: #0d1410;
+  --color-surface-panel: #aaa99f;
+  --color-surface-border: #656d63;
+  --color-surface-border-subtle: #777970;
+  --color-text-muted: #5e645a;
 
   /* Typography Stacks */
   --font-mono: "Noto Sans Mono", "Courier New", monospace;
@@ -26,12 +42,12 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Terminal Layout Tokens */
-  --spacing-bezel: 1rem;
-  --radius-terminal: 0.75rem;
+  --spacing-bezel: 1.25rem;
+  --radius-terminal: 0.875rem;
   --radius-bezel: 1.25rem;
 }
 
-/* Base Styles & Accessibility Reset */
+/* Base Styles & Precision Studio Worktop */
 *,
 *::before,
 *::after {
@@ -39,25 +55,32 @@
 }
 
 body {
-  background-color: var(--color-surface-ground);
-  color: var(--color-teletext-white);
+  background-color: var(--color-device-desk);
+  background-image:
+    radial-gradient(#c6c3b8 1px, transparent 1px),
+    linear-gradient(180deg, #e4e2db 0%, #d5d3ca 50%, #c9c7bd 100%);
+  background-size:
+    24px 24px,
+    100% 100%;
+  color: var(--color-text-hardware);
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.55;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* High-Visibility Accessible Focus Indicators */
+/* Precision Accessible Focus Indicators */
 :focus-visible {
-  outline: 2px solid var(--color-teletext-yellow);
+  outline: 2px solid var(--color-phosphor-amber);
   outline-offset: 2px;
 }
 
 /* Text Selection Styling */
 ::selection {
-  background-color: var(--color-teletext-yellow);
-  color: var(--color-teletext-black);
+  background-color: var(--color-phosphor-amber);
+  color: #0d1410;
 }
 
 /* Teletext Terminal Specific Utilities */
@@ -75,9 +98,38 @@ body {
   line-height: 1.35;
 }
 
-/* CRT Screen Effects */
+/* Physical Terminal Casing & Chassis Material */
+.chassis-body {
+  background: linear-gradient(180deg, #c2c0b6 0%, #aaa99f 10%, #a2a197 88%, #939288 100%);
+  border: 1px solid var(--color-chassis-border);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 -2px 0 var(--color-chassis-shadow) inset,
+    0 24px 50px -12px rgba(45, 48, 42, 0.45),
+    0 6px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+}
+
+/* Recessed CRT Display Housing */
+.screen-bay {
+  background: var(--color-screen-recess);
+  border: 2px solid #232e27;
+  box-shadow:
+    inset 0 6px 18px rgba(0, 0, 0, 0.95),
+    inset 0 0 0 1px #0a100c,
+    0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+}
+
+/* CRT Screen Glass Canvas */
+.screen-crt-glass {
+  background: radial-gradient(ellipse at 50% 50%, #151f19 0%, #0d1410 90%);
+  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.75);
+}
+
+/* Subtle Retro CRT Scanlines & Glare */
 .crt-scanlines {
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%);
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
   background-size: 100% 4px;
 }
 
@@ -85,37 +137,198 @@ body {
   text-shadow: 0 0 2px currentColor;
 }
 
-/* CRT Monitor Bezel & Glass Reflection */
-.crt-bezel {
-  box-shadow:
-    0 0 0 1px rgba(39, 39, 42, 0.8),
-    0 12px 36px -12px rgba(0, 0, 0, 0.9),
-    inset 0 1px 1px rgba(255, 255, 255, 0.08);
-}
-
 .crt-glass-glare {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.01) 40%,
-    rgba(0, 0, 0, 0) 60%
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.01) 35%,
+    rgba(0, 0, 0, 0) 55%
   );
 }
 
-/* Tactile Hardware Press Animation */
-.btn-tactile {
-  transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+/* Physical Tactile Keycaps (Dark Charcoal Hardware Keys) */
+.btn-keycap {
+  background: linear-gradient(180deg, #3d453f 0%, #2a312c 55%, #1e2420 100%);
+  color: var(--color-phosphor-primary);
+  border: 1px solid #161c18;
+  box-shadow:
+    0 3px 0 #111613,
+    0 4px 6px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.btn-keycap:hover {
+  background: linear-gradient(180deg, #47504a 0%, #323b34 55%, #242c26 100%);
+  color: #d1dfc5;
+}
+
+.btn-keycap:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #111613,
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Light / Chassis-Matched Keycaps & Push Buttons */
+.btn-keycap-light {
+  background: linear-gradient(180deg, #d8d6cc 0%, #c4c2b7 55%, #aba99e 100%);
+  color: #2b302a;
+  border: 1px solid #74766d;
+  box-shadow:
+    0 2px 0 #61635a,
+    0 3px 5px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-keycap-light:hover {
+  background: linear-gradient(180deg, #e2e0d7 0%, #ceccbf 55%, #b5b3a8 100%);
+  color: #1a1e19;
+}
+
+.btn-keycap-light:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 1px 0 #61635a,
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Molded Fastext Rocker Switches */
+.btn-rocker-red {
+  background: linear-gradient(180deg, #bd3a2e 0%, #9e2b20 55%, #801d14 100%);
+  color: #ffffff;
+  border: 1px solid #6b150d;
+  box-shadow:
+    0 3px 0 #540e07,
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-rocker-red:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #540e07,
+    inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-rocker-green {
+  background: linear-gradient(180deg, #2f8c56 0%, #226f43 55%, #185633 100%);
+  color: #ffffff;
+  border: 1px solid #114225;
+  box-shadow:
+    0 3px 0 #0d321c,
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-rocker-green:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #0d321c,
+    inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-rocker-yellow {
+  background: linear-gradient(180deg, #c7962c 0%, #a77c1f 55%, #8a6413 100%);
+  color: #1a1506;
+  border: 1px solid #6e4e0c;
+  box-shadow:
+    0 3px 0 #543b07,
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.btn-rocker-yellow:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #543b07,
+    inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-rocker-cyan {
+  background: linear-gradient(180deg, #268790 0%, #1c6d74 55%, #135359 100%);
+  color: #ffffff;
+  border: 1px solid #0d3d42;
+  box-shadow:
+    0 3px 0 #0a2d30,
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-rocker-cyan:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #0a2d30,
+    inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Recessed 7-Segment / Buffer Display Window */
+.led-window {
+  background: #090e0b;
+  border: 1px solid #1c251f;
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  color: var(--color-phosphor-primary);
+}
+
+/* Precision Silkscreen Technical Labeling */
+.silkscreen-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4b5249;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Corner Screw Fasteners */
+.chassis-screw {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a4a297 0%, #6f7067 100%);
+  border: 1px solid #575950;
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+.chassis-screw::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: #393b34;
+  transform: translateY(-50%) rotate(42deg);
+}
+
+/* Precision Ventilation Louvers */
+.chassis-louver {
+  height: 3px;
+  background: #6f7168;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+  border-radius: 1px;
+}
+
+/* Legacy utility alias for btn-tactile */
+.btn-tactile {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .btn-tactile:active {
-  transform: scale(0.96) translateY(1px);
+  transform: scale(0.97) translateY(1px);
 }
 
 /* Smooth Touch Scroll Utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;

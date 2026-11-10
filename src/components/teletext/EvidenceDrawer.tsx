@@ -64,20 +64,20 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
     >
       <FocusTrap active={isOpen} onClose={onClose}>
         <aside
-          className={`flex h-full w-full max-w-xl flex-col border-l border-zinc-800 bg-zinc-950 font-mono text-zinc-300 shadow-2xl ${className}`.trim()}
+          className={`flex h-full w-full max-w-xl flex-col border-l border-[#3A453F] bg-[#121815] font-mono text-[#D1DCD0] shadow-2xl ${className}`.trim()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/80 px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-cyan-400" />
-              <h2 className="text-sm font-bold tracking-wider text-cyan-400 uppercase">
+          <div className="flex items-center justify-between border-b border-[#2A352F] bg-[#18211D] px-4 py-3">
+            <div className="flex items-center gap-2.5">
+              <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#B7C9A8]" />
+              <h2 className="text-sm font-bold tracking-wider text-[#B7C9A8] uppercase">
                 {`SOURCE EVIDENCE EXPLORER • P${pageNumber}`}
               </h2>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="btn-tactile rounded border border-zinc-700 bg-zinc-800 px-2.5 py-1 text-xs font-bold text-zinc-300 transition-all hover:border-red-400 hover:text-red-400 active:scale-95"
+              className="btn-keycap-light rounded border border-[#3A453F] bg-[#222924] px-2.5 py-1 text-xs font-bold text-[#A8B7A4] transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
               aria-label="Close evidence explorer"
             >
               ESC [X]
@@ -87,16 +87,16 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
           {/* Scrollable Body */}
           <div className="flex-1 space-y-4 overflow-y-auto p-4 text-xs">
             {/* 1. Grounding Overview Card */}
-            <div className="space-y-2 rounded border border-zinc-800 bg-zinc-900/50 p-3">
+            <div className="space-y-2 rounded-lg border border-[#2A352F] bg-[#161E1A] p-3.5 shadow-inner">
               <div className="flex items-center justify-between">
-                <span className="font-bold tracking-wide text-yellow-400 uppercase">
+                <span className="font-bold tracking-wide text-[#C69B5B] uppercase">
                   1. Canonical Source Attribution
                 </span>
                 <span
-                  className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase ${
+                  className={`rounded border px-2 py-0.5 text-[10px] font-bold uppercase ${
                     hasEvidence
-                      ? "border border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                      : "border border-amber-500/40 bg-amber-500/10 text-amber-400"
+                      ? "border-[#3A453F] bg-[#222924] text-[#B7C9A8]"
+                      : "border-[#C69B5B]/40 bg-[#C69B5B]/10 text-[#C69B5B]"
                   }`}
                 >
                   {hasEvidence ? `${evidenceRefs.length} POINTS GROUNDED` : "NO GROUNDING RECORDS"}
@@ -105,24 +105,24 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
 
               <div className="grid grid-cols-1 gap-2 pt-1 text-[11px] sm:grid-cols-2">
                 <div>
-                  <span className="text-zinc-500">Source:</span>{" "}
-                  <span className="font-semibold text-zinc-200">
+                  <span className="text-[#879B83]">Source:</span>{" "}
+                  <span className="font-semibold text-[#E8ECE6]">
                     {metadata?.sourceName || "Internal Publication / Seed"}
                   </span>
                 </div>
                 <div>
-                  <span className="text-zinc-500">Author:</span>{" "}
-                  <span className="text-zinc-300">{metadata?.author || "Not specified"}</span>
+                  <span className="text-[#879B83]">Author:</span>{" "}
+                  <span className="text-[#D1DCD0]">{metadata?.author || "Not specified"}</span>
                 </div>
                 <div>
-                  <span className="text-zinc-500">Language:</span>{" "}
-                  <span className="text-zinc-300 uppercase">
+                  <span className="text-[#879B83]">Language:</span>{" "}
+                  <span className="text-[#D1DCD0] uppercase">
                     {metadata?.language === "hi" ? "Hindi (Devanagari)" : "English"}
                   </span>
                 </div>
                 <div>
-                  <span className="text-zinc-500">Created:</span>{" "}
-                  <span className="text-zinc-300">
+                  <span className="text-[#879B83]">Created:</span>{" "}
+                  <span className="text-[#D1DCD0]">
                     {pack?.createdAt
                       ? pack.createdAt.slice(0, 19).replace("T", " ")
                       : "Seed Baseline"}
@@ -131,13 +131,13 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
               </div>
 
               {metadata?.originalUrl && (
-                <div className="border-t border-zinc-800/80 pt-1">
-                  <span className="text-zinc-500">Original URL: </span>
+                <div className="border-t border-[#2A352F] pt-1.5">
+                  <span className="text-[#879B83]">Original URL: </span>
                   <a
                     href={metadata.originalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="break-all text-cyan-400 underline hover:text-cyan-300"
+                    className="break-all text-[#8FA88B] underline hover:text-[#B7C9A8]"
                   >
                     {metadata.originalUrl}
                   </a>
@@ -146,28 +146,28 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
             </div>
 
             {/* 2. Editorial Certificate & AI Disclosure */}
-            <div className="space-y-2 rounded border border-zinc-800 bg-zinc-900/50 p-3">
-              <span className="font-bold tracking-wide text-yellow-400 uppercase">
+            <div className="space-y-2 rounded-lg border border-[#2A352F] bg-[#161E1A] p-3.5 shadow-inner">
+              <span className="font-bold tracking-wide text-[#C69B5B] uppercase">
                 2. Editorial & AI Model Disclosure
               </span>
               <div className="space-y-1.5 text-[11px]">
                 <div className="flex items-center gap-2">
-                  <span className="text-zinc-500">Editorial Review Gate:</span>
+                  <span className="text-[#879B83]">Editorial Review Gate:</span>
                   {reviewedAt || metadata?.publisherId ? (
-                    <span className="font-semibold text-emerald-400">
+                    <span className="font-semibold text-[#B7C9A8]">
                       ✓ Verified by {reviewedBy || metadata?.publisherId || "editorial_desk"}
                       {reviewedAt ? ` at ${reviewedAt.slice(0, 19).replace("T", " ")}` : ""}
                     </span>
                   ) : (
-                    <span className="text-zinc-400 italic">
+                    <span className="text-[#879B83] italic">
                       Editorial approval timestamp not recorded
                     </span>
                   )}
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-zinc-500">Synthesis Type:</span>
-                  <span className="text-zinc-200">
+                  <span className="text-[#879B83]">Synthesis Type:</span>
+                  <span className="text-[#D1DCD0]">
                     {metadata?.aiAssisted
                       ? "AI-Assisted Bullet Summarization"
                       : "Manual / Direct Layout"}
@@ -175,16 +175,16 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
                 </div>
 
                 {metadata?.aiAssisted && (
-                  <div className="grid grid-cols-2 gap-2 pt-1 text-zinc-400">
+                  <div className="grid grid-cols-2 gap-2 pt-1 text-[#879B83]">
                     <div>
                       Model:{" "}
-                      <span className="text-zinc-200">
+                      <span className="text-[#D1DCD0]">
                         {metadata.modelId || "gemini-2.5-flash"}
                       </span>
                     </div>
                     <div>
                       Prompt Version:{" "}
-                      <span className="text-zinc-200">
+                      <span className="text-[#D1DCD0]">
                         {metadata.promptVersion || "prompt-v1.2"}
                       </span>
                     </div>
@@ -194,17 +194,17 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
             </div>
 
             {/* 3. Point-to-Sentence Grounding Inspector */}
-            <div className="space-y-3 rounded border border-zinc-800 bg-zinc-900/50 p-3">
+            <div className="space-y-3 rounded-lg border border-[#2A352F] bg-[#161E1A] p-3.5 shadow-inner">
               <div className="flex items-center justify-between">
-                <span className="font-bold tracking-wide text-yellow-400 uppercase">
+                <span className="font-bold tracking-wide text-[#C69B5B] uppercase">
                   3. Claim-to-Sentence Evidence Inspector
                 </span>
-                <span className="text-[10px] text-zinc-500">Select point to inspect</span>
+                <span className="text-[10px] text-[#879B83]">Select point to inspect</span>
               </div>
 
               {!hasEvidence ? (
-                <div className="rounded border border-dashed border-zinc-800 p-4 text-center text-zinc-500">
-                  <p className="font-semibold text-zinc-400">Evidence unavailable for this page</p>
+                <div className="rounded border border-dashed border-[#3A453F] p-4 text-center text-[#879B83]">
+                  <p className="font-semibold text-[#A8B7A4]">Evidence unavailable for this page</p>
                   <p className="mt-1 text-[11px]">
                     This bulletin was created without granular sentence-level provenance records.
                   </p>
@@ -220,10 +220,10 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
                           key={ref.pointId}
                           type="button"
                           onClick={() => setSelectedPointId(ref.pointId)}
-                          className={`btn-tactile rounded border px-2 py-1 text-[11px] font-bold transition-all active:scale-95 ${
+                          className={`btn-keycap-light rounded border px-2 py-1 text-[11px] font-bold transition-all active:scale-95 ${
                             isSelected
-                              ? "border-cyan-400 bg-cyan-400/20 text-cyan-300 shadow-[0_0_8px_rgba(0,255,255,0.25)]"
-                              : "border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                              ? "border-[#4E5C54] bg-[#2E3B33] text-[#B7C9A8]"
+                              : "border-[#3A453F] bg-[#222924] text-[#879B83] hover:text-[#D1DCD0]"
                           }`}
                         >
                           Point {idx + 1} ({ref.sourceSentenceId})
@@ -234,25 +234,25 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
 
                   {/* Active Point Evidence Detail */}
                   {activeRef && (
-                    <div className="space-y-2 rounded border border-zinc-800/80 bg-zinc-950 p-3 text-[11px]">
-                      <div className="flex items-center justify-between text-zinc-400">
+                    <div className="space-y-2 rounded-lg border border-[#2A352F] bg-[#0D1410] p-3 text-[11px]">
+                      <div className="flex items-center justify-between text-[#879B83]">
                         <span>
-                          Claim ID: <strong className="text-zinc-200">{activeRef.pointId}</strong>
+                          Claim ID: <strong className="text-[#D1DCD0]">{activeRef.pointId}</strong>
                         </span>
                         <span>
                           Source Sentence ID:{" "}
-                          <strong className="font-mono text-cyan-400">
+                          <strong className="font-mono text-[#B7C9A8]">
                             {activeRef.sourceSentenceId}
                           </strong>
                         </span>
                       </div>
 
                       {/* Excerpt Box */}
-                      <div className="rounded border border-cyan-500/20 bg-cyan-950/20 p-2.5">
-                        <span className="block text-[10px] font-bold tracking-wider text-cyan-400 uppercase">
+                      <div className="rounded border border-[#3A453F] bg-[#141B17] p-2.5">
+                        <span className="block text-[10px] font-bold tracking-wider text-[#879B83] uppercase">
                           Original Source Sentence Excerpt:
                         </span>
-                        <blockquote className="mt-1 leading-relaxed text-zinc-200 italic">
+                        <blockquote className="mt-1 leading-relaxed text-[#D1DCD0] italic">
                           &ldquo;
                           {activeRef.sentenceText ||
                             "Original sentence text was not embedded in this PagePack payload to preserve the strict 10 KiB ceiling."}
@@ -262,14 +262,14 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
 
                       {/* SHA-256 Fingerprint */}
                       {activeRef.sentenceHash ? (
-                        <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
-                          <span className="text-zinc-500">SHA-256 Fingerprint:</span>
-                          <code className="rounded bg-zinc-900 px-1 py-0.5 font-mono text-emerald-400">
+                        <div className="flex items-center gap-1.5 text-[10px] text-[#879B83]">
+                          <span className="text-[#6F7E6D]">SHA-256 Fingerprint:</span>
+                          <code className="rounded bg-[#18211D] px-1 py-0.5 font-mono text-[#B7C9A8]">
                             {activeRef.sentenceHash}
                           </code>
                         </div>
                       ) : (
-                        <div className="text-[10px] text-zinc-500">
+                        <div className="text-[10px] text-[#879B83]">
                           Fingerprint: Verified against extracted source session
                         </div>
                       )}
@@ -281,9 +281,11 @@ export const EvidenceDrawer: React.FC<EvidenceDrawerProps> = ({
           </div>
 
           {/* Footer */}
-          <div className="border-t border-zinc-800 bg-zinc-900/60 px-4 py-2 text-right text-[11px] text-zinc-500">
+          <div className="border-t border-[#2A352F] bg-[#18211D] px-4 py-2 text-right text-[11px] text-[#879B83]">
             Press{" "}
-            <kbd className="rounded border border-zinc-700 bg-zinc-800 px-1 text-zinc-300">ESC</kbd>{" "}
+            <kbd className="rounded border border-[#3A453F] bg-[#222924] px-1.5 py-0.5 text-[#D1DCD0]">
+              ESC
+            </kbd>{" "}
             or click close to return to terminal
           </div>
         </aside>

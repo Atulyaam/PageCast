@@ -48,16 +48,16 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-xs"
     >
       <FocusTrap onClose={onClose} className="w-full max-w-lg">
-        <div className="w-full border-2 border-emerald-500 bg-zinc-950 p-6 font-mono text-zinc-100 shadow-[0_0_30px_rgba(0,255,102,0.3)]">
+        <div className="w-full rounded-xl border border-[#3A453F] bg-[#141B17] p-6 font-mono text-[#D1DCD0] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
           {/* Header */}
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="bg-emerald-500 px-1.5 py-0.5 text-xs font-black text-black">
-                HELP
+          <div className="mb-4 flex items-center justify-between border-b border-[#2A352F] pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="rounded border border-[#3A453F] bg-[#222924] px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#879B83]">
+                REF // 4025
               </span>
               <h2
                 id="shortcuts-title"
-                className="text-sm font-bold tracking-wider text-emerald-400 uppercase"
+                className="text-sm font-bold tracking-wider text-[#B7C9A8] uppercase"
               >
                 Teletext Remote Control Keys
               </h2>
@@ -66,30 +66,30 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close keyboard shortcuts"
-              className="btn-tactile cursor-pointer border border-zinc-800 px-2 py-1 text-sm text-zinc-400 transition-all hover:border-zinc-600 hover:text-white active:scale-95"
+              className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-2.5 py-1 text-xs text-[#A8B7A4] transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
             >
-              ✕
+              ESC [✕]
             </button>
           </div>
 
           {/* Shortcuts Table */}
-          <div className="mb-4 overflow-x-auto">
-            <table className="w-full divide-y divide-zinc-800 border border-zinc-800 text-left text-xs">
-              <thead className="bg-zinc-900 text-[10px] tracking-wider text-zinc-400 uppercase">
+          <div className="mb-4 max-h-[60vh] overflow-y-auto rounded-lg border border-[#2A352F] bg-[#0D1410]">
+            <table className="w-full divide-y divide-[#2A352F] text-left text-xs">
+              <thead className="sticky top-0 bg-[#18211D] text-[10px] tracking-wider text-[#879B83] uppercase">
                 <tr>
-                  <th className="w-28 px-3 py-2">Key</th>
-                  <th className="px-3 py-2">Function</th>
+                  <th className="w-32 px-3.5 py-2.5 font-bold">Key Control</th>
+                  <th className="px-3.5 py-2.5 font-bold">Terminal Function</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-900">
+              <tbody className="divide-y divide-[#1D2520]">
                 {shortcuts.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-zinc-900/40">
-                    <td className="px-3 py-1.5 font-bold whitespace-nowrap text-yellow-400">
-                      <kbd className="rounded-xs border border-zinc-700 bg-zinc-900 px-1.5 py-0.5 text-[11px]">
+                  <tr key={idx} className="transition-colors hover:bg-[#161E1A]">
+                    <td className="px-3.5 py-2 font-bold whitespace-nowrap text-[#C69B5B]">
+                      <kbd className="inline-block rounded border border-[#3A453F] bg-[#222924] px-2 py-0.5 text-[11px] font-bold text-[#E8ECE6] shadow-xs">
                         {item.key}
                       </kbd>
                     </td>
-                    <td className="px-3 py-1.5 text-zinc-300">{item.desc}</td>
+                    <td className="px-3.5 py-2 text-[#C8D4C5]">{item.desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -97,17 +97,14 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
           </div>
 
           {/* Dismiss Footer */}
-          <div className="flex items-center justify-between border-t border-zinc-800 pt-3 text-[11px] text-zinc-500">
-            <span>
-              Press <kbd className="text-zinc-300">Esc</kbd> or{" "}
-              <kbd className="text-zinc-300">?</kbd> anytime to dismiss
-            </span>
+          <div className="flex items-center justify-between border-t border-[#2A352F] pt-3 text-[11px] text-[#6F7E6D]">
+            <span>Model PC-4025 Teletext Terminal Deck</span>
             <button
               type="button"
               onClick={onClose}
-              className="btn-tactile cursor-pointer bg-emerald-500 px-4 py-1.5 text-xs font-bold tracking-wider text-black uppercase transition-all hover:bg-emerald-400 active:scale-95"
+              className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-3 py-1 text-xs font-bold text-[#B7C9A8] transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
             >
-              Got it
+              Close [ESC]
             </button>
           </div>
         </div>

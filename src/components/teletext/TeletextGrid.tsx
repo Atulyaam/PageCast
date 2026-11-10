@@ -20,7 +20,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
 }) => {
   return (
     <div
-      className={`bg-surface-terminal border-surface-border rounded-terminal crt-bezel relative flex flex-col border p-2 shadow-2xl transition-all sm:p-4 ${className}`.trim()}
+      className={`screen-bay relative flex flex-col p-1.5 transition-all sm:p-2.5 ${className}`.trim()}
     >
       {/* Semantic Screen-Reader Transcription */}
       <AccessibleAlternative page={page} />
@@ -31,7 +31,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
         aria-rowcount={25}
         aria-colcount={40}
         aria-label={`Teletext Screen Page ${page.pageNumber}`}
-        className={`bg-teletext-black relative flex aspect-[40/25] flex-col justify-between overflow-hidden rounded p-2 select-none sm:p-3 ${
+        className={`screen-crt-glass relative flex aspect-[40/25] flex-col justify-between overflow-hidden rounded-xs p-2 select-none sm:p-3 ${
           phosphorGlow ? "crt-glow" : ""
         }`}
       >
@@ -45,7 +45,7 @@ export const TeletextGrid: React.FC<TeletextGridProps> = ({
         {showScanlines && (
           <div
             aria-hidden="true"
-            className="crt-scanlines pointer-events-none absolute inset-0 z-10 opacity-40 transition-opacity duration-300"
+            className="crt-scanlines pointer-events-none absolute inset-0 z-10 opacity-30 transition-opacity duration-300"
           />
         )}
 

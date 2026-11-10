@@ -28,32 +28,28 @@ export const TeletextFastextBar: React.FC<TeletextFastextBarProps> = ({
       key: "1",
       page: fastext.red,
       label: labels?.red ?? `P${fastext.red}`,
-      bgClass:
-        "bg-red-600 hover:bg-red-500 active:bg-red-700 text-white border-red-700 shadow-red-950/40 hover:shadow-red-500/30",
+      rockerClass: "btn-rocker-red",
     },
     {
       color: "green",
       key: "2",
       page: fastext.green,
       label: labels?.green ?? `P${fastext.green}`,
-      bgClass:
-        "bg-green-600 hover:bg-green-500 active:bg-green-700 text-black font-semibold border-green-700 shadow-green-950/40 hover:shadow-green-500/30",
+      rockerClass: "btn-rocker-green",
     },
     {
       color: "yellow",
       key: "3",
       page: fastext.yellow,
       label: labels?.yellow ?? `P${fastext.yellow}`,
-      bgClass:
-        "bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-black font-semibold border-yellow-600 shadow-yellow-950/40 hover:shadow-yellow-500/30",
+      rockerClass: "btn-rocker-yellow",
     },
     {
       color: "cyan",
       key: "4",
       page: fastext.cyan,
       label: labels?.cyan ?? `P${fastext.cyan}`,
-      bgClass:
-        "bg-cyan-500 hover:bg-cyan-400 active:bg-cyan-600 text-black font-semibold border-cyan-600 shadow-cyan-950/40 hover:shadow-cyan-500/30",
+      rockerClass: "btn-rocker-cyan",
     },
   ] as const;
 
@@ -74,11 +70,11 @@ export const TeletextFastextBar: React.FC<TeletextFastextBarProps> = ({
             }
             onNavigate(item.page);
           }}
-          className={`btn-tactile flex items-center justify-between rounded border px-3 py-2 font-mono text-sm font-semibold shadow-md active:scale-95 sm:text-base ${item.bgClass}`}
+          className={`flex cursor-pointer items-center justify-between rounded-xs border px-3 py-2 font-mono text-xs font-bold transition-all sm:text-sm ${item.rockerClass}`}
           title={`Shortcut key [${item.key}]: Navigate to Page ${item.page}`}
         >
           <span className="truncate">{item.label}</span>
-          <span className="ml-1 rounded bg-black/30 px-1.5 py-0.5 text-[11px] font-bold uppercase">
+          <span className="ml-1 rounded-xs bg-black/35 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider uppercase">
             [{item.key}]
           </span>
         </button>

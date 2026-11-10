@@ -96,10 +96,12 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
       <div
         role="region"
         aria-label="Subpage Indicator"
-        className={`flex items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-1.5 font-mono text-xs text-zinc-500 ${className}`.trim()}
+        className={`flex items-center justify-between border-b border-[#232e27] bg-[#121915] px-3 py-1 font-mono text-xs text-[#5e6b5c] ${className}`.trim()}
       >
         <span>P{pageNumber} &bull; Single Frame Bulletin</span>
-        <span className="text-[11px] text-zinc-600">STATIC BROADCAST</span>
+        <span className="text-[10px] tracking-wider text-[#475445] uppercase">
+          STATIC BROADCAST
+        </span>
       </div>
     );
   }
@@ -110,14 +112,14 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
     <div
       role="region"
       aria-label="Subpage Carousel Navigation"
-      className={`flex flex-col justify-between gap-3 border border-zinc-800 bg-zinc-950 px-3 py-2 font-mono text-xs text-zinc-300 shadow-md sm:flex-row sm:items-center ${className}`.trim()}
+      className={`flex flex-col justify-between gap-2.5 border-b border-[#232e27] bg-[#121915] px-3 py-1.5 font-mono text-xs text-[#879b83] shadow-inner sm:flex-row sm:items-center ${className}`.trim()}
     >
       {/* Subpage Index Display & Direct Jumps */}
       <div className="flex items-center gap-2">
-        <span className="bg-emerald-500 px-1.5 py-0.5 text-xs font-bold text-black">
+        <span className="rounded-xs bg-[#226f43] px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase">
           CAROUSEL FRAMES:
         </span>
-        <span className="font-bold tracking-wider text-white">{indicatorText}</span>
+        <span className="font-bold tracking-wider text-[#b7c9a8]">{indicatorText}</span>
 
         {/* Direct Subpage Buttons */}
         <div className="ml-2 flex items-center gap-1">
@@ -126,10 +128,10 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
               key={i}
               type="button"
               onClick={() => handleSelect(i)}
-              className={`btn-tactile h-5 w-5 rounded text-[11px] font-bold transition-all active:scale-90 ${
+              className={`h-5 w-5 cursor-pointer rounded-xs text-[11px] font-bold transition-all ${
                 i === currentSubIndex
-                  ? "bg-cyan-400 font-extrabold text-black shadow-[0_0_6px_rgba(0,255,255,0.4)]"
-                  : "border border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-white"
+                  ? "bg-[#c69b5b] font-extrabold text-[#0d1410] shadow-[0_0_6px_rgba(198,155,91,0.5)]"
+                  : "border border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
               }`}
               aria-label={`Jump to subpage ${i + 1}`}
               aria-current={i === currentSubIndex ? "true" : undefined}
@@ -141,20 +143,20 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
       </div>
 
       {/* Navigation & Rotation Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {/* Progress Bar for Auto-Rotation */}
         {isAutoRotating && (
           <div
             className="hidden items-center gap-1.5 sm:flex"
             title={`Auto-rotating every ${autoRotateIntervalMs / 1000}s`}
           >
-            <div className="h-1.5 w-16 overflow-hidden rounded border border-zinc-800 bg-zinc-900">
+            <div className="h-1.5 w-16 overflow-hidden rounded-xs border border-[#2a362f] bg-[#0d1410]">
               <div
-                className="h-full bg-cyan-400 transition-all duration-100 ease-linear"
+                className="h-full bg-[#c69b5b] transition-all duration-100 ease-linear"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <span className="text-[10px] text-zinc-500">15s</span>
+            <span className="text-[10px] text-[#6b7c68]">15s</span>
           </div>
         )}
 
@@ -162,7 +164,7 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={handlePrev}
-          className="btn-tactile border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-all hover:border-zinc-700 hover:text-white active:scale-95"
+          className="cursor-pointer rounded-xs border border-[#2a362f] bg-[#0d1410] px-2 py-0.5 text-xs text-[#879b83] transition-all hover:border-[#425247] hover:text-[#b7c9a8] active:scale-95"
           aria-label="Previous subpage"
         >
           &larr; PREV
@@ -172,10 +174,10 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={togglePause}
-          className={`btn-tactile border px-2 py-1 text-xs font-bold transition-all active:scale-95 ${
+          className={`cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
             isAutoRotating
-              ? "border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:text-white"
-              : "border-yellow-500 bg-yellow-500/20 text-yellow-300 shadow-[0_0_8px_rgba(234,179,8,0.25)]"
+              ? "border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
+              : "border-[#c69b5b] bg-[#c69b5b]/20 text-[#c69b5b] shadow-[0_0_8px_rgba(198,155,91,0.3)]"
           }`}
           aria-label={isAutoRotating ? "Pause auto-rotation" : "Resume auto-rotation"}
         >
@@ -186,7 +188,7 @@ export const SubPageCarousel: React.FC<SubPageCarouselProps> = ({
         <button
           type="button"
           onClick={handleNext}
-          className="btn-tactile border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-300 transition-all hover:border-zinc-700 hover:text-white active:scale-95"
+          className="cursor-pointer rounded-xs border border-[#2a362f] bg-[#0d1410] px-2 py-0.5 text-xs text-[#879b83] transition-all hover:border-[#425247] hover:text-[#b7c9a8] active:scale-95"
           aria-label="Next subpage"
         >
           NEXT &rarr;

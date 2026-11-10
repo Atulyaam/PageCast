@@ -79,7 +79,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
     <div
       role="region"
       aria-label="Audio & Speech Synthesizer Controls"
-      className={`flex flex-wrap items-center justify-between gap-3 border border-zinc-800 bg-zinc-950 px-3 py-2 font-mono text-xs text-zinc-300 shadow-md ${className}`.trim()}
+      className={`flex flex-wrap items-center justify-between gap-2.5 rounded-lg border border-[#777970] bg-[#9e9d93] px-3 py-2 font-mono text-xs text-[#2b302a] shadow-[inset_0_1px_3px_rgba(0,0,0,0.15)] ${className}`.trim()}
     >
       {/* Sound FX Toggle (Teletext Carrier Tones) */}
       <div className="flex items-center gap-2">
@@ -87,16 +87,16 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
           type="button"
           onClick={handleToggleSoundFx}
           aria-pressed={!isSynthMuted}
-          className={`btn-tactile cursor-pointer border px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
+          className={`btn-keycap-light cursor-pointer rounded-xs px-2.5 py-1 text-xs font-bold transition-all ${
             !isSynthMuted
-              ? "border-emerald-500 bg-emerald-500 text-black shadow-[0_0_8px_rgba(16,185,129,0.35)]"
-              : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
+              ? "!border-[#226f43] !bg-[#2f8c56] !text-white shadow-[0_0_8px_rgba(47,140,86,0.5)]"
+              : ""
           }`}
         >
           {!isSynthMuted ? "🔊 SOUND FX: ON" : "🔇 SOUND FX: OFF"}
         </button>
-        <span className="hidden text-[11px] text-zinc-600 sm:inline">
-          {!isSynthMuted ? "MODEM CARRIER TUNING ACTIVE" : "ACOUSTIC CUES MUTED"}
+        <span className="hidden text-[10px] font-semibold tracking-wider text-[#575d53] uppercase sm:inline">
+          {!isSynthMuted ? "MODEM CARRIER ACTIVE" : "ACOUSTIC CUES MUTED"}
         </span>
       </div>
 
@@ -114,12 +114,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
                     : "Pause speech narration"
                   : "Read bulletin aloud using speech synthesizer"
               }
-              className={`btn-tactile cursor-pointer border px-3 py-1 text-xs font-bold transition-all active:scale-95 ${
+              className={`btn-keycap-light cursor-pointer rounded-xs px-3 py-1 text-xs font-bold transition-all ${
                 speechState.isSpeaking && !speechState.isPaused
-                  ? "animate-pulse border-yellow-400 bg-yellow-400 text-black shadow-[0_0_8px_rgba(250,204,21,0.4)]"
+                  ? "!border-[#c69b5b] !bg-[#c69b5b] !text-[#0d1410] shadow-[0_0_8px_rgba(198,155,91,0.5)]"
                   : speechState.isPaused
-                    ? "border-amber-500 bg-amber-500 text-black"
-                    : "border-zinc-700 bg-zinc-900 text-yellow-400 hover:border-yellow-400"
+                    ? "!border-[#c69b5b] !bg-[#c69b5b]/40 !text-[#2b302a]"
+                    : ""
               }`}
             >
               {speechState.isSpeaking
@@ -134,18 +134,18 @@ export const AudioControls: React.FC<AudioControlsProps> = ({ page, className = 
                 type="button"
                 onClick={handleStopSpeech}
                 aria-label="Stop speech narration"
-                className="btn-tactile cursor-pointer border border-zinc-800 bg-black px-2.5 py-1 text-xs font-bold text-red-400 transition-all hover:border-red-500 active:scale-95"
+                className="btn-keycap-light cursor-pointer rounded-xs px-2.5 py-1 text-xs font-bold !text-[#9e2b20] transition-all"
               >
                 ⏹ STOP
               </button>
             )}
 
-            <span className="border border-zinc-800 px-1.5 py-0.5 text-[10px] text-zinc-500 uppercase">
+            <span className="rounded-xs border border-[#777970] bg-[#8e8d83] px-1.5 py-0.5 text-[10px] font-bold text-[#2b302a] uppercase">
               {page.language === "hi" ? "HI (हिन्दी)" : "EN"}
             </span>
           </>
         ) : (
-          <span className="text-[11px] text-zinc-600">TTS UNAVAILABLE</span>
+          <span className="text-[11px] text-[#70756a]">TTS UNAVAILABLE</span>
         )}
       </div>
     </div>

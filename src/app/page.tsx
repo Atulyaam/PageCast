@@ -3,68 +3,72 @@ import { WebTerminal } from "@/components/teletext/WebTerminal";
 
 export default function Home() {
   return (
-    <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
-      {/* Top Header */}
-      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-30 border-b px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
+    <div className="flex min-h-screen flex-col font-sans">
+      {/* Top Precision Instrumentation Rail */}
+      <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
         <div className="mx-auto flex max-w-5xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <span className="text-teletext-yellow font-mono text-lg font-bold tracking-tight sm:text-xl">
+            <div className="flex items-center gap-2.5">
+              <span className="font-mono text-base font-black tracking-tight text-[#f6dfa9] sm:text-lg">
                 PAGECAST
               </span>
-              <span className="bg-surface-border text-teletext-cyan rounded px-2 py-0.5 font-mono text-[11px] sm:text-xs">
-                TELETEXT 2026
+              <span className="rounded-xs border border-[#3b453e] bg-[#161a17] px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-[#879b83] uppercase">
+                PT-4025 SYSTEM
               </span>
             </div>
           </div>
 
-          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto py-0.5 font-mono text-xs sm:gap-3 sm:text-sm">
+          <nav className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 font-mono text-xs sm:gap-2">
             <Link
               href="/"
-              className="btn-tactile text-teletext-yellow rounded px-2 py-1 font-bold transition-all hover:bg-zinc-800/60"
+              className="rounded-xs border border-[#3d4b40] bg-[#2b352e] px-2.5 py-1 font-bold text-[#f6dfa9] shadow-inner transition-all"
             >
               READER
             </Link>
             <Link
               href="/terminal"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               TERMINAL
             </Link>
             <Link
               href="/catalogue"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               CATALOGUE
             </Link>
             <Link
               href="/saved"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all hover:bg-zinc-800/60"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               SAVED
             </Link>
             <Link
               href="/publisher/ingest"
-              className="btn-tactile border-teletext-yellow/40 bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow/20 shrink-0 rounded border px-2.5 py-1 font-semibold transition-all"
+              className="rounded-xs border border-[#74581a] bg-[#3a2e12] px-2.5 py-1 font-bold text-[#f6dfa9] transition-all hover:bg-[#4a3b16]"
             >
               PUBLISHER STUDIO
             </Link>
-            <span className="text-surface-border-subtle hidden lg:inline">|</span>
-            <span className="text-text-muted hidden lg:inline">KIROWEEN 2026</span>
+            <span className="hidden text-[#3a443d] lg:inline">|</span>
+            <span className="hidden text-[10px] tracking-widest text-[#687565] uppercase lg:inline">
+              KIROWEEN 2026
+            </span>
           </nav>
         </div>
       </header>
 
-      {/* Main Terminal Area */}
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center p-4 sm:p-6">
+      {/* Main Tabletop Terminal Area */}
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center p-3 sm:p-6 lg:p-8">
         <WebTerminal initialPageNumber={100} />
       </main>
 
-      {/* Footer */}
-      <footer className="border-surface-border text-text-muted border-t px-4 py-4 text-center font-mono text-xs">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-2 sm:flex-row">
-          <span>PAGECAST &bull; AI-Powered Low-Bandwidth Teletext &bull; Kiroween 2026</span>
-          <span className="text-teletext-green">100% OFFLINE READY &bull; SUB-10 KiB</span>
+      {/* Precision Hardware Footer */}
+      <footer className="border-t border-[#bfbcb2] px-4 py-4 text-center font-mono text-xs text-[#5e645a]">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-1.5 sm:flex-row">
+          <span>PAGECAST &bull; AI-Powered Physical Teletext Terminal &bull; Kiroween 2026</span>
+          <span className="font-bold text-[#2e5a38]">
+            100% AIR-GAP CAPABLE &bull; SUB-10 KiB BROADCASTS
+          </span>
         </div>
       </footer>
     </div>

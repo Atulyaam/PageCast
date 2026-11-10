@@ -356,260 +356,309 @@ export const WebTerminal: React.FC<WebTerminalProps> = ({
 
   return (
     <div
-      className={`mx-auto flex w-full max-w-4xl flex-col items-center gap-3 ${className}`.trim()}
+      className={`mx-auto flex w-full max-w-5xl flex-col items-center select-none ${className}`.trim()}
     >
-      {/* Top Utility & Mode Bar */}
-      <div className="border-surface-border bg-surface-panel flex w-full flex-col justify-between gap-2 rounded border px-3 py-2 font-mono text-xs sm:flex-row sm:items-center sm:text-sm">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          {/* View Mode Toggle */}
-          <button
-            type="button"
-            onClick={() => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt"))}
-            className={`btn-tactile rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
-              viewMode === "accessible"
-                ? "border-teletext-green bg-teletext-green text-teletext-black font-bold shadow-[0_0_8px_rgba(0,255,0,0.3)]"
-                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
-            }`}
-            aria-label={
-              viewMode === "crt"
-                ? "Switch to text-only accessible view"
-                : "Switch to CRT visual grid view"
-            }
-          >
-            <span className="sm:hidden">{viewMode === "crt" ? "ACCESSIBLE" : "CRT MODE"}</span>
-            <span className="hidden sm:inline">
-              {viewMode === "crt" ? "ACCESSIBLE TEXT MODE" : "CRT DISPLAY MODE"}
+      {/* Physical Terminal Chassis */}
+      <div className="chassis-body relative flex w-full flex-col p-3 transition-all sm:p-5 lg:p-6">
+        {/* Chassis Top Branding & Fasteners */}
+        <div className="mb-3 flex items-center justify-between border-b border-[#777970] pb-2 font-mono text-[10px] text-[#4b5249]">
+          <div className="flex items-center gap-2">
+            <span className="chassis-screw" aria-hidden="true" />
+            <span className="font-bold tracking-widest text-[#2f342d] uppercase">
+              PAGECAST RECEIVER // SYSTEM PT-4025
             </span>
-          </button>
-
-          {/* Data Saver Mode Toggle (ENH-05) */}
-          <button
-            type="button"
-            onClick={handleToggleDataSaver}
-            className={`btn-tactile rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
-              isDataSaver
-                ? "border-cyan-400 bg-cyan-950/70 font-bold text-cyan-300 shadow-[0_0_8px_rgba(0,255,255,0.25)]"
-                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
-            }`}
-            aria-label={
-              isDataSaver
-                ? "Disable Low-Bandwidth Data Saver Mode"
-                : "Enable Low-Bandwidth Data Saver Mode"
-            }
-          >
-            <span className="sm:hidden">{isDataSaver ? "⚡ SAVER ON" : "SAVER"}</span>
-            <span className="hidden sm:inline">
-              {isDataSaver ? "⚡ DATA SAVER ON" : "DATA SAVER [D]"}
+          </div>
+          <div className="hidden items-center gap-3 sm:flex">
+            <span className="tracking-wider text-[#575d53] uppercase">
+              TELETEXT 625-LINE STANDARD
             </span>
-          </button>
-
-          {/* Buffer Dialing Indicator */}
-          {dialBuffer && (
-            <span className="border-teletext-yellow bg-teletext-yellow/20 text-teletext-yellow flex animate-pulse items-center gap-1 rounded border px-2 py-0.5 text-xs font-bold sm:text-sm">
-              DIALING: P{dialBuffer}__
-            </span>
-          )}
+            <span className="chassis-screw" aria-hidden="true" />
+          </div>
         </div>
 
-        {/* Action Buttons: Save, Shortcuts & Share */}
-        <div className="no-scrollbar flex flex-wrap items-center gap-1.5 overflow-x-auto sm:gap-2 sm:overflow-visible">
-          {/* Save / Remove Offline Page */}
-          <button
-            type="button"
-            onClick={handleToggleSave}
-            disabled={!pageData?.pack}
-            className={`btn-tactile flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 sm:text-sm ${
-              isSaved
-                ? "border-teletext-green bg-teletext-green/20 text-teletext-green shadow-[0_0_8px_rgba(0,255,0,0.2)]"
-                : "border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow"
-            } ${!pageData?.pack ? "cursor-not-allowed opacity-50" : ""}`}
-            aria-label={
-              isSaved
-                ? "Remove saved offline bulletin"
-                : "Save bulletin locally for offline reading"
-            }
-          >
-            <span className="sm:hidden">{isSaved ? "★ SAVED" : "☆ SAVE"}</span>
-            <span className="hidden sm:inline">
-              {isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}
+        {/* Data Saver Mode Status Banner */}
+        {isDataSaver && (
+          <div className="mb-3 flex w-full items-center justify-between rounded-xs border border-[#1b676e] bg-[#0c262a] px-3 py-1 font-mono text-xs text-[#76c7cd]">
+            <span className="flex items-center gap-1.5 font-bold">
+              <span>⚡ LOW-BANDWIDTH DATA SAVER ACTIVE</span>
+              <span className="hidden font-normal text-[#4e8d93] sm:inline">
+                • Raw Monospace Font • Scanlines Disabled • Cache-First Mode
+              </span>
             </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsEvidenceOpen(true)}
-            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95 sm:text-sm"
-            aria-label="Inspect source sentence evidence and attribution"
-          >
-            <span className="sm:hidden">EVID</span>
-            <span className="hidden sm:inline">EVIDENCE [E]</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsExportOpen(true)}
-            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-cyan hover:text-teletext-cyan flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95 sm:text-sm"
-            aria-label="Share bulletin or export PagePack QR code"
-          >
-            SHARE / QR
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsImportOpen(true)}
-            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-yellow hover:text-teletext-yellow flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95"
-            aria-label="Import PagePack JSON file"
-          >
-            <span className="sm:hidden">IMPORT</span>
-            <span className="hidden sm:inline">IMPORT JSON</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsScannerOpen(true)}
-            className="btn-tactile border-surface-border bg-surface-terminal text-text-primary hover:border-teletext-green hover:text-teletext-green flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs transition-all active:scale-95"
-            aria-label="Scan optical QR code or air-gap burst"
-          >
-            <span className="sm:hidden">SCAN</span>
-            <span className="hidden sm:inline">SCAN QR</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsShortcutsOpen(true)}
-            className="btn-tactile border-surface-border bg-surface-terminal text-text-muted hover:text-teletext-white flex items-center gap-1 rounded border px-2 py-1 text-xs transition-all active:scale-95"
-            aria-label="Open keyboard shortcuts help modal"
-          >
-            KEYS (?)
-          </button>
-        </div>
-      </div>
-
-      {/* Data Saver Mode Status Banner (ENH-05) */}
-      {isDataSaver && (
-        <div className="flex w-full items-center justify-between border border-cyan-800/60 bg-cyan-950/40 px-3 py-1 font-mono text-xs text-cyan-300">
-          <span className="flex items-center gap-1.5 font-bold">
-            <span>⚡ DATA SAVER ACTIVE</span>
-            <span className="hidden font-normal text-zinc-400 sm:inline">
-              • System Monospace Font • CRT Glow &amp; Scanlines Off • Cache-First Resolution
+            <span className="font-bold text-[#b7c9a8]">
+              RX: {(sessionBytes / 1024).toFixed(1)} KiB
             </span>
-          </span>
-          <span className="font-bold text-emerald-400">
-            Network: {(sessionBytes / 1024).toFixed(1)} KB
-          </span>
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* Main Terminal View Content */}
-      {viewMode === "accessible" ? (
-        <AccessibleTextView
-          page={activePage}
-          sourceUrl={pageData?.pack?.metadata?.sourceName}
-          publishedAt={pageData?.publishedAt}
-          onNavigate={handleNavigate}
-          onToggleViewMode={() => setViewMode("crt")}
-        />
-      ) : (
-        <>
-          {/* CRT Terminal Header */}
-          <TerminalHeader
-            pageNumber={currentPageNumber}
-            showScanlines={showScanlines}
-            phosphorGlow={phosphorGlow}
-            onToggleScanlines={() => setShowScanlines((prev) => !prev)}
-            onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
-            isOffline={!isOnline || pageData?.isFallback || pageData?.isSavedCopy}
-            isSavedCopy={pageData?.isSavedCopy}
-            revision={pageData?.revision}
-            updatedAt={pageData?.publishedAt}
-          />
-
-          {/* Stale Local Copy Warning Banner (ENH-06) */}
-          {isStaleCopy && (
-            <div className="flex w-full flex-wrap items-center justify-between gap-2 border-2 border-amber-500 bg-amber-950/80 p-2.5 font-mono text-xs text-amber-200">
-              <div className="flex items-center gap-2">
-                <span className="text-base">⚠️</span>
-                <div>
-                  <strong className="text-amber-400">STALE LOCAL COPY:</strong> Revision{" "}
-                  {pageData?.revision ?? 1} saved {formatRelativeFreshness(pageData?.publishedAt)}.
-                  Newer broadcast updates may be available.
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={handleRefreshLive}
-                className="cursor-pointer border border-amber-400 bg-amber-500 px-2.5 py-1 text-xs font-bold text-black hover:bg-amber-400"
-              >
-                REFRESH LIVE
-              </button>
-            </div>
-          )}
-
-          {/* Time-Sensitive Notice Expired Banner (ENH-06) */}
-          {isExpired && (
-            <div className="flex w-full items-center gap-2 border-2 border-red-500/80 bg-red-950/80 p-2.5 font-mono text-xs text-red-200">
-              <span className="text-base">⏳</span>
-              <div>
-                <strong className="text-red-400">NOTICE EXPIRED:</strong> This time-sensitive
-                advisory has passed its valid window. Content preserved for offline reference.
-              </div>
-            </div>
-          )}
-
-          {/* Subpage Carousel Navigation */}
-          {subPageCount > 1 && (
-            <SubPageCarousel
-              pageNumber={currentPageNumber}
-              currentSubIndex={currentSubIndex}
-              subPageCount={subPageCount}
-              onSubPageChange={handleSubPageChange}
-            />
-          )}
-
-          {/* 40x25 Screen Content / Loading / 404 */}
-          <div className="w-full">
-            {isLoading ? (
-              <TerminalLoading pageNumber={currentPageNumber} />
-            ) : isNotFound ? (
-              <>
-                <TerminalNotFound
+        {/* Physical Grid & Controls Layout */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:items-start">
+          {/* Main Left Bay: Recessed Screen Housing (lg:col-span-8) */}
+          <div className="flex flex-col gap-2.5 lg:col-span-8">
+            {viewMode === "accessible" ? (
+              <AccessibleTextView
+                page={activePage}
+                sourceUrl={pageData?.pack?.metadata?.sourceName}
+                publishedAt={pageData?.publishedAt}
+                onNavigate={handleNavigate}
+                onToggleViewMode={() => setViewMode("crt")}
+              />
+            ) : (
+              <div className="screen-bay flex flex-col overflow-hidden p-1 sm:p-1.5">
+                {/* Embedded Status Bar */}
+                <TerminalHeader
                   pageNumber={currentPageNumber}
                   showScanlines={showScanlines}
                   phosphorGlow={phosphorGlow}
+                  onToggleScanlines={() => setShowScanlines((prev) => !prev)}
+                  onTogglePhosphorGlow={() => setPhosphorGlow((prev) => !prev)}
+                  isOffline={!isOnline || pageData?.isFallback || pageData?.isSavedCopy}
+                  isSavedCopy={pageData?.isSavedCopy}
+                  revision={pageData?.revision}
+                  updatedAt={pageData?.publishedAt}
                 />
-                <TeletextFastextBar
-                  fastext={{ red: 100, green: 200, yellow: 300, cyan: 400 }}
-                  onNavigate={handleNavigate}
-                />
-              </>
-            ) : (
-              <>
-                <TeletextGrid
-                  page={activePage}
-                  showScanlines={isDataSaver ? false : showScanlines}
-                  phosphorGlow={isDataSaver ? false : phosphorGlow}
-                  useSystemFont={isDataSaver}
-                />
-                <TeletextFastextBar fastext={activePage.fastext} onNavigate={handleNavigate} />
-              </>
+
+                {/* Stale Local Copy Warning Banner */}
+                {isStaleCopy && (
+                  <div className="flex w-full flex-wrap items-center justify-between gap-2 border-b border-[#846114] bg-[#2d2208] p-2 font-mono text-xs text-[#f6dfa9]">
+                    <div className="flex items-center gap-2">
+                      <span>⚠️</span>
+                      <div>
+                        <strong className="text-[#c69b5b]">STALE LOCAL COPY:</strong> Revision{" "}
+                        {pageData?.revision ?? 1} saved{" "}
+                        {formatRelativeFreshness(pageData?.publishedAt)}.
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRefreshLive}
+                      className="cursor-pointer rounded-xs bg-[#c69b5b] px-2 py-0.5 text-xs font-bold text-[#0d1410] hover:bg-[#d6ab6b]"
+                    >
+                      REFRESH LIVE
+                    </button>
+                  </div>
+                )}
+
+                {/* Notice Expired Banner */}
+                {isExpired && (
+                  <div className="flex w-full items-center gap-2 border-b border-[#801d14] bg-[#2a0e0b] p-2 font-mono text-xs text-[#ff9e94]">
+                    <span>⏳</span>
+                    <div>
+                      <strong className="text-[#ef4444]">NOTICE EXPIRED:</strong> Content preserved
+                      for offline reference.
+                    </div>
+                  </div>
+                )}
+
+                {/* SubPage Carousel Bar */}
+                {subPageCount > 1 && (
+                  <SubPageCarousel
+                    pageNumber={currentPageNumber}
+                    currentSubIndex={currentSubIndex}
+                    subPageCount={subPageCount}
+                    onSubPageChange={handleSubPageChange}
+                  />
+                )}
+
+                {/* 40x25 Screen Canvas */}
+                <div className="w-full">
+                  {isLoading ? (
+                    <TerminalLoading pageNumber={currentPageNumber} />
+                  ) : isNotFound ? (
+                    <>
+                      <TerminalNotFound
+                        pageNumber={currentPageNumber}
+                        showScanlines={showScanlines}
+                        phosphorGlow={phosphorGlow}
+                      />
+                      <TeletextFastextBar
+                        fastext={{ red: 100, green: 200, yellow: 300, cyan: 400 }}
+                        onNavigate={handleNavigate}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <TeletextGrid
+                        page={activePage}
+                        showScanlines={isDataSaver ? false : showScanlines}
+                        phosphorGlow={isDataSaver ? false : phosphorGlow}
+                        useSystemFont={isDataSaver}
+                      />
+                      <div className="mt-1.5 p-0.5">
+                        <TeletextFastextBar
+                          fastext={activePage.fastext}
+                          onNavigate={handleNavigate}
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             )}
           </div>
-        </>
-      )}
 
-      {/* Audio Controls Toolbar */}
-      <div className="w-full">
-        <AudioControls page={activePage} />
-      </div>
+          {/* Right Bay: Hardware Tuning & Audio Console (lg:col-span-4) */}
+          <div className="flex flex-col gap-3 lg:col-span-4">
+            <TeletextDialer
+              currentPage={currentPageNumber}
+              catalogue={catalog}
+              fastext={activePage.fastext}
+              onNavigate={handleNavigate}
+            />
 
-      {/* Remote Control Keypad */}
-      <div className="flex w-full justify-center">
-        <TeletextDialer
-          currentPage={currentPageNumber}
-          catalogue={catalog}
-          fastext={activePage.fastext}
-          onNavigate={handleNavigate}
-        />
+            <AudioControls page={activePage} />
+
+            {/* Ventilation micro-louvers decorative hardware detail */}
+            <div
+              className="hidden flex-col gap-1 rounded-sm border border-[#777970] bg-[#9e9d93] p-2.5 shadow-inner lg:flex"
+              aria-hidden="true"
+            >
+              <div className="flex items-center justify-between font-mono text-[9px] font-bold tracking-widest text-[#474c44] uppercase">
+                <span>VENTILATION // HEATSINK</span>
+                <span>MODEL PT-4025</span>
+              </div>
+              <div className="chassis-louver" />
+              <div className="chassis-louver" />
+              <div className="chassis-louver" />
+            </div>
+          </div>
+        </div>
+
+        {/* Lower Accessory & Utility Deck */}
+        <div className="mt-4 flex flex-col justify-between gap-3 border-t border-[#777970] pt-3 font-mono text-xs text-[#2f342d] sm:flex-row sm:items-center">
+          {/* Mode & Data Saver Switches */}
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setViewMode((prev) => (prev === "crt" ? "accessible" : "crt"))}
+              className={`btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold transition-all ${
+                viewMode === "accessible"
+                  ? "!border-[#226f43] !bg-[#2f8c56] !text-white shadow-[0_0_8px_rgba(47,140,86,0.4)]"
+                  : ""
+              }`}
+              aria-label={
+                viewMode === "crt"
+                  ? "Switch to text-only accessible view"
+                  : "Switch to CRT visual grid view"
+              }
+            >
+              <span className="sm:hidden">{viewMode === "crt" ? "ACCESSIBLE" : "CRT MODE"}</span>
+              <span className="hidden sm:inline">
+                {viewMode === "crt" ? "ACCESSIBLE TEXT MODE [M]" : "CRT DISPLAY MODE [M]"}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleToggleDataSaver}
+              className={`btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold transition-all ${
+                isDataSaver
+                  ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
+                  : ""
+              }`}
+              aria-label={
+                isDataSaver
+                  ? "Disable Low-Bandwidth Data Saver Mode"
+                  : "Enable Low-Bandwidth Data Saver Mode"
+              }
+            >
+              <span className="sm:hidden">{isDataSaver ? "⚡ SAVER ON" : "SAVER"}</span>
+              <span className="hidden sm:inline">
+                {isDataSaver ? "⚡ DATA SAVER ON" : "DATA SAVER [D]"}
+              </span>
+            </button>
+
+            {dialBuffer && (
+              <span className="led-window animate-pulse px-2 py-0.5 text-xs font-bold text-[#c69b5b]">
+                DIALING: P{dialBuffer}__
+              </span>
+            )}
+          </div>
+
+          {/* Action Buttons: Save, Evidence, Share, Import, Scan, Keys */}
+          <div className="no-scrollbar flex flex-wrap items-center gap-1.5 overflow-x-auto sm:overflow-visible">
+            <button
+              type="button"
+              onClick={handleToggleSave}
+              disabled={!pageData?.pack}
+              className={`btn-keycap-light flex cursor-pointer items-center gap-1 px-2.5 py-1 text-xs font-bold transition-all ${
+                isSaved
+                  ? "!border-[#226f43] !bg-[#2f8c56] !text-white shadow-[0_0_8px_rgba(47,140,86,0.3)]"
+                  : ""
+              } ${!pageData?.pack ? "cursor-not-allowed opacity-50" : ""}`}
+              aria-label={
+                isSaved
+                  ? "Remove saved offline bulletin"
+                  : "Save bulletin locally for offline reading"
+              }
+            >
+              <span className="sm:hidden">{isSaved ? "★ SAVED" : "☆ SAVE"}</span>
+              <span className="hidden sm:inline">
+                {isSaved ? "★ SAVED OFFLINE" : "☆ SAVE OFFLINE"}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsEvidenceOpen(true)}
+              className="btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold transition-all"
+              aria-label="Inspect source sentence evidence and attribution"
+            >
+              <span className="sm:hidden">EVID</span>
+              <span className="hidden sm:inline">EVIDENCE [E]</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsExportOpen(true)}
+              className="btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold transition-all"
+              aria-label="Share bulletin or export PagePack QR code"
+            >
+              SHARE / QR
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsImportOpen(true)}
+              className="btn-keycap-light cursor-pointer px-2 py-1 text-xs font-bold transition-all"
+              aria-label="Import PagePack JSON file"
+            >
+              <span className="sm:hidden">IMPORT</span>
+              <span className="hidden sm:inline">IMPORT JSON</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsScannerOpen(true)}
+              className="btn-keycap-light cursor-pointer px-2 py-1 text-xs font-bold transition-all"
+              aria-label="Scan optical QR code or air-gap burst"
+            >
+              <span className="sm:hidden">SCAN</span>
+              <span className="hidden sm:inline">SCAN QR</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsShortcutsOpen(true)}
+              className="btn-keycap-light cursor-pointer px-2 py-1 text-xs font-bold transition-all"
+              aria-label="Open keyboard shortcuts help modal"
+            >
+              KEYS (?)
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Fasteners */}
+        <div
+          className="mt-2 flex items-center justify-between border-t border-[#777970] pt-1.5"
+          aria-hidden="true"
+        >
+          <span className="chassis-screw" />
+          <span className="font-mono text-[9px] font-bold tracking-widest text-[#575d53] uppercase">
+            KIROWEEN 2026 // HARDWARE SPEC V1.0
+          </span>
+          <span className="chassis-screw" />
+        </div>
       </div>
 
       {/* Keyboard Shortcuts Modal */}

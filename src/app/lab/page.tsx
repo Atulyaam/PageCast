@@ -55,26 +55,29 @@ export default function DataEfficiencyLabPage() {
   };
 
   return (
-    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
-      {/* Header */}
-      <header className="border-surface-border bg-surface-panel/85 border-b px-4 py-2.5 backdrop-blur">
+    <div className="flex min-h-screen flex-col font-mono">
+      {/* Precision Instrument Rail Header */}
+      <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <Link
               href="/terminal"
-              className="border-surface-border bg-surface-panel btn-tactile rounded border px-2.5 py-1 text-xs font-bold text-yellow-400 transition-colors hover:border-yellow-400"
+              className="btn-keycap-light px-2.5 py-1 text-xs font-bold transition-all"
             >
               ← TERMINAL
             </Link>
-            <h1 className="text-teletext-cyan text-sm font-bold tracking-wider uppercase">
+            <h1 className="text-sm font-bold tracking-wider text-[#f6dfa9] uppercase sm:text-base">
               PAGECAST DATA EFFICIENCY LAB
             </h1>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <span className="rounded border border-emerald-500/40 bg-emerald-950/60 px-2 py-0.5 text-[11px] font-bold text-emerald-400">
+            <span className="rounded-xs border border-[#236b40] bg-[#143320] px-2 py-0.5 text-[10px] font-bold text-[#22c55e]">
               EMPIRICAL BENCHMARKS
             </span>
-            <Link href="/about" className="text-zinc-400 transition-colors hover:text-white">
+            <Link
+              href="/about"
+              className="text-xs text-[#879b83] transition-colors hover:text-[#b7c9a8]"
+            >
               About
             </Link>
           </div>
@@ -84,45 +87,42 @@ export default function DataEfficiencyLabPage() {
       {/* Main Content */}
       <main className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
         {/* Case Selector Banner */}
-        <section
-          aria-labelledby="case-select-title"
-          className="space-y-3 rounded border border-zinc-800 bg-zinc-950 p-4"
-        >
+        <section aria-labelledby="case-select-title" className="chassis-body space-y-3 p-4 sm:p-5">
           <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <div>
               <h2
                 id="case-select-title"
-                className="text-xs font-bold tracking-wider text-yellow-400 uppercase"
+                className="text-xs font-bold tracking-wider text-[#2f342d] uppercase"
               >
                 Select Benchmark Dataset
               </h2>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-[#5e645a]">
                 Empirical payload comparisons between modern web articles and 40×25 PagePacks
               </p>
             </div>
             <select
               value={selectedCaseId}
               onChange={(e) => setSelectedCaseId(e.target.value)}
-              className="rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-bold text-cyan-300 focus:border-cyan-400 focus:outline-none"
+              className="led-window px-3 py-1.5 font-mono text-xs font-bold text-[#b7c9a8] focus:border-[#c69b5b] focus:outline-hidden"
               aria-label="Select benchmark case"
             >
               {EFFICIENCY_BENCHMARKS.map((b) => (
-                <option key={b.id} value={b.id}>
+                <option key={b.id} value={b.id} className="bg-[#0d1410] text-[#b7c9a8]">
                   P{b.pageNumber} — {b.title} ({b.language.toUpperCase()})
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="flex flex-wrap gap-4 border-t border-zinc-900 pt-1 text-xs text-zinc-400">
+          <div className="flex flex-wrap gap-4 border-t border-[#777970] pt-2 text-xs text-[#5e645a]">
             <span>
-              Publisher: <strong className="text-zinc-200">{activeCase.publisherName}</strong>
+              Publisher: <strong className="text-[#2f342d]">{activeCase.publisherName}</strong>
             </span>
             <span>
-              Category: <strong className="text-zinc-200">{activeCase.category}</strong>
+              Category: <strong className="text-[#2f342d]">{activeCase.category}</strong>
             </span>
             <span>
-              Language: <strong className="text-zinc-200 uppercase">{activeCase.language}</strong>
+              Language: <strong className="text-[#2f342d] uppercase">{activeCase.language}</strong>
             </span>
             <span className="max-w-xs truncate">
               Source:{" "}
@@ -130,7 +130,7 @@ export default function DataEfficiencyLabPage() {
                 href={activeCase.originalSourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-cyan-400 underline hover:text-cyan-300"
+                className="text-[#1b676e] underline hover:text-[#258189]"
               >
                 {activeCase.originalSourceUrl}
               </a>
@@ -142,68 +142,68 @@ export default function DataEfficiencyLabPage() {
         <section aria-labelledby="payload-comparison-title" className="space-y-3">
           <h2
             id="payload-comparison-title"
-            className="text-xs font-bold tracking-wider text-zinc-400 uppercase"
+            className="text-xs font-bold tracking-wider text-[#4b5249] uppercase"
           >
             Payload Weight Breakdown
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {/* 1. Original Web Article */}
-            <div className="space-y-2 rounded border border-red-500/30 bg-zinc-950 p-4">
+            <div className="chassis-body space-y-2 p-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-red-400 uppercase">1. Web Original</span>
-                <span className="rounded bg-red-950/60 px-1.5 py-0.5 text-[10px] text-red-300">
+                <span className="font-bold text-[#9e2b20] uppercase">1. Web Original</span>
+                <span className="rounded-xs bg-[#801d14] px-1.5 py-0.5 text-[10px] font-bold text-white">
                   HTTP Payload
                 </span>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-[#2f342d]">
                 {formatBytes(activeCase.originalArticleBytes)}
               </div>
-              <p className="text-[11px] leading-relaxed text-zinc-400">
+              <p className="text-[11px] leading-relaxed text-[#5e645a]">
                 Includes HTML document, JavaScript application bundles, web fonts, tracking pixels,
                 and ads.
               </p>
             </div>
 
             {/* 2. Extracted Article Text */}
-            <div className="space-y-2 rounded border border-zinc-800 bg-zinc-950 p-4">
+            <div className="chassis-body space-y-2 p-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-zinc-400 uppercase">2. Extracted Text</span>
-                <span className="rounded bg-zinc-900 px-1.5 py-0.5 text-[10px] text-zinc-400">
+                <span className="font-bold text-[#4b5249] uppercase">2. Extracted Text</span>
+                <span className="rounded-xs bg-[#777970] px-1.5 py-0.5 text-[10px] font-bold text-white">
                   Readability Clean
                 </span>
               </div>
-              <div className="text-2xl font-bold text-zinc-200">
+              <div className="text-2xl font-bold text-[#2f342d]">
                 {formatBytes(activeCase.extractedTextBytes)}
               </div>
-              <p className="text-[11px] leading-relaxed text-zinc-500">
+              <p className="text-[11px] leading-relaxed text-[#5e645a]">
                 Clean article text extracted via Readability parser with all scripts and styles
                 stripped.
               </p>
             </div>
 
             {/* 3. Published PagePack */}
-            <div className="space-y-2 rounded border border-emerald-500/40 bg-zinc-950 p-4">
+            <div className="chassis-body space-y-2 p-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-emerald-400 uppercase">3. PagePack V1</span>
-                <span className="rounded bg-emerald-950/60 px-1.5 py-0.5 text-[10px] text-emerald-300">
+                <span className="font-bold text-[#226f43] uppercase">3. PagePack V1</span>
+                <span className="rounded-xs bg-[#185633] px-1.5 py-0.5 text-[10px] font-bold text-white">
                   40×25 Teletext
                 </span>
               </div>
-              <div className="text-2xl font-bold text-emerald-400">
+              <div className="text-2xl font-bold text-[#226f43]">
                 {formatBytes(activeCase.pagePackBytes)}
               </div>
               {/* Byte Budget Meter */}
               <div className="space-y-1 pt-1">
-                <div className="flex justify-between text-[10px] text-zinc-400">
+                <div className="flex justify-between text-[10px] text-[#5e645a]">
                   <span>Ceiling: 10,240 B</span>
                   <span>
                     {((activeCase.pagePackBytes / PAGECAST_MAX_PACK_BYTES) * 100).toFixed(1)}% Used
                   </span>
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded bg-zinc-900">
+                <div className="h-1.5 w-full overflow-hidden rounded-xs bg-[#777970]">
                   <div
-                    className="h-full bg-emerald-400 transition-all"
+                    className="h-full bg-[#226f43] transition-all"
                     style={{
                       width: `${Math.min(100, (activeCase.pagePackBytes / PAGECAST_MAX_PACK_BYTES) * 100)}%`,
                     }}
@@ -215,33 +215,38 @@ export default function DataEfficiencyLabPage() {
         </section>
 
         {/* Efficiency KPI Summary Banner */}
-        <section
-          aria-labelledby="kpi-title"
-          className="rounded border border-zinc-800 bg-zinc-950 p-4"
-        >
+        <section aria-labelledby="kpi-title" className="chassis-body p-4 sm:p-5">
           <h2 id="kpi-title" className="sr-only">
             Efficiency Key Performance Indicators
           </h2>
           <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
             <div className="p-2">
-              <span className="block text-[11px] text-zinc-500 uppercase">Data Reduction</span>
-              <span className="text-2xl font-bold text-cyan-400">{metrics.reductionPercent}%</span>
+              <span className="block text-[11px] font-bold text-[#5e645a] uppercase">
+                Data Reduction
+              </span>
+              <span className="text-2xl font-bold text-[#1b676e]">{metrics.reductionPercent}%</span>
             </div>
             <div className="p-2">
-              <span className="block text-[11px] text-zinc-500 uppercase">Scale Factor</span>
-              <span className="text-2xl font-bold text-yellow-400">
+              <span className="block text-[11px] font-bold text-[#5e645a] uppercase">
+                Scale Factor
+              </span>
+              <span className="text-2xl font-bold text-[#c69b5b]">
                 {metrics.reductionFactor}× Smaller
               </span>
             </div>
             <div className="p-2">
-              <span className="block text-[11px] text-zinc-500 uppercase">5 MB Offline Quota</span>
-              <span className="text-2xl font-bold text-emerald-400">
+              <span className="block text-[11px] font-bold text-[#5e645a] uppercase">
+                5 MB Offline Quota
+              </span>
+              <span className="text-2xl font-bold text-[#226f43]">
                 ~{storage.capacityPages.toLocaleString()} Pages
               </span>
             </div>
             <div className="p-2">
-              <span className="block text-[11px] text-zinc-500 uppercase">Budget Margin</span>
-              <span className="text-2xl font-bold text-zinc-200">
+              <span className="block text-[11px] font-bold text-[#5e645a] uppercase">
+                Budget Margin
+              </span>
+              <span className="text-2xl font-bold text-[#2f342d]">
                 {metrics.budgetRemainingBytes.toLocaleString()} B Free
               </span>
             </div>
@@ -249,14 +254,11 @@ export default function DataEfficiencyLabPage() {
         </section>
 
         {/* Network Transfer Simulation Table */}
-        <section
-          aria-labelledby="network-simulation-title"
-          className="space-y-3 rounded border border-zinc-800 bg-zinc-950 p-4"
-        >
+        <section aria-labelledby="network-simulation-title" className="chassis-body space-y-3 p-4">
           <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
             <h2
               id="network-simulation-title"
-              className="text-xs font-bold tracking-wider text-yellow-400 uppercase"
+              className="text-xs font-bold tracking-wider text-[#2f342d] uppercase"
             >
               Estimated Transfer Time Across Network Profiles
             </h2>

@@ -160,34 +160,34 @@ export const TeletextDialer: React.FC<TeletextDialerProps> = ({
 
   return (
     <div
-      className={`bg-surface-panel border-surface-border rounded-terminal flex flex-col items-center border p-3 select-none sm:p-4 ${className}`.trim()}
+      className={`border-t border-[#777970] bg-[#9e9d93] p-3 shadow-[inset_0_2px_4px_rgba(0,0,0,0.18)] select-none sm:rounded-lg sm:border sm:border-[#777970] sm:p-4 ${className}`.trim()}
     >
       {/* Dial Screen & Prev/Next Toolbar */}
       <div className="mb-3 flex w-full items-center justify-between gap-2">
         <button
           type="button"
           onClick={handlePrev}
-          className={`btn-tactile rounded border px-3 py-1.5 font-mono text-xs transition-all active:scale-95 ${
+          className={`btn-keycap-light cursor-pointer rounded-xs px-3 py-1.5 font-mono text-xs font-bold transition-all ${
             activeKey === "PREV"
-              ? "bg-teletext-yellow text-teletext-black border-teletext-yellow shadow-[0_0_10px_rgba(255,255,0,0.5)]"
-              : "bg-surface-terminal border-surface-border hover:border-teletext-yellow text-teletext-white"
+              ? "!border-[#c69b5b] !bg-[#c69b5b] !text-[#0d1410] shadow-[0_0_10px_rgba(198,155,91,0.6)]"
+              : ""
           }`}
           title="Previous Page (Arrow Left/Up)"
         >
           ▲ PREV
         </button>
 
-        <div className="bg-teletext-black border-surface-border-subtle text-teletext-yellow flex items-center rounded border px-4 py-1.5 font-mono text-base font-bold tracking-widest shadow-[inset_0_1px_4px_rgba(0,0,0,0.8),0_0_8px_rgba(255,255,0,0.12)]">
+        <div className="led-window flex items-center px-4 py-1.5 font-mono text-base font-bold tracking-widest text-[#b7c9a8] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9),0_1px_0_rgba(255,255,255,0.4)]">
           {displayBuffer}
         </div>
 
         <button
           type="button"
           onClick={handleNext}
-          className={`btn-tactile rounded border px-3 py-1.5 font-mono text-xs transition-all active:scale-95 ${
+          className={`btn-keycap-light cursor-pointer rounded-xs px-3 py-1.5 font-mono text-xs font-bold transition-all ${
             activeKey === "NEXT"
-              ? "bg-teletext-yellow text-teletext-black border-teletext-yellow shadow-[0_0_10px_rgba(255,255,0,0.5)]"
-              : "bg-surface-terminal border-surface-border hover:border-teletext-yellow text-teletext-white"
+              ? "!border-[#c69b5b] !bg-[#c69b5b] !text-[#0d1410] shadow-[0_0_10px_rgba(198,155,91,0.6)]"
+              : ""
           }`}
           title="Next Page (Arrow Right/Down)"
         >
@@ -196,16 +196,16 @@ export const TeletextDialer: React.FC<TeletextDialerProps> = ({
       </div>
 
       {/* Numeric Keypad */}
-      <div className="grid w-full max-w-[200px] grid-cols-3 gap-1.5">
+      <div className="mx-auto grid w-full max-w-[210px] grid-cols-3 gap-2">
         {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
           <button
             key={digit}
             type="button"
             onClick={() => handleDigit(digit)}
-            className={`btn-tactile rounded border py-2 font-mono text-sm font-bold transition-all active:scale-95 ${
+            className={`btn-keycap cursor-pointer py-2.5 font-mono text-sm font-bold ${
               activeKey === digit
-                ? "bg-teletext-yellow text-teletext-black border-teletext-yellow scale-95 shadow-[0_0_12px_rgba(255,255,0,0.6)]"
-                : "bg-surface-terminal border-surface-border text-teletext-white hover:bg-surface-border hover:text-teletext-yellow"
+                ? "!border-[#c69b5b] !text-[#f6dfa9] shadow-[0_0_12px_rgba(198,155,91,0.7)]"
+                : ""
             }`}
           >
             {digit}
@@ -215,10 +215,10 @@ export const TeletextDialer: React.FC<TeletextDialerProps> = ({
         <button
           type="button"
           onClick={handleClear}
-          className={`btn-tactile rounded border py-2 font-mono text-xs font-bold transition-all active:scale-95 ${
+          className={`btn-keycap cursor-pointer py-2.5 font-mono text-xs font-bold !text-[#e67064] hover:!text-[#ff8a7e] ${
             activeKey === "CLR"
-              ? "bg-teletext-red text-teletext-white border-teletext-red scale-95 shadow-[0_0_10px_rgba(255,0,0,0.6)]"
-              : "bg-surface-terminal border-surface-border text-teletext-red hover:bg-red-950/40"
+              ? "!border-[#e67064] !bg-[#701e16] shadow-[0_0_10px_rgba(230,112,100,0.6)]"
+              : ""
           }`}
           title="Clear Buffer"
         >
@@ -228,10 +228,10 @@ export const TeletextDialer: React.FC<TeletextDialerProps> = ({
         <button
           type="button"
           onClick={() => handleDigit("0")}
-          className={`btn-tactile rounded border py-2 font-mono text-sm font-bold transition-all active:scale-95 ${
+          className={`btn-keycap cursor-pointer py-2.5 font-mono text-sm font-bold ${
             activeKey === "0"
-              ? "bg-teletext-yellow text-teletext-black border-teletext-yellow scale-95 shadow-[0_0_12px_rgba(255,255,0,0.6)]"
-              : "bg-surface-terminal border-surface-border text-teletext-white hover:bg-surface-border hover:text-teletext-yellow"
+              ? "!border-[#c69b5b] !text-[#f6dfa9] shadow-[0_0_12px_rgba(198,155,91,0.7)]"
+              : ""
           }`}
         >
           0
@@ -246,10 +246,10 @@ export const TeletextDialer: React.FC<TeletextDialerProps> = ({
             } catch {}
             onNavigate(100);
           }}
-          className={`btn-tactile rounded border py-2 font-mono text-xs font-bold transition-all active:scale-95 ${
+          className={`btn-keycap cursor-pointer py-2.5 font-mono text-xs font-bold !text-[#76c7cd] hover:!text-[#9ce7ec] ${
             activeKey === "100"
-              ? "bg-teletext-cyan text-teletext-black border-teletext-cyan scale-95 shadow-[0_0_10px_rgba(0,255,255,0.6)]"
-              : "bg-surface-terminal border-surface-border text-teletext-cyan hover:bg-cyan-950/40"
+              ? "!border-[#76c7cd] !bg-[#15464a] shadow-[0_0_10px_rgba(118,199,205,0.6)]"
+              : ""
           }`}
           title="Index Page 100 (Esc)"
         >

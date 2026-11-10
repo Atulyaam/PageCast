@@ -102,16 +102,16 @@ export const PosterModal: React.FC<PosterModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-4 font-mono backdrop-blur-xs"
     >
       <FocusTrap active={isOpen} onClose={onClose} className="w-full max-w-2xl">
-        <div className="w-full border-2 border-emerald-500 bg-zinc-950 p-6 text-zinc-100 shadow-[0_0_25px_rgba(0,255,102,0.3)]">
+        <div className="w-full rounded-xl border border-[#3A453F] bg-[#141B17] p-6 text-[#D1DCD0] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
           {/* Action Bar (Hidden on print) */}
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-3 print:hidden">
-            <div className="flex items-center gap-2">
-              <span className="bg-emerald-500 px-2 py-0.5 text-xs font-black text-black">
+          <div className="mb-4 flex items-center justify-between border-b border-[#2A352F] pb-3 print:hidden">
+            <div className="flex items-center gap-2.5">
+              <span className="rounded border border-[#3A453F] bg-[#222924] px-2 py-0.5 text-xs font-bold text-[#879B83]">
                 PRINT KIT
               </span>
               <h2
                 id="poster-modal-title"
-                className="text-sm font-bold tracking-wider text-emerald-400 uppercase"
+                className="text-sm font-bold tracking-wider text-[#B7C9A8] uppercase"
               >
                 Community Bulletin Poster (A4 / Letter)
               </h2>
@@ -120,7 +120,7 @@ export const PosterModal: React.FC<PosterModalProps> = ({
               <button
                 type="button"
                 onClick={handlePrint}
-                className="cursor-pointer bg-emerald-500 px-3 py-1 text-xs font-bold text-black transition-colors hover:bg-emerald-400"
+                className="btn-keycap cursor-pointer rounded border border-[#3A453F] bg-[#2E3B33] px-3 py-1 text-xs font-bold text-[#B7C9A8] transition-colors hover:bg-[#38483E]"
               >
                 🖨️ Print Poster
               </button>
@@ -128,7 +128,7 @@ export const PosterModal: React.FC<PosterModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Close poster preview"
-                className="cursor-pointer border border-zinc-700 px-2.5 py-1 text-xs text-zinc-400 hover:text-white"
+                className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-2.5 py-1 text-xs text-[#A8B7A4] hover:border-[#4E5C54] hover:text-white"
               >
                 ✕
               </button>

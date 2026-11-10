@@ -78,44 +78,44 @@ export default function SavedPagesPage() {
   });
 
   return (
-    <div className="bg-surface-ground text-teletext-white flex min-h-screen flex-col font-sans">
-      {/* Top Navigation Header */}
-      <header className="border-surface-border bg-surface-panel/85 sticky top-0 z-30 border-b px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
+    <div className="flex min-h-screen flex-col font-sans">
+      {/* Top Precision Instrumentation Rail */}
+      <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2.5">
             <Link
               href="/"
-              className="text-teletext-yellow font-mono text-lg font-bold tracking-tight transition-opacity hover:opacity-80 sm:text-xl"
+              className="font-mono text-base font-black tracking-tight text-[#f6dfa9] transition-opacity hover:opacity-80 sm:text-lg"
             >
               PAGECAST
             </Link>
-            <span className="bg-teletext-green/20 border-teletext-green text-teletext-green rounded border px-2 py-0.5 font-mono text-[11px] font-bold">
+            <span className="rounded-xs border border-[#236b40] bg-[#143320] px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-[#22c55e] uppercase">
               OFFLINE VAULT
             </span>
           </div>
 
-          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto font-mono text-xs sm:gap-4">
+          <nav className="no-scrollbar flex items-center gap-1.5 overflow-x-auto font-mono text-xs sm:gap-2">
             <Link
               href="/"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               READER
             </Link>
             <Link
               href="/terminal"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               TERMINAL
             </Link>
             <Link
               href="/catalogue"
-              className="btn-tactile text-text-muted hover:text-teletext-white rounded px-2 py-1 transition-all"
+              className="rounded-xs border border-transparent px-2.5 py-1 text-[#879b83] transition-all hover:border-[#3b453e] hover:text-[#b7c9a8]"
             >
               CATALOGUE
             </Link>
             <Link
               href="/saved"
-              className="btn-tactile text-teletext-green rounded px-2 py-1 font-bold underline transition-all"
+              className="rounded-xs border border-[#3d4b40] bg-[#2b352e] px-2.5 py-1 font-bold text-[#22c55e] shadow-inner transition-all"
             >
               SAVED
             </Link>
@@ -126,14 +126,14 @@ export default function SavedPagesPage() {
       {/* Main Container */}
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col p-4 sm:p-6">
         {/* Title & Stats */}
-        <div className="border-surface-border mb-6 flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
+        <div className="mb-6 flex flex-col justify-between gap-3 border-b border-[#777970] pb-4 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-teletext-white font-mono text-2xl font-bold tracking-tight">
+            <h1 className="font-mono text-xl font-bold tracking-tight text-[#2f342d] sm:text-2xl">
               SAVED OFFLINE BULLETINS
             </h1>
-            <p className="text-text-muted mt-1 text-xs">
-              IndexedDB persistent local storage &bull; {savedPages.length} bulletin
-              {savedPages.length === 1 ? "" : "s"} stored
+            <p className="mt-1 font-mono text-xs text-[#5e645a]">
+              IndexedDB persistent local storage &bull; {savedPages.length} cartridge
+              {savedPages.length === 1 ? "" : "s"} cached
             </p>
           </div>
 
@@ -142,7 +142,7 @@ export default function SavedPagesPage() {
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className="btn-tactile border-teletext-yellow bg-teletext-yellow/10 text-teletext-yellow hover:bg-teletext-yellow hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95"
+              className="btn-keycap-light cursor-pointer px-3 py-1.5 font-mono text-xs font-bold transition-all"
               aria-label="Import PagePack JSON file"
             >
               + IMPORT JSON
@@ -150,7 +150,7 @@ export default function SavedPagesPage() {
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="btn-tactile border-teletext-green bg-teletext-green/10 text-teletext-green hover:bg-teletext-green hover:text-teletext-black rounded border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95"
+              className="btn-keycap-light cursor-pointer px-3 py-1.5 font-mono text-xs font-bold transition-all"
               aria-label="Scan optical QR code or air-gap burst"
             >
               SCAN QR
@@ -160,7 +160,7 @@ export default function SavedPagesPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter by page or title..."
-              className="border-surface-border bg-surface-terminal text-text-primary placeholder:text-text-muted focus:border-teletext-yellow rounded border px-3 py-1.5 font-mono text-xs focus:outline-none"
+              className="led-window px-3 py-1.5 font-mono text-xs text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
               aria-label="Filter saved bulletins"
             />
           </div>
@@ -170,7 +170,7 @@ export default function SavedPagesPage() {
         {actionMessage && (
           <div
             role="status"
-            className="border-teletext-green bg-teletext-green/10 text-teletext-green mb-4 rounded border px-3 py-2 font-mono text-xs"
+            className="mb-4 rounded-xs border border-[#236b40] bg-[#143320] px-3 py-2 font-mono text-xs text-[#b7c9a8]"
           >
             {actionMessage}
           </div>
@@ -179,25 +179,25 @@ export default function SavedPagesPage() {
         {/* Content States */}
         {loading ? (
           <div className="flex flex-1 flex-col items-center justify-center py-16 text-center font-mono">
-            <div className="border-teletext-green mb-3 h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-            <p className="text-text-muted text-xs tracking-wider">
+            <div className="mb-3 h-8 w-8 animate-spin rounded-full border-2 border-[#236b40] border-t-transparent" />
+            <p className="text-xs tracking-wider text-[#5e645a]">
               SCANNING LOCAL INDEXEDDB STORAGE...
             </p>
           </div>
         ) : filteredPages.length === 0 ? (
-          <div className="border-surface-border bg-surface-panel rounded-lg border p-8 text-center font-mono">
-            <p className="text-teletext-yellow mb-2 text-sm font-bold">
+          <div className="chassis-body p-8 text-center font-mono">
+            <p className="mb-2 text-sm font-bold text-[#c69b5b]">
               {searchQuery
                 ? "NO SAVED BULLETINS MATCH YOUR FILTER"
                 : "NO OFFLINE BULLETINS SAVED YET"}
             </p>
-            <p className="text-text-muted mx-auto mb-6 max-w-md text-xs">
+            <p className="mx-auto mb-6 max-w-md text-xs text-[#5e645a]">
               When viewing any bulletin in the Reader or Terminal, click the &ldquo;☆ SAVE
               OFFLINE&rdquo; button to keep a permanent offline copy on this device.
             </p>
             <Link
               href="/catalogue"
-              className="border-teletext-yellow bg-teletext-yellow rounded border px-4 py-2 text-xs font-bold text-black transition-colors hover:bg-yellow-400"
+              className="btn-keycap-light inline-block px-4 py-2 text-xs font-bold uppercase transition-colors"
             >
               EXPLORE BROADCAST CATALOGUE
             </Link>
@@ -217,26 +217,26 @@ export default function SavedPagesPage() {
               return (
                 <div
                   key={saved.pageNumber}
-                  className="border-surface-border bg-surface-panel hover:border-surface-border-subtle flex flex-col justify-between rounded-lg border p-4 shadow-sm transition-all"
+                  className="chassis-body flex flex-col justify-between p-4 shadow-md transition-all"
                 >
                   <div>
                     {/* Top Badges */}
                     <div className="mb-2 flex items-center justify-between gap-2 font-mono text-[11px]">
-                      <span className="bg-teletext-yellow rounded px-2 py-0.5 font-bold text-black">
+                      <span className="rounded-xs bg-[#c69b5b] px-2 py-0.5 font-bold text-[#0d1410]">
                         P{saved.pageNumber}
                       </span>
-                      <span className="text-teletext-cyan uppercase">
+                      <span className="text-[10px] font-bold tracking-wider text-[#3d4b40] uppercase">
                         Mag {mag.number}: {mag.name}
                       </span>
                     </div>
 
                     {/* Bulletin Title */}
-                    <h2 className="text-teletext-white mb-2 line-clamp-2 font-mono text-sm font-bold">
+                    <h2 className="mb-2 line-clamp-2 font-mono text-sm font-bold text-[#2f342d]">
                       {saved.title}
                     </h2>
 
                     {/* Metadata Details */}
-                    <div className="text-text-muted mb-4 space-y-0.5 font-mono text-[11px]">
+                    <div className="mb-4 space-y-0.5 font-mono text-[11px] text-[#5e645a]">
                       <div>Saved: {formattedDate}</div>
                       <div>
                         Size: {(saved.byteLength / 1024).toFixed(1)} KiB &bull;{" "}
@@ -252,10 +252,10 @@ export default function SavedPagesPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="border-surface-border flex items-center justify-between gap-2 border-t pt-3 font-mono text-xs">
+                  <div className="flex items-center justify-between gap-2 border-t border-[#777970] pt-3 font-mono text-xs">
                     <Link
                       href={`/terminal?page=${saved.pageNumber}`}
-                      className="border-teletext-cyan bg-teletext-cyan/10 text-teletext-cyan hover:bg-teletext-cyan/20 rounded border px-3 py-1 font-semibold transition-colors"
+                      className="btn-keycap-light px-3 py-1 text-xs font-bold uppercase"
                     >
                       READ OFFLINE
                     </Link>
@@ -263,7 +263,7 @@ export default function SavedPagesPage() {
                     <button
                       type="button"
                       onClick={() => handleRemove(saved.pageNumber)}
-                      className="rounded border border-red-900/50 px-2 py-1 text-red-400 transition-colors hover:bg-red-950/40"
+                      className="cursor-pointer rounded-xs px-2 py-1 text-[11px] font-semibold text-[#801d14] transition-colors hover:text-[#b93529]"
                       aria-label={`Remove saved page ${saved.pageNumber}`}
                     >
                       REMOVE
@@ -277,10 +277,10 @@ export default function SavedPagesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-surface-border text-text-muted border-t px-4 py-4 text-center font-mono text-xs">
+      <footer className="border-t border-[#bfbcb2] px-4 py-4 text-center font-mono text-xs text-[#5e645a]">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <span>PAGECAST &bull; Offline PWA Storage</span>
-          <span className="text-teletext-green">100% CLIENT PERSISTED</span>
+          <span className="font-bold text-[#2e5a38]">100% CLIENT PERSISTED</span>
         </div>
       </footer>
       {/* Import Dialog */}

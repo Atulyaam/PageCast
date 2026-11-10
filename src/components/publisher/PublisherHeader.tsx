@@ -26,37 +26,37 @@ export const PublisherHeader: React.FC<PublisherHeaderProps> = ({ activeTitle })
   ];
 
   return (
-    <header className="border-surface-border bg-surface-panel/85 border-b px-4 py-2.5 font-mono backdrop-blur sm:px-6">
+    <header className="sticky top-0 z-30 border-b border-[#1b201c] bg-[#222723] px-3 py-2 text-[#b7c9a8] shadow-md sm:px-5 sm:py-2.5">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Brand & Studio Tag */}
         <div className="flex items-center gap-3">
           <Link href="/" className="group flex items-center gap-2">
-            <span className="text-teletext-yellow font-mono text-lg font-bold tracking-tight transition-opacity group-hover:opacity-80 sm:text-xl">
+            <span className="font-mono text-base font-black tracking-tight text-[#f6dfa9] transition-opacity group-hover:opacity-80 sm:text-lg">
               PAGECAST
             </span>
-            <span className="bg-surface-border text-teletext-green rounded px-2 py-0.5 font-mono text-[11px] sm:text-xs">
-              STUDIO
+            <span className="rounded-xs border border-[#3b453e] bg-[#161a17] px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-[#22c55e] uppercase">
+              STUDIO DESK
             </span>
           </Link>
-          <span className="text-surface-border-subtle hidden sm:inline">/</span>
-          <span className="text-text-muted hidden text-xs tracking-wider uppercase sm:inline">
-            {activeTitle || "Publisher Workspace"}
+          <span className="hidden text-[#3b453e] sm:inline">/</span>
+          <span className="hidden text-xs font-semibold tracking-wider text-[#879b83] uppercase sm:inline">
+            {activeTitle || "Transmission Control"}
           </span>
         </div>
 
         {/* Navigation & System Status */}
-        <div className="flex flex-wrap items-center gap-4 text-xs">
-          <nav className="no-scrollbar flex items-center gap-2 overflow-x-auto">
+        <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+          <nav className="no-scrollbar flex items-center gap-1.5 overflow-x-auto">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`btn-tactile border px-2.5 py-1 transition-colors ${
+                  className={`rounded-xs border px-2.5 py-1 transition-colors ${
                     isActive
-                      ? "border-teletext-green/50 bg-teletext-green/10 text-teletext-green font-bold"
-                      : "text-text-muted hover:border-surface-border hover:text-teletext-white border-transparent"
+                      ? "border-[#3d4b40] bg-[#2b352e] font-bold text-[#f6dfa9] shadow-inner"
+                      : "border-transparent text-[#879b83] hover:border-[#3b453e] hover:text-[#b7c9a8]"
                   }`}
                 >
                   {link.label}
@@ -65,9 +65,9 @@ export const PublisherHeader: React.FC<PublisherHeaderProps> = ({ activeTitle })
             })}
           </nav>
 
-          <div className="border-surface-border text-text-muted hidden items-center gap-1.5 border-l pl-4 text-[11px] sm:flex">
-            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-            <span>STANDBY</span>
+          <div className="hidden items-center gap-1.5 border-l border-[#333b35] pl-3 text-[11px] text-[#6b7c68] sm:flex">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#22c55e] shadow-[0_0_6px_#22c55e]" />
+            <span className="font-bold tracking-wider text-[#879b83]">TX READY</span>
           </div>
         </div>
       </div>

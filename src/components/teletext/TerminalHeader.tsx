@@ -75,7 +75,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
     <div
       role="region"
       aria-label="Teletext Broadcast Status Bar"
-      className={`flex w-full flex-wrap items-center justify-between border border-zinc-800 bg-zinc-950 px-3 py-2 font-mono text-xs text-zinc-400 shadow-md sm:text-sm ${className}`.trim()}
+      className={`flex w-full flex-wrap items-center justify-between border-b border-[#232e27] bg-[#121915] px-3 py-1.5 font-mono text-xs text-[#879b83] shadow-inner sm:text-sm ${className}`.trim()}
     >
       {/* Broadcast Stream Status & Magazine Tag */}
       <div className="flex items-center gap-3">
@@ -83,42 +83,44 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
           <span className="relative flex h-2.5 w-2.5">
             <span
               className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                isOffline ? "animate-ping bg-amber-400" : "animate-ping bg-emerald-400"
+                isOffline ? "animate-ping bg-[#c69b5b]" : "animate-ping bg-[#22c55e]"
               }`}
             />
             <span
               className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
-                isOffline ? "bg-amber-500" : "bg-emerald-400"
+                isOffline
+                  ? "bg-[#c69b5b] shadow-[0_0_6px_#c69b5b]"
+                  : "bg-[#22c55e] shadow-[0_0_6px_#22c55e]"
               }`}
             />
           </span>
-          <span className={isOffline ? "text-amber-400" : "text-emerald-400"}>
+          <span className={isOffline ? "text-[#c69b5b]" : "text-[#b7c9a8]"}>
             {isOffline ? "CACHED / OFFLINE" : "LIVE BROADCAST"}
           </span>
         </div>
 
-        <span className="hidden text-zinc-700 sm:inline">|</span>
+        <span className="hidden text-[#2d3830] sm:inline">|</span>
 
         {magazine && (
-          <span className="hidden font-semibold tracking-wide text-zinc-300 sm:inline">
+          <span className="hidden font-semibold tracking-wide text-[#879b83] sm:inline">
             {`MAG ${magazine.number}: ${magazine.name.toUpperCase()}`}
           </span>
         )}
 
         {isSavedCopy && (
-          <span className="hidden rounded border border-emerald-500 bg-emerald-500/20 px-1.5 py-0.5 text-[11px] font-bold text-emerald-400 sm:inline-block">
+          <span className="hidden rounded-xs border border-[#236b40] bg-[#143320] px-1.5 py-0.5 text-[11px] font-bold text-[#b7c9a8] sm:inline-block">
             ★ LOCAL COPY
           </span>
         )}
 
         {revision !== undefined && (
-          <span className="hidden rounded border border-cyan-800 bg-cyan-950/60 px-1.5 py-0.5 text-[11px] font-bold text-cyan-400 sm:inline-block">
+          <span className="hidden rounded-xs border border-[#1b676e] bg-[#0f2e32] px-1.5 py-0.5 text-[11px] font-bold text-[#76c7cd] sm:inline-block">
             Rev {revision}
           </span>
         )}
 
         {updatedAt && (
-          <span className="hidden text-[11px] text-zinc-500 md:inline-block">
+          <span className="hidden text-[11px] text-[#6b7c68] md:inline-block">
             • {formatRelativeFreshness(updatedAt)}
           </span>
         )}
@@ -127,7 +129,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
       {/* Teletext Clock & Visual Effects Toggles */}
       <div className="flex items-center gap-3">
         {clockTime && (
-          <span className="hidden font-bold tracking-wider text-yellow-400 md:inline">
+          <span className="hidden font-bold tracking-wider text-[#c69b5b] md:inline">
             {clockTime}
           </span>
         )}
@@ -137,10 +139,10 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onToggleScanlines}
             aria-pressed={showScanlines}
-            className={`btn-tactile cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
+            className={`cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               showScanlines
-                ? "border-yellow-400 bg-yellow-400 text-black shadow-[0_0_8px_rgba(255,255,0,0.35)]"
-                : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
+                ? "border-[#c69b5b] bg-[#c69b5b] text-[#0d1410] shadow-[0_0_8px_rgba(198,155,91,0.5)]"
+                : "border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
             }`}
           >
             {`CRT SCANLINES: ${showScanlines ? "ON" : "OFF"}`}
@@ -150,10 +152,10 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             type="button"
             onClick={onTogglePhosphorGlow}
             aria-pressed={phosphorGlow}
-            className={`btn-tactile cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
+            className={`cursor-pointer rounded-xs border px-2 py-0.5 text-xs font-bold transition-all active:scale-95 ${
               phosphorGlow
-                ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_8px_rgba(0,255,255,0.35)]"
-                : "border-zinc-800 bg-black text-zinc-400 hover:border-zinc-700 hover:text-white"
+                ? "border-[#76c7cd] bg-[#268790] text-white shadow-[0_0_8px_rgba(38,135,144,0.5)]"
+                : "border-[#2a362f] bg-[#0d1410] text-[#879b83] hover:border-[#425247] hover:text-[#b7c9a8]"
             }`}
           >
             {`GLOW: ${phosphorGlow ? "ON" : "OFF"}`}

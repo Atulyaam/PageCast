@@ -127,10 +127,9 @@ export const AccessibleTextView: React.FC<AccessibleTextViewProps> = ({
   // Contrast theme classes
   const themeClasses: Record<ContrastMode, { root: string; button: string; link: string }> = {
     standard: {
-      root: "bg-surface-terminal text-text-primary border-surface-border",
-      button:
-        "bg-surface-panel border-surface-border text-text-primary hover:bg-surface-border-subtle",
-      link: "text-teletext-cyan hover:underline",
+      root: "bg-[#141B17] text-[#D1DCD0] border-[#3A453F]",
+      button: "bg-[#222924] border-[#3A453F] text-[#D1DCD0] hover:bg-[#2E3B33]",
+      link: "text-[#8FA88B] hover:underline",
     },
     "high-contrast-light": {
       root: "bg-white text-black border-black",

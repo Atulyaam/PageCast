@@ -155,25 +155,25 @@ export default function PublisherEditorPage() {
   const activePage = pack.pages[currentSubIndex] || pack.pages[0];
 
   return (
-    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
+    <div className="flex min-h-screen flex-col font-mono">
       <PublisherHeader activeTitle={`Editing P${pack.primaryPageNumber}`} />
 
       {/* Editor Sub-Header Toolbar */}
-      <div className="border-surface-border bg-surface-panel border-b px-4 py-3 sm:px-6">
+      <div className="border-b border-[#777970] bg-[#a2a197] px-4 py-2.5 sm:px-6">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/publisher"
-              className="border border-zinc-800 px-2 py-1 text-xs text-zinc-400 hover:text-white"
+              className="btn-keycap-light px-2.5 py-1 text-xs font-bold transition-all"
             >
               ← Back
             </Link>
             <div>
               <div className="flex items-center gap-2">
-                <span className="py-0.2 bg-emerald-500 px-1.5 text-xs font-black text-black">
+                <span className="rounded-xs bg-[#c69b5b] px-1.5 py-0.5 text-xs font-black text-[#0d1410]">
                   P{pack.primaryPageNumber}
                 </span>
-                <h1 className="max-w-md truncate text-sm font-bold text-zinc-100">{pack.title}</h1>
+                <h1 className="max-w-md truncate text-sm font-bold text-[#2f342d]">{pack.title}</h1>
               </div>
             </div>
           </div>
@@ -181,8 +181,8 @@ export default function PublisherEditorPage() {
           <div className="flex items-center gap-2">
             {saveMessage && (
               <span
-                className={`px-2 py-1 text-xs ${
-                  saveMessage.includes("success") ? "text-emerald-400" : "text-red-400"
+                className={`px-2 py-1 text-xs font-bold ${
+                  saveMessage.includes("success") ? "text-[#226f43]" : "text-[#9e2b20]"
                 }`}
               >
                 {saveMessage}
@@ -192,21 +192,21 @@ export default function PublisherEditorPage() {
             <button
               onClick={handleSaveDraft}
               disabled={isSaving}
-              className="cursor-pointer border border-zinc-700 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-200 uppercase hover:border-zinc-500"
+              className="btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors"
             >
               {isSaving ? "Saving..." : "Save Draft"}
             </button>
 
             <button
               onClick={() => setShowExportModal(true)}
-              className="cursor-pointer border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-300 uppercase hover:border-zinc-500"
+              className="btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold tracking-wider uppercase transition-colors"
             >
               Export
             </button>
 
             <button
               onClick={() => setShowPublishModal(true)}
-              className="cursor-pointer bg-emerald-500 px-4 py-1.5 text-xs font-black tracking-wider text-black uppercase hover:bg-emerald-400"
+              className="btn-keycap-light cursor-pointer !border-[#114225] !bg-[#2f8c56] px-4 py-1.5 text-xs font-black tracking-wider !text-white uppercase transition-colors"
             >
               Publish Live...
             </button>
@@ -219,16 +219,16 @@ export default function PublisherEditorPage() {
         <div className="space-y-4 lg:col-span-8">
           {/* Subpage Tabs */}
           {pack.pages.length > 1 && (
-            <div className="flex items-center gap-2 border-b border-zinc-800 pb-2">
-              <span className="text-xs tracking-wider text-zinc-500 uppercase">Sub-pages:</span>
+            <div className="flex items-center gap-2 border-b border-[#777970] pb-2">
+              <span className="text-xs font-bold tracking-wider text-[#4b5249] uppercase">
+                Sub-pages:
+              </span>
               {pack.pages.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentSubIndex(idx)}
-                  className={`cursor-pointer border px-2.5 py-1 text-xs font-bold ${
-                    currentSubIndex === idx
-                      ? "border-emerald-500 bg-emerald-950/40 text-emerald-400"
-                      : "border-zinc-800 text-zinc-400 hover:text-white"
+                  className={`btn-keycap-light cursor-pointer px-2.5 py-1 text-xs font-bold ${
+                    currentSubIndex === idx ? "!border-[#c69b5b] !bg-[#c69b5b] !text-[#0d1410]" : ""
                   }`}
                 >
                   {pack.primaryPageNumber}/{idx + 1}
@@ -236,7 +236,7 @@ export default function PublisherEditorPage() {
               ))}
               <button
                 onClick={handleAddSubPage}
-                className="cursor-pointer border border-dashed border-zinc-700 px-2 py-1 text-xs text-zinc-400 hover:border-emerald-500 hover:text-emerald-400"
+                className="btn-keycap-light cursor-pointer !border-dashed px-2 py-1 text-xs font-bold"
               >
                 + Add Subpage
               </button>
@@ -244,39 +244,41 @@ export default function PublisherEditorPage() {
           )}
 
           {/* 40x25 Teletext Grid Interactive Editor */}
-          <TeletextEditor page={activePage} onChange={handlePageChange} />
+          <div className="chassis-body p-3 sm:p-5">
+            <TeletextEditor page={activePage} onChange={handlePageChange} />
+          </div>
         </div>
 
         {/* Sidebar Diagnostics Column */}
         <div className="space-y-6 lg:col-span-4">
           {/* Real-time Byte Budget Meter */}
-          <div>
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-zinc-400 uppercase">
+          <div className="chassis-body p-4">
+            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
               Live Byte Budget
             </h2>
             <ByteBudgetMeter pack={pack} />
           </div>
 
           {/* Real-time Grid Validation Banner */}
-          <div>
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-zinc-400 uppercase">
+          <div className="chassis-body p-4">
+            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
               Compliance Checklist
             </h2>
             <GridValidationBanner pack={pack} />
           </div>
 
           {/* Quick Subpage Actions */}
-          <div className="border border-zinc-800 bg-zinc-950 p-4">
-            <h2 className="mb-2 text-xs font-bold tracking-wider text-zinc-400 uppercase">
+          <div className="chassis-body p-4">
+            <h2 className="mb-2 text-xs font-bold tracking-wider text-[#4b5249] uppercase">
               Multi-Page Tools
             </h2>
-            <p className="mb-3 text-[11px] text-zinc-500">
+            <p className="mb-3 text-[11px] text-[#5e645a]">
               Total Sub-pages: <strong>{pack.pages.length}</strong>. Each subpage is transmitted
               sequentially in the Teletext carousel.
             </p>
             <button
               onClick={handleAddSubPage}
-              className="w-full cursor-pointer border border-zinc-700 bg-zinc-900 py-2 text-xs font-bold tracking-wider text-emerald-400 uppercase hover:border-emerald-500"
+              className="btn-keycap-light w-full cursor-pointer py-2 text-xs font-bold tracking-wider uppercase"
             >
               + Append Subpage ({pack.primaryPageNumber}/{pack.pages.length + 1})
             </button>

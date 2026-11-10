@@ -92,22 +92,22 @@ export default function PublisherDashboardPage() {
   };
 
   return (
-    <div className="bg-surface-ground text-teletext-white min-h-screen font-mono">
+    <div className="flex min-h-screen flex-col font-mono">
       <PublisherHeader activeTitle="Publisher Dashboard" />
 
-      <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+      <main className="mx-auto max-w-7xl p-3 sm:p-6 lg:p-8">
         {/* Top Header & Actions */}
-        <div className="mb-8 flex flex-col gap-4 border-b border-zinc-800 pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-6 flex flex-col gap-4 border-b border-[#777970] pb-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="bg-emerald-500 px-2 py-0.5 text-xs font-black text-black">
+              <span className="rounded-xs bg-[#226f43] px-2 py-0.5 text-[10px] font-black text-white uppercase">
                 CONSOLE
               </span>
-              <h1 className="text-xl font-bold tracking-wider text-emerald-400 uppercase sm:text-2xl">
-                Publisher Control Desk
+              <h1 className="text-lg font-bold tracking-wider text-[#2f342d] uppercase sm:text-xl">
+                Publisher Transmission Control Desk
               </h1>
             </div>
-            <p className="mt-1 text-xs text-zinc-400 sm:text-sm">
+            <p className="mt-1 text-xs text-[#5e645a]">
               Manage Teletext news bulletins, drafts, 40×25 CRT layouts, and distribution packages.
             </p>
           </div>
@@ -115,13 +115,13 @@ export default function PublisherDashboardPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/publisher/ingest"
-              className="cursor-pointer bg-emerald-500 px-4 py-2 text-xs font-bold tracking-wider text-black uppercase transition-colors hover:bg-emerald-400"
+              className="btn-keycap-light px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
             >
               + Ingest New Article
             </Link>
             <Link
               href="/terminal"
-              className="cursor-pointer border border-zinc-700 px-4 py-2 text-xs font-bold tracking-wider text-zinc-300 uppercase transition-colors hover:border-zinc-500"
+              className="btn-keycap-light px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
             >
               📺 Open Terminal
             </Link>
@@ -129,63 +129,65 @@ export default function PublisherDashboardPage() {
         </div>
 
         {/* System Metric Cards */}
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="border border-zinc-800 bg-zinc-950 p-4">
-            <div className="text-[10px] tracking-widest text-zinc-500 uppercase">Active Drafts</div>
-            <div className="mt-1 text-2xl font-black text-emerald-400">{drafts.length}</div>
-            <div className="mt-1 text-[10px] text-zinc-500">Pending Editorial Review</div>
+        <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+          <div className="chassis-body p-3.5 shadow-sm">
+            <div className="text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
+              Active Drafts
+            </div>
+            <div className="mt-1 text-2xl font-black text-[#2e8552]">{drafts.length}</div>
+            <div className="mt-0.5 text-[10px] text-[#5e645a]">Pending Review</div>
           </div>
 
-          <div className="border border-zinc-800 bg-zinc-950 p-4">
-            <div className="text-[10px] tracking-widest text-zinc-500 uppercase">
+          <div className="chassis-body p-3.5 shadow-sm">
+            <div className="text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
               Published Bulletins
             </div>
-            <div className="mt-1 text-2xl font-black text-cyan-400">{published.length}</div>
-            <div className="mt-1 text-[10px] text-zinc-500">Live in Reader Terminal</div>
+            <div className="mt-1 text-2xl font-black text-[#1b676e]">{published.length}</div>
+            <div className="mt-0.5 text-[10px] text-[#5e645a]">Live in Terminal</div>
           </div>
 
-          <div className="border border-zinc-800 bg-zinc-950 p-4">
-            <div className="text-[10px] tracking-widest text-zinc-500 uppercase">
+          <div className="chassis-body p-3.5 shadow-sm">
+            <div className="text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
               Active Magazines
             </div>
-            <div className="mt-1 text-2xl font-black text-yellow-400">
+            <div className="mt-1 text-2xl font-black text-[#c69b5b]">
               {new Set(published.map((p) => p.magazineNumber)).size || 1} / 8
             </div>
-            <div className="mt-1 text-[10px] text-zinc-500">Ranges P100 - P899</div>
+            <div className="mt-0.5 text-[10px] text-[#5e645a]">Ranges P100 - P899</div>
           </div>
 
-          <div className="border border-zinc-800 bg-zinc-950 p-4">
-            <div className="text-[10px] tracking-widest text-zinc-500 uppercase">
+          <div className="chassis-body p-3.5 shadow-sm">
+            <div className="text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
               Payload Ceiling
             </div>
-            <div className="mt-1 text-2xl font-black text-zinc-300">10,240 B</div>
-            <div className="mt-1 text-[10px] text-emerald-400">Strict UTF-8 Compliance</div>
+            <div className="mt-1 text-2xl font-black text-[#2f342d]">10,240 B</div>
+            <div className="mt-0.5 text-[10px] font-bold text-[#2e8552]">Strict Limit</div>
           </div>
         </div>
 
         {/* Section 1: In-Progress Drafts */}
         <section aria-labelledby="drafts-heading" className="mb-10">
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-2">
+          <div className="mb-3 flex items-center justify-between border-b border-[#777970] pb-2">
             <h2
               id="drafts-heading"
-              className="text-sm font-bold tracking-wider text-emerald-400 uppercase"
+              className="text-xs font-bold tracking-wider text-[#2f342d] uppercase sm:text-sm"
             >
               In-Progress Drafts ({drafts.length})
             </h2>
           </div>
 
           {isLoading ? (
-            <div className="border border-zinc-900 bg-zinc-950 p-8 text-center text-xs text-zinc-500">
+            <div className="chassis-body p-8 text-center text-xs text-[#5e645a]">
               Loading drafts...
             </div>
           ) : drafts.length === 0 ? (
-            <div className="border border-zinc-900 bg-zinc-950 p-8 text-center text-xs text-zinc-500">
+            <div className="chassis-body p-8 text-center text-xs text-[#5e645a]">
               No active drafts found. Ingest an article to compose your first Teletext bulletin.
             </div>
           ) : (
-            <div className="overflow-x-auto border border-zinc-800 bg-zinc-950">
+            <div className="screen-bay overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-zinc-800 bg-zinc-900 text-[10px] tracking-wider text-zinc-400 uppercase">
+                <thead className="border-b border-[#232e27] bg-[#121915] text-[10px] tracking-wider text-[#879b83] uppercase">
                   <tr>
                     <th className="px-4 py-2.5">Page</th>
                     <th className="px-4 py-2.5">Title</th>
@@ -195,30 +197,28 @@ export default function PublisherDashboardPage() {
                     <th className="px-4 py-2.5 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-900">
+                <tbody className="divide-y divide-[#1b241e] bg-[#0d1410]">
                   {drafts.map((draft) => (
-                    <tr key={draft.id} className="transition-colors hover:bg-zinc-900/40">
-                      <td className="px-4 py-2.5 font-bold text-emerald-400">
-                        P{draft.pageNumber}
-                      </td>
-                      <td className="max-w-xs truncate px-4 py-2.5 font-medium text-zinc-200">
+                    <tr key={draft.id} className="transition-colors hover:bg-[#16201a]">
+                      <td className="px-4 py-2.5 font-bold text-[#b7c9a8]">P{draft.pageNumber}</td>
+                      <td className="max-w-xs truncate px-4 py-2.5 font-medium text-[#f6dfa9]">
                         {draft.title}
                       </td>
-                      <td className="px-4 py-2.5 text-zinc-400 uppercase">{draft.language}</td>
-                      <td className="px-4 py-2.5 text-zinc-400">{draft.subPages}</td>
-                      <td className="px-4 py-2.5 text-[11px] text-zinc-500">
+                      <td className="px-4 py-2.5 text-[#879b83] uppercase">{draft.language}</td>
+                      <td className="px-4 py-2.5 text-[#879b83]">{draft.subPages}</td>
+                      <td className="px-4 py-2.5 text-[11px] text-[#6b7c68]">
                         {new Date(draft.updatedAt).toLocaleTimeString()}
                       </td>
                       <td className="space-x-2 px-4 py-2.5 text-right">
                         <Link
                           href={`/publisher/editor/${draft.id}`}
-                          className="border border-emerald-800 bg-emerald-950 px-2.5 py-1 text-[11px] font-bold text-emerald-400 hover:border-emerald-500"
+                          className="btn-keycap-light inline-block px-2.5 py-1 text-[11px] font-bold uppercase"
                         >
                           Edit 40×25 Grid
                         </Link>
                         <button
                           onClick={() => handleDeleteDraft(draft.id)}
-                          className="cursor-pointer px-2 py-1 text-[11px] text-zinc-500 hover:text-red-400"
+                          className="cursor-pointer px-2 py-1 text-[11px] font-semibold text-[#801d14] hover:text-[#b93529]"
                         >
                           Delete
                         </button>
@@ -233,27 +233,27 @@ export default function PublisherDashboardPage() {
 
         {/* Section 2: Published Teletext Catalog */}
         <section aria-labelledby="published-heading">
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-800 pb-2">
+          <div className="mb-3 flex items-center justify-between border-b border-[#777970] pb-2">
             <h2
               id="published-heading"
-              className="text-sm font-bold tracking-wider text-cyan-400 uppercase"
+              className="text-xs font-bold tracking-wider text-[#2f342d] uppercase sm:text-sm"
             >
               Live Published Bulletins ({published.length})
             </h2>
           </div>
 
           {isLoading ? (
-            <div className="border border-zinc-900 bg-zinc-950 p-8 text-center text-xs text-zinc-500">
+            <div className="chassis-body p-8 text-center text-xs text-[#5e645a]">
               Loading published catalogue...
             </div>
           ) : published.length === 0 ? (
-            <div className="border border-zinc-900 bg-zinc-950 p-8 text-center text-xs text-zinc-500">
+            <div className="chassis-body p-8 text-center text-xs text-[#5e645a]">
               No bulletins published yet.
             </div>
           ) : (
-            <div className="overflow-x-auto border border-zinc-800 bg-zinc-950">
+            <div className="screen-bay overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-zinc-800 bg-zinc-900 text-[10px] tracking-wider text-zinc-400 uppercase">
+                <thead className="border-b border-[#232e27] bg-[#121915] text-[10px] tracking-wider text-[#879b83] uppercase">
                   <tr>
                     <th className="px-4 py-2.5">Page</th>
                     <th className="px-4 py-2.5">Magazine</th>
@@ -263,30 +263,30 @@ export default function PublisherDashboardPage() {
                     <th className="px-4 py-2.5 text-right">Distribution</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-900">
+                <tbody className="divide-y divide-[#1b241e] bg-[#0d1410]">
                   {published.map((pub) => {
                     const mag = getMagazineDefinition(pub.pageNumber);
                     return (
-                      <tr key={pub.pageNumber} className="transition-colors hover:bg-zinc-900/40">
-                        <td className="px-4 py-2.5 font-bold text-cyan-400">P{pub.pageNumber}</td>
-                        <td className="px-4 py-2.5 text-[11px] text-zinc-400">
+                      <tr key={pub.pageNumber} className="transition-colors hover:bg-[#16201a]">
+                        <td className="px-4 py-2.5 font-bold text-[#c69b5b]">P{pub.pageNumber}</td>
+                        <td className="px-4 py-2.5 text-[11px] text-[#879b83]">
                           Mag {mag.number}: {mag.name}
                         </td>
-                        <td className="max-w-xs truncate px-4 py-2.5 font-medium text-zinc-200">
+                        <td className="max-w-xs truncate px-4 py-2.5 font-medium text-[#b7c9a8]">
                           {pub.title}
                         </td>
-                        <td className="px-4 py-2.5 text-zinc-400 uppercase">{pub.language}</td>
-                        <td className="px-4 py-2.5 text-zinc-400">r{pub.revision}</td>
+                        <td className="px-4 py-2.5 text-[#879b83] uppercase">{pub.language}</td>
+                        <td className="px-4 py-2.5 text-[#6b7c68]">r{pub.revision}</td>
                         <td className="space-x-2 px-4 py-2.5 text-right">
                           <Link
                             href={`/terminal?page=${pub.pageNumber}`}
-                            className="border border-zinc-800 px-2 py-1 text-[11px] text-zinc-300 hover:border-zinc-600 hover:text-white"
+                            className="btn-keycap-light inline-block px-2.5 py-1 text-[11px] font-bold uppercase"
                           >
                             View Live
                           </Link>
                           <button
                             onClick={() => setExportPageNumber(pub.pageNumber)}
-                            className="cursor-pointer border border-zinc-700 bg-zinc-900 px-2 py-1 text-[11px] font-bold text-emerald-400 hover:bg-zinc-800"
+                            className="btn-keycap-light cursor-pointer px-2.5 py-1 text-[11px] font-bold uppercase"
                           >
                             QR / Poster
                           </button>
