@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { Printer, Tv, ArrowRight } from "lucide-react";
 import type { ExtractedSource, BulletinDraft } from "@/domain/source-provenance/types";
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import { TeletextGrid } from "@/components/teletext/TeletextGrid";
@@ -308,14 +309,16 @@ export const BulletinComposer: React.FC<BulletinComposerProps> = ({
               onClick={() => setIsPosterOpen(true)}
               className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black shadow-lg transition-transform hover:scale-105 hover:bg-emerald-400"
             >
-              <span>🖨️ Print Community Poster (A4)</span>
+              <Printer className="h-4 w-4" />
+              <span>Print Community Poster (A4)</span>
             </button>
             <Link
               href={`/pages/${packResult.pack.pages[0].pageNumber}`}
               className="bg-teletext-yellow hover:bg-teletext-yellow/80 text-teletext-black inline-flex items-center gap-2 rounded-md px-6 py-2.5 text-sm font-bold shadow-lg transition-transform hover:scale-105"
             >
-              <span>📺 Open in Full-Screen Web Terminal</span>
-              <span>→</span>
+              <Tv className="h-4 w-4" />
+              <span>Open in Full-Screen Web Terminal</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

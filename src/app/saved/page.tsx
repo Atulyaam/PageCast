@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
+import { Download, Scan, Search, HardDrive, Trash2, BookOpen, Layers } from "lucide-react";
 import { getAllSavedPages, removeSavedPage } from "@/lib/storage/saved-pages";
 import type { SavedPageRecord } from "@/lib/storage/dexie-db";
 import { ImportDialog } from "@/components/teletext/ImportDialog";
@@ -142,27 +143,31 @@ export default function SavedPagesPage() {
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className="btn-keycap-light cursor-pointer px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="btn-keycap-light inline-flex cursor-pointer items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-bold transition-all"
               aria-label="Import PagePack JSON file"
             >
-              + IMPORT JSON
+              <Download className="h-3.5 w-3.5 text-[#22c55e]" />
+              <span>+ IMPORT JSON</span>
             </button>
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="btn-keycap-light cursor-pointer px-3 py-1.5 font-mono text-xs font-bold transition-all"
+              className="btn-keycap-light inline-flex cursor-pointer items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-bold transition-all"
               aria-label="Scan optical QR code or air-gap burst"
             >
-              SCAN QR
+              <Scan className="h-3.5 w-3.5 text-[#c69b5b]" />
+              <span>SCAN QR</span>
             </button>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter by page or title..."
-              className="led-window px-3 py-1.5 font-mono text-xs text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
-              aria-label="Filter saved bulletins"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter by page or title..."
+                className="led-window px-3 py-1.5 font-mono text-xs text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
+                aria-label="Filter saved bulletins"
+              />
+            </div>
           </div>
         </div>
 
@@ -255,18 +260,20 @@ export default function SavedPagesPage() {
                   <div className="flex items-center justify-between gap-2 border-t border-[#777970] pt-3 font-mono text-xs">
                     <Link
                       href={`/terminal?page=${saved.pageNumber}`}
-                      className="btn-keycap-light px-3 py-1 text-xs font-bold uppercase"
+                      className="btn-keycap-light inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold uppercase"
                     >
-                      READ OFFLINE
+                      <BookOpen className="h-3 w-3 text-[#22c55e]" />
+                      <span>READ OFFLINE</span>
                     </Link>
 
                     <button
                       type="button"
                       onClick={() => handleRemove(saved.pageNumber)}
-                      className="cursor-pointer rounded-xs px-2 py-1 text-[11px] font-semibold text-[#801d14] transition-colors hover:text-[#b93529]"
+                      className="inline-flex cursor-pointer items-center gap-1 rounded-xs px-2 py-1 text-[11px] font-semibold text-[#801d14] transition-colors hover:text-[#b93529]"
                       aria-label={`Remove saved page ${saved.pageNumber}`}
                     >
-                      REMOVE
+                      <Trash2 className="h-3 w-3" />
+                      <span>REMOVE</span>
                     </button>
                   </div>
                 </div>

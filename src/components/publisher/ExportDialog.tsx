@@ -10,6 +10,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode";
+import { X, Printer, Play, Pause, Download, Copy, Check } from "lucide-react";
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import { getBulletinShareUrl } from "@/server/export/qr-distribution";
 import { measurePagePack } from "@/domain/page-pack/codec";
@@ -209,9 +210,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close export dialog"
-              className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-2.5 py-1 text-xs text-[#A8B7A4] transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
+              className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] p-1.5 text-xs text-[#A8B7A4] transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
             >
-              ✕
+              <X className="h-4 w-4" />
             </button>
           </div>
 
@@ -378,9 +379,10 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
               <button
                 type="button"
                 onClick={() => setIsPosterOpen(true)}
-                className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-3 py-1.5 text-xs font-bold tracking-wider text-[#B7C9A8] uppercase transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
+                className="btn-keycap-light inline-flex cursor-pointer items-center gap-1.5 rounded border border-[#3A453F] bg-[#222924] px-3 py-1.5 text-xs font-bold tracking-wider text-[#B7C9A8] uppercase transition-all hover:border-[#4E5C54] hover:text-[#E8ECE6] active:scale-95"
               >
-                🖨️ Poster
+                <Printer className="h-3.5 w-3.5 text-[#22c55e]" />
+                <span>Poster</span>
               </button>
               <button
                 type="button"

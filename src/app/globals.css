@@ -12,20 +12,20 @@
   --color-teletext-blue: #2563eb;
 
   /* Premium Industrial Hardware Palette */
-  --color-device-desk: #d9d7cf;
-  --color-device-desk-border: #bfbcb2;
-  --color-chassis: #aaa99f;
-  --color-chassis-highlight: #c7c5ba;
-  --color-chassis-shadow: #777970;
-  --color-chassis-border: #656d63;
-  --color-screen-recess: #18211d;
-  --color-screen-surface: #0d1410;
-  --color-screen-glass: #141c17;
+  --color-device-desk: #d4d2c8;
+  --color-device-desk-border: #b8b5a9;
+  --color-chassis: #a4a298;
+  --color-chassis-highlight: #c9c7bd;
+  --color-chassis-shadow: #6e6c64;
+  --color-chassis-border: #585750;
+  --color-screen-recess: #151a17;
+  --color-screen-surface: #0a0f0c;
+  --color-screen-glass: #101713;
   --color-phosphor-primary: #b7c9a8;
   --color-phosphor-secondary: #879b83;
   --color-phosphor-amber: #c69b5b;
-  --color-text-hardware: #2f342d;
-  --color-text-hardware-muted: #5e645a;
+  --color-text-hardware: #282c27;
+  --color-text-hardware-muted: #575c53;
 
   /* Backward-compatible semantic surface mappings */
   --color-surface-ground: #d9d7cf;
@@ -99,32 +99,53 @@ body {
 }
 
 /* Physical Terminal Casing & Chassis Material */
-.chassis-body {
-  background: linear-gradient(180deg, #c2c0b6 0%, #aaa99f 10%, #a2a197 88%, #939288 100%);
-  border: 1px solid var(--color-chassis-border);
+.chassis-body,
+.device-enclosure {
+  background: linear-gradient(180deg, #c5c3b9 0%, #aaa89d 8%, #9e9c91 92%, #86847a 100%);
+  border: 1px solid #585750;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.65) inset,
-    0 -2px 0 var(--color-chassis-shadow) inset,
-    0 24px 50px -12px rgba(45, 48, 42, 0.45),
-    0 6px 16px rgba(0, 0, 0, 0.15);
-  border-radius: 14px;
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 -3px 0 #6e6c64 inset,
+    0 32px 70px -15px rgba(25, 28, 24, 0.5),
+    0 10px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 18px;
 }
 
-/* Recessed CRT Display Housing */
-.screen-bay {
-  background: var(--color-screen-recess);
-  border: 2px solid #232e27;
+/* Professional Recessed CRT Display Housing */
+.screen-bay,
+.device-bezel-outer {
+  background: #141916;
+  border: 3px solid #1d231f;
   box-shadow:
-    inset 0 6px 18px rgba(0, 0, 0, 0.95),
-    inset 0 0 0 1px #0a100c,
-    0 1px 0 rgba(255, 255, 255, 0.35);
-  border-radius: 8px;
+    inset 0 10px 25px rgba(0, 0, 0, 0.96),
+    inset 0 0 0 1px #090e0b,
+    0 1px 0 rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
 }
 
 /* CRT Screen Glass Canvas */
-.screen-crt-glass {
-  background: radial-gradient(ellipse at 50% 50%, #151f19 0%, #0d1410 90%);
-  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.75);
+.screen-crt-glass,
+.device-crt-screen {
+  background: radial-gradient(ellipse at 50% 45%, #18231c 0%, #0d1410 75%, #060a08 100%);
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+}
+
+/* Anodized Brand & Telemetry Badge */
+.device-brand-plate {
+  background: linear-gradient(
+    90deg,
+    #252a27 0%,
+    #343a36 25%,
+    #252a27 50%,
+    #383f3a 75%,
+    #222623 100%
+  );
+  border: 1px solid #424a44;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 2px 5px rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
 }
 
 /* Subtle Retro CRT Scanlines & Glare */

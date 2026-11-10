@@ -10,6 +10,15 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import {
+  Search,
+  SlidersHorizontal,
+  Radio,
+  Tv,
+  ArrowUpRight,
+  AlertTriangle,
+  Cpu,
+} from "lucide-react";
 import { MAGAZINES } from "@/domain/teletext/magazine";
 import type { CatalogItem } from "@/server/database/repository";
 import type { GroupedMagazineCatalog } from "@/app/api/v1/catalog/route";
@@ -176,48 +185,55 @@ export default function BroadcastCataloguePage() {
         {snapshotDate && (
           <div
             role="status"
-            className="mb-6 flex items-center justify-between rounded-xs border border-[#846114] bg-[#2d2208] px-3 py-2 text-xs text-[#f6dfa9]"
+            className="mb-6 flex items-center justify-between rounded-xs border border-[#846114] bg-[#2d2208] px-3.5 py-2.5 text-xs text-[#f6dfa9] shadow-sm"
           >
-            <span>
-              ⚠️ OFFLINE CATALOGUE SNAPSHOT &bull; Stored {snapshotDate} &bull; Broadcast updates
-              paused
-            </span>
-            <span className="text-[10px] font-bold tracking-widest text-[#c69b5b] uppercase">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 shrink-0 text-[#eab308]" />
+              <span>
+                OFFLINE CATALOGUE SNAPSHOT &bull; Stored {snapshotDate} &bull; Broadcast updates
+                paused
+              </span>
+            </div>
+            <span className="rounded-xs bg-[#846114]/40 px-1.5 py-0.5 text-[10px] font-bold tracking-widest text-[#c69b5b] uppercase">
               OFFLINE CACHE
             </span>
           </div>
         )}
 
         {/* Search & Filter Chassis Toolbar */}
-        <div className="chassis-body mb-8 flex flex-col justify-between gap-4 p-4 md:flex-row md:items-center">
+        <div className="chassis-body mb-8 flex flex-col justify-between gap-4 p-4.5 md:flex-row md:items-center">
           {/* Keyword Search */}
           <div className="flex-1">
             <label
               htmlFor="catalogue-search"
-              className="mb-1 block font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase"
+              className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase"
             >
+              <Search className="h-3 w-3 text-[#777970]" />
               Search Bulletins (Page or Title)
             </label>
-            <input
-              id="catalogue-search"
-              type="text"
-              placeholder="e.g. 101, cyclone, technology..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="led-window w-full px-3 py-1.5 text-sm text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
-            />
+            <div className="relative">
+              <input
+                id="catalogue-search"
+                type="text"
+                placeholder="e.g. 101, cyclone, technology..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="led-window w-full px-3 py-2 text-sm text-[#b7c9a8] placeholder:text-[#506053] focus:border-[#c69b5b] focus:outline-hidden"
+              />
+            </div>
           </div>
 
           {/* Language Selector */}
           <div>
-            <label className="mb-1 block font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
+            <label className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#4b5249] uppercase">
+              <SlidersHorizontal className="h-3 w-3 text-[#777970]" />
               Language Filter
             </label>
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setLanguageFilter("all")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1 text-xs font-bold transition-all ${
+                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
                   languageFilter === "all"
                     ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
                     : ""
@@ -228,7 +244,7 @@ export default function BroadcastCataloguePage() {
               <button
                 type="button"
                 onClick={() => setLanguageFilter("en")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1 text-xs font-bold transition-all ${
+                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
                   languageFilter === "en"
                     ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
                     : ""
@@ -239,7 +255,7 @@ export default function BroadcastCataloguePage() {
               <button
                 type="button"
                 onClick={() => setLanguageFilter("hi")}
-                className={`btn-keycap-light cursor-pointer px-3 py-1 text-xs font-bold transition-all ${
+                className={`btn-keycap-light cursor-pointer px-3 py-1.5 text-xs font-bold transition-all ${
                   languageFilter === "hi"
                     ? "!border-[#1b676e] !bg-[#268790] !text-white shadow-[0_0_8px_rgba(38,135,144,0.4)]"
                     : ""
@@ -253,9 +269,10 @@ export default function BroadcastCataloguePage() {
 
         {/* Quick Jump Bar to Magazines */}
         <div className="mb-8 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="mr-2 font-mono text-[10px] font-bold tracking-widest text-[#5e645a] uppercase">
+          <div className="mr-2 flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-[#5e645a] uppercase">
+            <Radio className="h-3 w-3 text-[#c69b5b]" />
             Jump to:
-          </span>
+          </div>
           {magazines.map((mag) => (
             <a
               key={mag.magazineNumber}
@@ -346,9 +363,10 @@ export default function BroadcastCataloguePage() {
                               <td className="px-4 py-2.5 text-right">
                                 <Link
                                   href={`/?page=${bulletin.pageNumber}`}
-                                  className="btn-keycap-light inline-block px-3 py-1 text-xs font-bold tracking-wider uppercase transition-colors"
+                                  className="btn-keycap-light inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold tracking-wider uppercase transition-colors"
                                 >
-                                  Tune In →
+                                  <span>Tune In</span>
+                                  <ArrowUpRight className="h-3 w-3 text-[#22c55e]" />
                                 </Link>
                               </td>
                             </tr>

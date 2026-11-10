@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { Plus, Tv, FileText, QrCode, Eye, Trash2, Cpu, Activity } from "lucide-react";
 import { PublisherHeader } from "@/components/publisher/PublisherHeader";
 import { ExportDialog } from "@/components/publisher/ExportDialog";
 import { getMagazineDefinition } from "@/domain/teletext/magazine";
@@ -115,15 +116,17 @@ export default function PublisherDashboardPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/publisher/ingest"
-              className="btn-keycap-light px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
+              className="btn-keycap-light inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
             >
-              + Ingest New Article
+              <Plus className="h-3.5 w-3.5 text-[#22c55e]" />
+              <span>Ingest New Article</span>
             </Link>
             <Link
               href="/terminal"
-              className="btn-keycap-light px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
+              className="btn-keycap-light inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold tracking-wider uppercase transition-colors"
             >
-              📺 Open Terminal
+              <Tv className="h-3.5 w-3.5 text-[#22c55e]" />
+              <span>Open Terminal</span>
             </Link>
           </div>
         </div>
@@ -212,15 +215,17 @@ export default function PublisherDashboardPage() {
                       <td className="space-x-2 px-4 py-2.5 text-right">
                         <Link
                           href={`/publisher/editor/${draft.id}`}
-                          className="btn-keycap-light inline-block px-2.5 py-1 text-[11px] font-bold uppercase"
+                          className="btn-keycap-light inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold uppercase"
                         >
-                          Edit 40×25 Grid
+                          <FileText className="h-3 w-3 text-[#22c55e]" />
+                          <span>Edit 40×25 Grid</span>
                         </Link>
                         <button
                           onClick={() => handleDeleteDraft(draft.id)}
-                          className="cursor-pointer px-2 py-1 text-[11px] font-semibold text-[#801d14] hover:text-[#b93529]"
+                          className="inline-flex cursor-pointer items-center gap-0.5 px-2 py-1 text-[11px] font-semibold text-[#801d14] hover:text-[#b93529]"
                         >
-                          Delete
+                          <Trash2 className="h-3 w-3" />
+                          <span>Delete</span>
                         </button>
                       </td>
                     </tr>
@@ -280,15 +285,17 @@ export default function PublisherDashboardPage() {
                         <td className="space-x-2 px-4 py-2.5 text-right">
                           <Link
                             href={`/terminal?page=${pub.pageNumber}`}
-                            className="btn-keycap-light inline-block px-2.5 py-1 text-[11px] font-bold uppercase"
+                            className="btn-keycap-light inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold uppercase"
                           >
-                            View Live
+                            <Eye className="h-3 w-3 text-[#22c55e]" />
+                            <span>View Live</span>
                           </Link>
                           <button
                             onClick={() => setExportPageNumber(pub.pageNumber)}
-                            className="btn-keycap-light cursor-pointer px-2.5 py-1 text-[11px] font-bold uppercase"
+                            className="btn-keycap-light inline-flex cursor-pointer items-center gap-1 px-2.5 py-1 text-[11px] font-bold uppercase"
                           >
-                            QR / Poster
+                            <QrCode className="h-3 w-3 text-[#c69b5b]" />
+                            <span>QR / Poster</span>
                           </button>
                         </td>
                       </tr>

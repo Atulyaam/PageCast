@@ -13,6 +13,7 @@
 
 import React, { useState, useEffect } from "react";
 import QRCode from "qrcode";
+import { Printer, X } from "lucide-react";
 import type { PagePackV1 } from "@/domain/page-pack/types";
 import { getBulletinShareUrl } from "@/server/export/qr-distribution";
 import { FocusTrap } from "@/components/common/FocusTrap";
@@ -120,17 +121,18 @@ export const PosterModal: React.FC<PosterModalProps> = ({
               <button
                 type="button"
                 onClick={handlePrint}
-                className="btn-keycap cursor-pointer rounded border border-[#3A453F] bg-[#2E3B33] px-3 py-1 text-xs font-bold text-[#B7C9A8] transition-colors hover:bg-[#38483E]"
+                className="btn-keycap inline-flex cursor-pointer items-center gap-1.5 rounded border border-[#3A453F] bg-[#2E3B33] px-3 py-1 text-xs font-bold text-[#B7C9A8] transition-colors hover:bg-[#38483E]"
               >
-                🖨️ Print Poster
+                <Printer className="h-3.5 w-3.5" />
+                <span>Print Poster</span>
               </button>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Close poster preview"
-                className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] px-2.5 py-1 text-xs text-[#A8B7A4] hover:border-[#4E5C54] hover:text-white"
+                className="btn-keycap-light cursor-pointer rounded border border-[#3A453F] bg-[#222924] p-1 text-xs text-[#A8B7A4] hover:border-[#4E5C54] hover:text-white"
               >
-                ✕
+                <X className="h-4 w-4" />
               </button>
             </div>
           </div>
